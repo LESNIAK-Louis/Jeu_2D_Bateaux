@@ -1,9 +1,10 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+
+#include <iostream>
+
 #include "Graphique/fonctions_SDL.hpp"
+
 
 #define objW 640
 #define objH 192
@@ -22,7 +23,7 @@ int main()
     bool terminer = false;
     if(SDL_Init(SDL_INIT_VIDEO) < 0) // Initialisation de la SDL
     {
-        printf("Erreur d’initialisation de la SDL: %s",SDL_GetError());
+        std::wcout << L"Erreur d’initialisation de la SDL: " << SDL_GetError() << std::endl;
         SDL_Quit();
         return EXIT_FAILURE;
     }
@@ -32,14 +33,14 @@ int main()
     SDL_WINDOWPOS_CENTERED, 600, 600, SDL_WINDOW_RESIZABLE);
     if(fenetre == NULL) // En cas d’erreur
     {
-        printf("Erreur de la creation d’une fenetre: %s",SDL_GetError());
+        std::wcout << "Erreur de la creation d’une fenetre: " << SDL_GetError() << std::endl;
         SDL_Quit();
         return EXIT_FAILURE;
     }
 
     if(TTF_Init() < 0) // Initialisation du TTF
     {
-        printf("Erreur d’initialisation du TTF: %s",TTF_GetError());
+        std::wcout << "Erreur d’initialisation du TTF: " << TTF_GetError() << std::endl;
         TTF_Quit();
         return EXIT_FAILURE;
     }
@@ -51,8 +52,8 @@ int main()
     SDL_Texture* fond = charger_image("Ressources/fond.bmp", ecran);
 
     // Charger l’image avec la transparence
-    SDL_Texture* obj = charger_image_transparente("Ressources/obj.bmp",ecran,255,255,255);
-    SDL_Texture* sprites = charger_image_transparente("Ressources/sprites.bmp",ecran,0,255,255);
+    SDL_Texture* obj = charger_image_transparente("Ressources/obj.bmp", ecran, 255, 255, 255);
+    SDL_Texture* sprites = charger_image_transparente("Ressources/sprites.bmp", ecran, 0, 255, 255);
     SDL_Rect SrcR;
     SDL_Rect DestR;
 
@@ -82,7 +83,7 @@ int main()
     }
 
     // TTF
-    TTF_Font *font = TTF_OpenFont("Ressources/arial.ttf",28);
+    TTF_Font *font = TTF_OpenFont("Ressources/arial.ttf", 28);
     SDL_Color color = {0,0,0,0};
     char msg[] = "TP sur Makefile et SDL";
     SDL_Texture* texte = charger_texte(msg,ecran,font,color);
@@ -98,8 +99,10 @@ int main()
         SDL_RenderClear(ecran);
         SDL_RenderCopy(ecran, fond, NULL, NULL);
         SDL_RenderCopy(ecran, obj, &SrcR, &DestR);
+
         for(int i = 0; i < 6;i++)
             SDL_RenderCopy(ecran, sprites, &SrcR_sprite[i], &DestR_sprite[i]);
+            
         //Appliquer la surface du texte sur l’écran
         SDL_RenderCopy(ecran,texte,NULL,&text_pos);
         //SDL_PollEvent ...

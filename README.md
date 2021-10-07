@@ -1,2 +1,2 @@
-# -ProgA_2021_Lesniak_Steiner_Projet_S3
+#  Projet_STEINER_LESNIAK_ProgA
 Jeu pour projet S3

@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-#include "Point"
+#include "Point.hpp"
 
 
 class Patrouilleur

@@ -19,4 +19,24 @@ class Patrouilleur
         int degatArme;
         int cdArme; //cool down pour le tir
         int cible;
+
+    public : 
+
+
+        
+        bool getMove();
+        int getVitesse();
+        int getPVMax()
+        int getPv();
+        int getDegatArme();
+        int getCdArme();
+        int getCible();
+
+        bool setMove();
+        int setVitesse();
+        int setPVMax()
+        int setPv();
+        int setDegatArme();
+        int setCdArme();
+        int setCible();
 }

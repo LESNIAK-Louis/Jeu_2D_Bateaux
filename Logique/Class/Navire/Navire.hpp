@@ -6,41 +6,50 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-#include "./Point.hpp"
+#include "../Point.hpp"
 
 #ifndef NAVIRE_HPP
 #define NAVIRE_HPP
 
 class Navire
 {
-    protected : 
+    protected :
+        Flotte* flotte;
+        Point* centre;
         bool move;
-        int angleDeplacement;
-        int *vitesse;
-        int pvMax;
+        int angle;
         int pv;
-        int degatArme;
-        int cdArme; //cool down pour le tir
-        Navire cible;
+        int *vitesse;
+        int *pvMax;
+        int *degatArme;
+        int *cdArme; //cool down pour le tir
+        int *portee;
+        Navire* cible;
 
     public : 
-
+        Flotte* getFlotte();
+        Point* getCentre();
+        int getAbscisse();
+        int getOrdonnee();
         bool getMove();
-        int getAngleDeplacement();
-        int getVitesse();
-        int getPVMax()
+        int getAngle();
         int getPv();
+        int getVitesse();
+        int getPvMax();
         int getDegatArme();
         int getCdArme();
-        int getCible();
+        Navire* getCible();
 
-        bool setMove();
-        int setVitesse();
-        int setPVMax()
-        int setPv();
-        int setDegatArme();
-        int setCdArme();
-        int setCible();
+        void setFlotte(Flotte* f);
+        void setCentre(Point* p);
+        void setMove(bool b);
+        void setAngle(int a);
+        void setPv(int p);
+        void setVitesse(int* v);
+        void setPvMax(int* p);
+        void setDegatArme(int*d);
+        void setCdArme(int* c);
+        void setCible(Navire* navire);
 }
 
 #endif

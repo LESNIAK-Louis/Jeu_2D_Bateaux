@@ -11,7 +11,7 @@ Navire::Navire(Flotte* flotte){
     this->centre = new Point(pos);
     this->setMove(false);
     this->setAngle(0);
-    this->setPv(this->getPvMax())
+    this->setPv(this->getPvMax());
 }
 
 

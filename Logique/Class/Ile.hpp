@@ -1,6 +1,7 @@
-/** file iles.hpp
-*@author Louis Lesniak & Hugues Steiner
-*date 14/09/2021
+/** 
+* @file Ile.hpp
+* @author Louis Lesniak & Hugues Steiner
+* @date 04/11/2021
 */
 
 #ifndef  ILE_H
@@ -19,11 +20,15 @@ class Ile
 
     public : 
         Ile(int abs, int ord, int t, int f);
+        ~Ile();
+
         Point* getCentre();
         int getTaille();
         int getForme();
-        int getAbscisse();
-        int getOrdonnee();
+
+        void setCentre(Point centre);
+        void setTaille(int taille);
+        void setForme(int forme);
         std::string toString();
 };
 

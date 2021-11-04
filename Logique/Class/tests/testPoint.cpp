@@ -1,19 +1,18 @@
 #include "../Point.hpp"
-#include <cassert>
 
 void testGets()
 {
     Point* pt = new Point(3,2);
-    assert(pt->getAbscisse() == 3 && pt->getOrdonnee() == 2);
-
+    if(pt->getAbscisse() != 3 || pt->getOrdonnee() != 2) perror("Gets non correspondants | testGets - Point");
+    delete[] pt;
 }
 
 void testDistance()
 {
     Point* pt1 = new Point(2,2);
     Point* pt2 = new Point(4,4);
-    assert(pt1->distance(pt2) == 2);
-    free(pt1); free(pt2);
+    if(pt1->distance(pt2) != 2) perror("La distance n'est pas la bonne | testDistance - Point");
+    delete[] pt1; delete[] pt2;
 }
 
 void testIsEqual()
@@ -22,16 +21,16 @@ void testIsEqual()
     Point* pt2 = new Point(2,2);
     Point* pt3 = new Point(1,2);
     Point* pt4 = new Point(2,1);
-    assert(pt1->isEqual(pt2) && !(pt3->isEqual(pt4)) && !(pt2->isEqual(pt4)) && !(pt2->isEqual(pt3)));
-    free(pt1); free(pt2); free(pt3); free(pt4);
+    if(!pt1->isEqual(pt2) || pt3->isEqual(pt4) || pt2->isEqual(pt4) || pt2->isEqual(pt3)) perror("Resultats non normal | testIsEqual - Point");
+    delete[] pt1; delete[] pt2; delete[] pt3; delete[] pt4;
 }
 
 void testDeplacer()
 {
     Point* pt = new Point(2,2);
     pt->deplacer(2,2);
-    assert(pt->getAbscisse() == 4 && pt->getOrdonnee() == 4);
-    free(pt);
+    if(pt->getAbscisse() != 4 || pt->getOrdonnee() != 4) perror("Le deplacement a echoue | testDeplacer - Point");
+    delete[] pt;
 }
 
 

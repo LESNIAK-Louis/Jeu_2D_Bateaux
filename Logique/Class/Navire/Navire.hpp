@@ -4,16 +4,19 @@
 *Definition des diffferent types de bateaux/vehicules
 */
 
+#ifndef NAVIRE_HPP
+#define NAVIRE_HPP
+
 #include <stdio.h>
 #include <stdbool.h>
 #include "../Point.hpp"
+#include "../Flotte.hpp"
 
-#ifndef NAVIRE_HPP
-#define NAVIRE_HPP
 
 class Navire
 {
     protected :
+       
         Flotte* flotte;
         Point* centre;
         bool move;
@@ -27,6 +30,8 @@ class Navire
         Navire* cible;
 
     public : 
+        Navire(Flotte*);
+
         Flotte* getFlotte();
         Point* getCentre();
         int getAbscisse();
@@ -50,6 +55,7 @@ class Navire
         void setDegatArme(int*d);
         void setCdArme(int* c);
         void setCible(Navire* navire);
-}
+};
+
 
 #endif

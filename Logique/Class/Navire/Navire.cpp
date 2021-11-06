@@ -8,12 +8,11 @@
 
 Navire::Navire(Flotte* flotte){
     this->setFlotte(flotte);
-    this->centre = new Point(pos);
+    this->setCentre(this->getFlotte()->getSpawnPoint());
     this->setMove(false);
     this->setAngle(0);
     this->setPv(this->getPvMax());
 }
-
 
 //Getter
 Flotte* getFlotte(){

@@ -1,16 +1,17 @@
 /** 
 * @file IleBonus.hpp
 * @author Louis Lesniak & Hugues Steiner
-* @date 04/11/2021
+* @date 07/11/2021
+* Representation d'une ile bonus
 */
 
+#ifndef ILESBONUS_H
+#define ILESBONUS_H
 
 #include <string> 
 #include "Point.hpp"
 #include "Navire/Patrouilleur.hpp"
-
-#ifndef ILESBONUS_H
-#define ILESBONUS_H
+#include "../../definitions.hpp"
 
 class IleBonus {
     private : 
@@ -25,7 +26,7 @@ class IleBonus {
         int bonusGain;
         int tempsDebut;
     public : 
-        IleBonus();
+        IleBonus(Point* centre, int taille, int forme, int rayonCapture, int nbDefenseur, Patrouilleur[] defenseur, int controle, int bonustype, int bonusGain);
         ~IleBonus();
 
         Point getCentre();
@@ -45,7 +46,7 @@ class IleBonus {
         void setForme(int forme);
         void setRayonCapture(int rayonCapture);
         void setNbDefenseur(int nbDefenseur):
-        // setDefenseur ?
+        void setDefenseur(Patrouilleur[] defenseur);
         void setControle(int controle);
         void setBonusType(int bonusType);
         void setBonusGain(int bonusGain);
@@ -54,3 +55,4 @@ class IleBonus {
         std::string toString();
 };
 
+#endif

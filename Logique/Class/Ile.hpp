@@ -1,7 +1,8 @@
 /** 
 * @file Ile.hpp
 * @author Louis Lesniak & Hugues Steiner
-* @date 04/11/2021
+* @date 07/11/2021
+* Representation d'une ile
 */
 
 #ifndef  ILE_H
@@ -9,6 +10,7 @@
 
 #include <string> 
 #include "Point.hpp"
+#include "../../definitions.hpp"
 
 
 class Ile
@@ -19,14 +21,14 @@ class Ile
         int forme;
 
     public : 
-        Ile(int abs, int ord, int t, int f);
+        Ile(Point* centre, int taille, int forme);
         ~Ile();
 
         Point* getCentre();
         int getTaille();
         int getForme();
 
-        void setCentre(Point centre);
+        void setCentre(Point* centre);
         void setTaille(int taille);
         void setForme(int forme);
         std::string toString();

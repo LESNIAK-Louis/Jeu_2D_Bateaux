@@ -1,3 +1,10 @@
+/** 
+* @file testPoint.cpp
+* @author Louis Lesniak & Hugues Steiner
+* @date 07/11/2021
+* Les tests relatifs à la classe Point
+*/
+
 #include "../Point.hpp"
 
 void testGets()

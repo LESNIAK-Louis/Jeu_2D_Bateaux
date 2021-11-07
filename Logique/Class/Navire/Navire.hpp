@@ -1,7 +1,8 @@
-/**file Navire.hpp
- *@author Louis Lesniak & Hugues Steiner
-*date 14/09/2021
-*Definition des diffferent types de bateaux/vehicules
+/**
+ * @file Navire.hpp
+ * @author Louis Lesniak & Hugues Steiner
+ * @date 14/09/2021
+ * Definition des diffferent types de bateaux/vehicules
 */
 
 #ifndef NAVIRE_HPP
@@ -11,6 +12,7 @@
 #include <stdbool.h>
 #include "../Point.hpp"
 #include "../Flotte.hpp"
+#include "../../../definitions.hpp"
 
 
 class Navire
@@ -45,15 +47,15 @@ class Navire
         int getCdArme();
         Navire* getCible();
 
-        void setFlotte(Flotte* f);
-        void setCentre(Point* p);
+        void setFlotte(Flotte* flotte);
+        void setCentre(Point* centre);
         void setMove(bool b);
-        void setAngle(int a);
-        void setPv(int p);
-        void setVitesse(int* v);
-        void setPvMax(int* p);
-        void setDegatArme(int*d);
-        void setCdArme(int* c);
+        void setAngle(int angle);
+        void setPv(int pv);
+        void setVitesse(int* vitesse);
+        void setPvMax(int* pvMax);
+        void setDegatArme(int* degat);
+        void setCdArme(int* cd);
         void setCible(Navire* navire);
 };
 

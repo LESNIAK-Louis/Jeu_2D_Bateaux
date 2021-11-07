@@ -1,17 +1,20 @@
-/**file Flotte.hpp
- *@author Louis Lesniak & Hugues Steiner
-*date 14/09/2021
-*Definition d'une flotte (~= un joueur)
+/**
+ * @file Flotte.hpp
+ * @author Louis Lesniak & Hugues Steiner
+ * @date 14/09/2021
+ * Definition d'une flotte (~= un joueur)
 */
+#ifndef FLOTTE_HPP
+#define FLOTTE_HPP
 
 #include <stdio.h>
 #include <stdbool.h>
 #include <list>
 #include "./Point.hpp"
 #include "./Navire/Patrouilleur.hpp"
+#include "../../definitions.hpp"
 
-#ifndef FLOTTE_HPP
-#define FLOTTE_HPP
+
 
 class Flotte 
 {
@@ -23,3 +26,5 @@ class Flotte
         int[] caracPatrouilleur; //index : 0: vitesse; 1: pvMax; 2: degatArme; 3: cooldown; 
         std::list<Patrouilleur> Patrouilleurs;
 }
+
+#endif

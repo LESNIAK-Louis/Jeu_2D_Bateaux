@@ -1,7 +1,7 @@
 /** 
 * @file Point.cpp
 * @author Louis Lesniak & Hugues Steiner
-* @date 04/11/2021
+* @date 07/11/2021
 * Représentation d'un point
 */
 
@@ -36,7 +36,7 @@ int Point::getOrdonnee()
 
 void Point::setOrdonnee(int ord)
 {
-    this->ord = ord:
+    this->ord = ord;
 }
 
 void Point::setAbscisse(int abs)
@@ -46,7 +46,7 @@ void Point::setAbscisse(int abs)
 
 int Point::distance(Point* pt)
 {
-    if(pt == NULL) perror("point NULL en param. | distance - Point")
+    if(pt == NULL) error("point NULL en param. | distance - Point");
     int x = std::abs(this->getAbscisse() - pt->getAbscisse());
     int y = std::abs(this->getOrdonnee() - pt->getOrdonnee());
     return (int)sqrt(x*x + y*y);
@@ -54,7 +54,7 @@ int Point::distance(Point* pt)
 
 bool Point::isEqual(Point* pt)
 {
-    if(pt == NULL) perror("point NULL en param. | isEqual - Point")
+    if(pt == NULL) error("point NULL en param. | isEqual - Point");
     return pt->getAbscisse() == this->getAbscisse() && pt->getOrdonnee() == this->getOrdonnee();
 }
 

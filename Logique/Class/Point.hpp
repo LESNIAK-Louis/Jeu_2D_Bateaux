@@ -1,7 +1,7 @@
 /** 
 * @file Point.hpp
 * @author Louis Lesniak & Hugues Steiner
-* @date 04/11/2021
+* @date 07/11/2021
 * Représentation d'un Point
 */
 
@@ -10,6 +10,7 @@
 
 #include <string>
 #include <cmath>
+#include "../../definitions.hpp"
 
 class Point
 {
@@ -20,8 +21,8 @@ class Point
         int getOrdonnee();
         int getAbscisse();
 
-        int setOrdonnee(int ord);
-        int setAbscisse(int abs);
+        void setOrdonnee(int ord);
+        void setAbscisse(int abs);
 
         int distance(Point* pt);
         bool isEqual(Point* pt);

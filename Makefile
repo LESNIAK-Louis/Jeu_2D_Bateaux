@@ -5,7 +5,7 @@ LDFLAGS = `sdl2-config --cflags --libs` -lSDL2_ttf -lSDL2_image
 INCLUDES = -I./SDL2_ttf -I./SDL2_image
 EXEC = main
 SRC = main.cpp Graphique/fonctions_SDL.cpp
-OBJ = $(SRC:.c=.o)
+OBJ = $(SRC:.cpp=.o)
 
 all: $(EXEC)
 main: $(OBJ)

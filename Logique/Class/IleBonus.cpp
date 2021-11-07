@@ -1,18 +1,27 @@
 /** 
 * @file IleBonus.cpp
 * @author Louis Lesniak & Hugues Steiner
-* @date 04/11/2021
-* Definition des fonctions propres aux iles
+* @date 07/11/2021
+* Definition des fonctions propres aux iles bonus
 */
 
 #include "IleBonus.hpp"
 
 //Constructeur
-IleBonus::IleBonus(int abs, int ord, int t, int f)
+IleBonus::IleBonus(Point* centre, int taille, int forme, int rayonCapture, int nbDefenseur, Patrouilleur[] defenseur, int controle, int bonustype, int bonusGain)
 {
-    this->setCentre(new Point(abs, ord));
-    this->setTaille(t);
-    this->setForme(f);
+    if(centre == NULL) error("centre NULL en param | Constructeur - Ile");
+    if(nbDefenseur != 0 && defenseur == NULL) error("tableau de defenseurs NULL en param | Constructeur - Ile");
+    this->setCentre(centre);
+    this->setTaille(taile);
+    this->setForme(forme);
+    this->setRayonCapture(rayonCapture);
+    this->setNbDefenseur(nbDefenseur);
+    this->setDefenseur(defenseur);
+    this->setControle(controle);
+    this->setBonusType(bonusType);
+    this->setBonusGain(bonusGain);
+    this->tempsDebut = 0;
 }
 
 IleBonus::~IleBonus()
@@ -48,7 +57,7 @@ int IleBonus::getNbDefenseur()
 
 Patrouilleur[] getDefenseur(int index)
 {
-    if(index < 0 || index >= this->getNbDefenseur()) perror("index out of range | getDefenseur - IleBonus");
+    if(index < 0 || index >= this->getNbDefenseur()) error("index out of range | getDefenseur - IleBonus");
     return this->defenseur[index];
 }
 
@@ -75,55 +84,63 @@ int IleBonus::getTempsDebut()
 
 void IleBonus::setCentre(Point* centre)
 {
-    if(centre == NULL) perror("centre NULL en param | setCentre - IleBonus");
+    if(centre == NULL) error("centre NULL en param | setCentre - IleBonus");
+    if(this->centre != NULL) delete[] this->centre;
     return this->centre = centre;
 }
 
 void IleBonus::setTaille(int taille)
 {
-    if(taille < 0) perror("taille < 0 | setTaille - IleBonus");
+    if(taille < 0) error("taille < 0 | setTaille - IleBonus");
     return this->taille = taille;
 }
 
 void IleBonus::setForme(int forme)
 {
-    if(forme < 0) perror("forme < 0 | setForme - IleBonus");
+    if(forme < 0) error("forme < 0 | setForme - IleBonus");
     return this->forme = forme;
 }
 
 void IleBonus::setRayonCapture(int rayonCapture)
 {
-    if(rayonCapture < 0) perror("rayonCapture < 0 | setRayonCapture - IleBonus");
+    if(rayonCapture < 0) error("rayonCapture < 0 | setRayonCapture - IleBonus");
     return this->rayonCapture = rayonCapture;
 }
 
 void IleBonus::setNbDefenseur(int nbDefenseur)
 {
-    if(nbDefenseur < 0) perror("nbDefenseur < 0 | setNbDefenseur - IleBonus");
+    if(nbDefenseur < 0) error("nbDefenseur < 0 | setNbDefenseur - IleBonus");
     return this->nbDefenseur = nbDefenseur;
+}
+
+void IleBonus::setDefenseur(Patrouilleur[] defenseur)
+{
+    if(defenseur == NULL) error("tableau de defenseurs NULL en param | setDefenseur - IleBonus");
+    if(defenseur != NULL) delete[] defenseur;
+    this->defenseur = defenseur;
 }
 
 void IleBonus::setControle(int controle)
 {
-    if(controle < 0) perror("controle < 0 | setControle - IleBonus");
+    if(controle < 0) error("controle < 0 | setControle - IleBonus");
     return this->controle = controle;
 }
 
 void IleBonus::setBonusType(int bonusType)
 {
-    if(bonusType < 0) perror("bonusType < 0 | setBonusType - IleBonus");
+    if(bonusType < 0) error("bonusType < 0 | setBonusType - IleBonus");
     return this->bonusType = bonusType;
 }
 
 void IleBonus::setBonusGain(int bonusGain)
 {
-    if(bonusGain < 0) perror("bonusGain < 0 | setBonusGain - IleBonus");
+    if(bonusGain < 0) error("bonusGain < 0 | setBonusGain - IleBonus");
     return this->bonusGain = bonusGain;
 }
 
 void IleBonus::setTempsDebut(int tempsDebut)
 {
-    if(tempsDebut < 0) perror("tempsDebut < 0 | setTempsDebut - IleBonus");
+    if(tempsDebut < 0) error("tempsDebut < 0 | setTempsDebut - IleBonus");
     return this->tempsDebut = tempsDebut;
 }
 

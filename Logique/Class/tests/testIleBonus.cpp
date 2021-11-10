@@ -9,7 +9,7 @@
 
 void testGets()
 {
-    IleBonus* ile = new IleBonus(new Point(4,2), 2, 1, 0, 0, NULL, 0, 0, 0);
+    IleBonus* ile = new IleBonus(new Point(4,2), 2, 1, 0, 0, 0, 0);
     if(ile->getCentre()->getAbscisse() != 4 || ile->getCentre()->getOrdonnee() != 2) error("Position non correspondante | getCentre - testIleBonus");
     if(ile->getTaille() != 2) error("Taille non correspondante | getTaille - testIleBonus");
     if(ile->getForme() != 1) error("Forme non correspondante | getForme - testIleBonus");
@@ -19,7 +19,7 @@ void testGets()
 
 void testSets()
 {  
-    IleBonus* ile = new IleBonus(new Point(4,2), 2, 1, 0, 0, NULL, 0, 0, 0);
+    IleBonus* ile = new IleBonus(new Point(4,2), 2, 1, 0, 0, 0, 0);
 
     ile->setCentre(new Point(2,3));
     ile->setTaille(1);

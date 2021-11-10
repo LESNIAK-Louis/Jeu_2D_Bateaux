@@ -1,17 +1,15 @@
 /** 
-* @file definitions.cpp
-* @author Louis Lesniak & Hugues Steiner
-* @date 07/11/2021
-* Definition des constantes du programme
+* \file definitions.hpp
+* \brief Definition des constantes du programme
+* \author Louis Lesniak & Hugues Steiner
+* \date 10 Nov. 2021
 */
 
 #ifndef DEFINITIONS_HPP
 #define DEFINITIONS_HPP
 
 #define error(s) {\
-        perror((s));\
+        perror(s);\
         exit(EXIT_FAILURE); }
-
-
 
 #endif

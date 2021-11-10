@@ -1,8 +1,8 @@
 /**
- * @file Patrouilleur.hpp
- * @author Louis Lesniak & Hugues Steiner
- * @date 07/11/2021
- * Definition des diffferent types de bateaux/vehicules
+ * \file Patrouilleur.hpp
+ * \brief Definition des diffferent types de bateaux/vehicules
+ * \author Louis Lesniak & Hugues Steiner
+ * \date 10 Nov. 2021
 */
 
 #ifndef PATROUILLEUR_HPP

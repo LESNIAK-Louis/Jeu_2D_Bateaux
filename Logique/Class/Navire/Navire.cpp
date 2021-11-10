@@ -1,8 +1,8 @@
 /**
- * @file Navire.cpp
- * @author Louis Lesniak & Hugues Steiner
- * @date 14/09/2021
- * Definition des diffferent types de bateaux/vehicules
+ * \file Navire.cpp
+ * \brief Definition des diffferent types de bateaux/vehicules
+ * \author Louis Lesniak & Hugues Steiner
+ * \date 10 Nov. 2021
 */
 
 #include "Navire.hpp"

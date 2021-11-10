@@ -1,10 +1,5 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-
-#include <iostream>
-
 #include "Graphique/fonctions_SDL.hpp"
-
+#include "Input/input.hpp"
 
 #define objW 640
 #define objH 192
@@ -20,55 +15,23 @@ int main()
 {
     SDL_Window* fenetre; // Déclaration de la fenêtre
     SDL_Event evenements; // Événements liés à la fenêtre
-    bool terminer = false;
-    if(SDL_Init(SDL_INIT_VIDEO) < 0) // Initialisation de la SDL
-    {
-        std::wcout << L"Erreur d’initialisation de la SDL: " << SDL_GetError() << std::endl;
-        SDL_Quit();
-        return EXIT_FAILURE;
-    }
-    
-    // Créer la fenêtre
-    fenetre = SDL_CreateWindow("Fenetre SDL", SDL_WINDOWPOS_CENTERED,
-    SDL_WINDOWPOS_CENTERED, 600, 600, SDL_WINDOW_RESIZABLE);
-    if(fenetre == NULL) // En cas d’erreur
-    {
-        std::wcout << "Erreur de la creation d’une fenetre: " << SDL_GetError() << std::endl;
-        SDL_Quit();
-        return EXIT_FAILURE;
-    }
-
-    if(TTF_Init() < 0) // Initialisation du TTF
-    {
-        std::wcout << "Erreur d’initialisation du TTF: " << TTF_GetError() << std::endl;
-        TTF_Quit();
-        return EXIT_FAILURE;
-    }
-
-    // Mettre en place un contexte de rendu de l’écran
     SDL_Renderer* ecran;
-    ecran = SDL_CreateRenderer(fenetre, -1, SDL_RENDERER_ACCELERATED);
-    // Charger l’image
-    SDL_Texture* fond = charger_image("Ressources/fond.bmp", ecran);
+    bool terminer = false;
 
-    // Charger l’image avec la transparence
-    SDL_Texture* obj = charger_image_transparente("Ressources/obj.bmp", ecran, 255, 255, 255);
-    SDL_Texture* sprites = charger_image_transparente("Ressources/sprites.bmp", ecran, 0, 255, 255);
-    SDL_Rect SrcR;
-    SDL_Rect DestR;
+    initSDL(&fenetre, &ecran, 600, 600);
 
-    SrcR.x = 0;
-    SrcR.y = 0;
-    SrcR.w = objW; // Largeur de l’objet en pixels (à récupérer)
-    SrcR.h = objH; // Hauteur de l’objet en pixels (à récupérer)
-    DestR.x = 350;
-    DestR.y = 350;
-    DestR.w = objW/3;
-    DestR.h = objH/3;
+    std::vector<SDL_Texture*> textures;
+    std::vector<TTF_Font*> polices;
+
+    textures.push_back(charger_image("Ressources/fond.bmp", ecran));
+    textures.push_back(charger_image_transparente("Ressources/obj.bmp", ecran, 255, 255, 255));
+    textures.push_back(charger_image_transparente("Ressources/sprites.bmp", ecran, 0, 255, 255));
+
+    SDL_Rect SrcR = {0,0,objW,objH};
+    SDL_Rect DestR = {350, 350, objW/3, objH/3};
 
     SDL_Rect DestR_sprite[6];
     SDL_Rect SrcR_sprite[6];
-
     for(int i=0; i<6; i++)
     {
         SrcR_sprite[i].x = i > 2 ? (i-3)*(chatW) : i*(chatW);
@@ -83,59 +46,28 @@ int main()
     }
 
     // TTF
-    TTF_Font *font = TTF_OpenFont("Ressources/arial.ttf", 28);
+    polices.push_back(charger_police("Ressources/arial.ttf", 28));
     SDL_Color color = {0,0,0,0};
-    char msg[] = "TP sur Makefile et SDL";
-    SDL_Texture* texte = charger_texte(msg,ecran,font,color);
-    SDL_Rect text_pos; // Position du texte
-    text_pos.x = 10;
-    text_pos.y = 100;
-    text_pos.w = texteW; // Largeur du texte en pixels (à récupérer)
-    text_pos.h = texteH; // Hauteur du texte en pixels (à récupérer)
+    textures.push_back(charger_texte("TP sur Makefile et SDL", ecran, polices[0], color));
+    SDL_Rect text_pos {10,100,texteW,texteH}; // Position du texte
 
-    // Boucle principale
     while(!terminer)
     {
         SDL_RenderClear(ecran);
-        SDL_RenderCopy(ecran, fond, NULL, NULL);
-        SDL_RenderCopy(ecran, obj, &SrcR, &DestR);
+        SDL_RenderCopy(ecran, textures[0], NULL, NULL);
+        SDL_RenderCopy(ecran, textures[1], &SrcR, &DestR);
 
         for(int i = 0; i < 6;i++)
-            SDL_RenderCopy(ecran, sprites, &SrcR_sprite[i], &DestR_sprite[i]);
+            SDL_RenderCopy(ecran, textures[2], &SrcR_sprite[i], &DestR_sprite[i]);
             
         //Appliquer la surface du texte sur l’écran
-        SDL_RenderCopy(ecran,texte,NULL,&text_pos);
+        SDL_RenderCopy(ecran,textures[3],NULL,&text_pos);
         //SDL_PollEvent ...
         SDL_RenderPresent(ecran);
         
-        SDL_PollEvent(&evenements);
-        switch(evenements.type)
-        {
-            case SDL_QUIT:
-                terminer = true; 
-                break;
-            case SDL_KEYDOWN:
-                switch(evenements.key.keysym.sym)
-                {
-                    case SDLK_ESCAPE:
-                    case SDLK_q:
-                        terminer = true;
-                        break;
-                }
-        }
+        gestion_evenements(&evenements);
     }
 
-    // Libérer de la mémoire
-    SDL_DestroyTexture(fond);
-    SDL_DestroyTexture(obj);
-    SDL_DestroyTexture(sprites);
-    SDL_DestroyTexture(texte);
-    SDL_DestroyRenderer(ecran);
-    // Fermer la police et SDL_ttf
-    TTF_CloseFont(font);
-    TTF_Quit() ;
-    // Quitter SDL
-    SDL_DestroyWindow(fenetre);
-    SDL_Quit();
+    cleanSDL(ecran, fenetre, &textures, &polices);
     return 0;
 }

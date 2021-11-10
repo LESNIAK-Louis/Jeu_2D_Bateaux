@@ -1,8 +1,8 @@
 /** 
-* @file IleBonus.hpp
-* @author Louis Lesniak & Hugues Steiner
-* @date 07/11/2021
-* Representation d'une ile bonus
+* \file IleBonus.hpp
+* \brief Representation d'une ile bonus
+* \author Louis Lesniak & Hugues Steiner
+* \date 10 Nov. 2021
 */
 
 #ifndef ILEBONUS_H

@@ -1,8 +1,8 @@
 /** 
-* @file IleBonus.cpp
-* @author Louis Lesniak & Hugues Steiner
-* @date 07/11/2021
-* Definition des fonctions propres aux iles bonus
+* \file IleBonus.cpp
+* \brief Definition des fonctions propres aux iles bonus
+* \author Louis Lesniak & Hugues Steiner
+* \date 10 Nov. 2021
 */
 
 #include "IleBonus.hpp"
@@ -23,8 +23,9 @@ IleBonus::IleBonus(Point* centre, int taille, int forme, int rayonCapture, int c
 
 IleBonus::~IleBonus()
 {   
-    delete[] this->centre;
+    delete this->centre;
     this->removeAllDefenseurs();
+    this->defenseurs
 }
 
 Point* IleBonus::getCentre()
@@ -77,7 +78,7 @@ int IleBonus::getTempsDebut()
 void IleBonus::setCentre(Point* centre)
 {
     if(centre == NULL) error("centre NULL en param | setCentre - IleBonus");
-    if(this->centre != NULL) delete[] this->centre;
+    if(this->centre != NULL) delete this->centre;
     this->centre = centre;
 }
 
@@ -132,7 +133,7 @@ void IleBonus::addDefenseur(Patrouilleur* defenseur)
 void IleBonus::removeDefenseur(int index)
 {
     if(index < 0 || index >= this->getNbDefenseur()) error("index out of range | removeDefenseur - IleBonus");
-    if(this->defenseurs[index] != NULL) delete[] this->defenseurs[index];
+    if(this->defenseurs[index] != NULL) delete this->defenseurs[index];
     this->defenseurs.erase(this->defenseurs.begin() + index);
 }
 
@@ -140,7 +141,7 @@ void IleBonus::replaceDefenseur(int index, Patrouilleur* defenseur)
 {
     if(defenseur == NULL) error("defenseur NULL en param | replaceDefenseur - IleBonus");
     if(index < 0 || index >= this->getNbDefenseur()) error("index out of range | replaceDefenseur - IleBonus");
-    if(this->defenseurs[index] != NULL) delete[] this->defenseurs[index];
+    if(this->defenseurs[index] != NULL) delete this->defenseurs[index];
     this->defenseurs[index] = defenseur;
 }
 

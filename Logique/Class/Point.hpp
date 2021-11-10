@@ -1,8 +1,8 @@
 /** 
-* @file Point.hpp
-* @author Louis Lesniak & Hugues Steiner
-* @date 07/11/2021
-* Représentation d'un Point
+* \file Point.hpp
+* \brief Représentation d'un Point
+* \author Louis Lesniak & Hugues Steiner
+* \date 10 Nov. 2021
 */
 
 #ifndef POINT

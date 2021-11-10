@@ -1,8 +1,8 @@
 /** 
-* @file Armes_Explosives.hpp
-* @author Louis Lesniak & Hugues Steiner
-* @date 07/11/2021
-* Représentation des armes explosives : torpille et mine
+* \file Armes_Explosives.hpp
+* \brief Représentation des armes explosives : torpille et mine
+* \author Louis Lesniak & Hugues Steiner
+* \date 10 Nov. 2021
 */
 
 #ifndef ARMES_EXPLOSIVES

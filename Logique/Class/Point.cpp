@@ -1,8 +1,8 @@
 /** 
-* @file Point.cpp
-* @author Louis Lesniak & Hugues Steiner
-* @date 07/11/2021
-* Représentation d'un point
+* \file Point.cpp
+* \brief Représentation d'un point
+* \author Louis Lesniak & Hugues Steiner
+* \date 10 Nov. 2021
 */
 
 #include "Point.hpp"

@@ -1,8 +1,8 @@
 /** 
-* @file Ile.hpp
-* @author Louis Lesniak & Hugues Steiner
-* @date 07/11/2021
-* Representation d'une ile
+* \file Ile.hpp
+* \brief Representation d'une ile
+* \author Louis Lesniak & Hugues Steiner
+* \date 10 Nov. 2021
 */
 
 #ifndef  ILE_H

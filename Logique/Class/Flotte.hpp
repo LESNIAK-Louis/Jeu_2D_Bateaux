@@ -1,9 +1,10 @@
 /**
- * @file Flotte.hpp
- * @author Louis Lesniak & Hugues Steiner
- * @date 14/09/2021
- * Definition d'une flotte (~= un joueur)
+ * \file Flotte.hpp
+ * \brief Definition d'une flotte (~= un joueur)
+ * \author Louis Lesniak & Hugues Steiner
+ * \date 10 Nov. 2021
 */
+
 #ifndef FLOTTE_HPP
 #define FLOTTE_HPP
 

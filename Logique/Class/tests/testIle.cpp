@@ -1,8 +1,8 @@
 /** 
-* @file testIle.cpp
-* @author Louis Lesniak & Hugues Steiner
-* @date 07/11/2021
-* Les tests relatifs à la classe Ile
+* \file testIle.cpp
+* \brief Les tests relatifs à la classe Ile
+* \author Louis Lesniak & Hugues Steiner
+* \date 10 Nov. 2021
 */
 
 #include "../Ile.hpp"

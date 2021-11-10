@@ -1,8 +1,8 @@
 /**
-* @file Ile.cpp
-* @author Louis Lesniak & Hugues Steiner
-* @date 07/11/2021
-* Definition des fonctions propres aux iles
+* \file Ile.cpp
+* \brief Definition des fonctions propres aux iles
+* \author Louis Lesniak & Hugues Steiner
+* \date 10 Nov. 2021
 */
 
 #include "Ile.hpp"

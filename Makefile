@@ -13,11 +13,15 @@ OBJPoint = $(SRCPoint:.cpp=.o)
 SRCIle = Logique/Class/tests/testIle.cpp Logique/Class/Point.cpp Logique/Class/Ile.cpp 
 OBJIle = $(SRCIle:.cpp=.o)
 
-SRCIleBonus = Logique/Class/tests/testIleBonus.cpp Logique/Class/Point.cpp Logique/Class/IleBonus.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Flotte.cpp
+SRCIleBonus = Logique/Class/tests/testIleBonus.cpp Logique/Class/Point.cpp Logique/Class/IleBonus.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Flotte.cpp Logique/Class/Navire/Navire.cpp
 OBJIleBonus = $(SRCIleBonus:.cpp=.o)
+
+SRCPatrouilleur = Logique/Class/tests/testPatrouilleur.cpp Logique/Class/Point.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Navire/Navire.cpp Logique/Class/Flotte.cpp
+OBJPatrouilleur = $(SRCPatrouilleur:.cpp=.o)
 
 SRCLogique = Logique/Tests/testLogique.cpp Logique/fichier.cpp Logique/logique.cpp 
 OBJLogique = $(SRCLogique:.cpp=.o)
+
 
 all: $(EXEC)
 
@@ -40,6 +44,12 @@ testIleBonus: $(OBJIleBonus)
 	$(CC) $(CFLAGS) -o $@ $^
 %.o: %.cpp
 	$(CC) $(CFLAGS) -o $@ -c $<
+
+testPatrouilleur: $(OBJIleBonus)
+	$(CC) $(CFLAGS) -o $@ $^
+%.o: %.cpp
+	$(CC) $(CFLAGS) -o $@ -c $<
+
 
 testLogique: $(OBJLogique)
 	$(CC) $(CFLAGS) -o $@ $^

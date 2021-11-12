@@ -10,10 +10,11 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <string>
+#include <vector>
 #include "../Point.hpp"
-#include "../Flotte.hpp"
 #include "../../../definitions.hpp"
-
+class Flotte;
 
 class Navire
 {
@@ -24,7 +25,8 @@ class Navire
         bool move;
         int angle;
         int pv;
-        int *vitesse;
+        int vitesse;
+        Point* destination;
         int *pvMax;
         int *degatArme;
         int *cdArme; //cool down pour le tir
@@ -33,6 +35,9 @@ class Navire
 
     public : 
         Navire(Flotte*);
+        Navire(Point* p, int angle, int pMax); //Constructeur basique pour les tests
+
+        ~Navire();
 
         Flotte* getFlotte();
         Point* getCentre();
@@ -42,6 +47,7 @@ class Navire
         int getAngle();
         int getPv();
         int getVitesse();
+        Point* getDestination();
         int getPvMax();
         int getDegatArme();
         int getCdArme();
@@ -49,10 +55,12 @@ class Navire
 
         void setFlotte(Flotte* flotte);
         void setCentre(Point* centre);
+        void deplacer(int abs, int ord);
         void setMove(bool b);
         void setAngle(int angle);
         void setPv(int pv);
-        void setVitesse(int* vitesse);
+        void setVitesse(int vitesse);
+        void setDestination(Point* p);
         void setPvMax(int* pvMax);
         void setDegatArme(int* degat);
         void setCdArme(int* cd);

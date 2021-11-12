@@ -13,7 +13,7 @@
 
 class Patrouilleur : protected Navire
 {
-
+    Patrouilleur(Point* p, int angle, int pMax, int v);
 };
 
 #endif

@@ -5,18 +5,42 @@
  * \date 10 Nov. 2021
 */
 
+//TODO : Finir le constructeur à partir d'une flotte
+
 #include "Navire.hpp"
+#include "../../../definitions.hpp"
 
 Navire::Navire(Flotte* flotte){
-    this->setFlotte(flotte);
+  /*  this->setFlotte(flotte);
     this->setCentre(this->getFlotte()->getSpawnPoint());
     this->setMove(false);
-    this->setAngle(0);
-    this->setPv(this->getPvMax());
+    this->setAngle(0);*/
 }
 
+Navire::Navire(Point* p, int angle, int pMax){
+    this->centre = new Point(*p);
+    //this->setPvMax(pmax);
+    this->setAngle(angle);
+    this->setPv(pMax);
+}
+
+
+Navire::~Navire()
+{
+    delete[] this->centre;
+    delete[] this->destination;
+    delete[] this->pvMax;
+    delete[] this->degatArme;
+    delete[] this->cdArme;
+    delete[] this->portee;
+    delete[] this->cible;
+
+}
+
+
 //Getter
-Flotte* getFlotte(){
+
+Flotte* Navire::getFlotte(){
     return this->flotte;
 }
 
@@ -41,7 +65,11 @@ int Navire::getAngle() {
 }
 
 int Navire::getVitesse(){
-    return *(this->vitesse);
+    return (this->vitesse);
+}
+
+Point* Navire::getDestination(){
+    return this->destination;
 }
 
 int Navire::getPv(){
@@ -65,6 +93,7 @@ Navire* Navire::getCible(){
 }
 
 //Setter
+
 void Navire::setFlotte(Flotte* flotte){
     if(flotte == NULL) error("Flotte NULL en param | Constructeur - Navire");
     this->flotte = flotte;
@@ -72,8 +101,12 @@ void Navire::setFlotte(Flotte* flotte){
 
 void Navire::setCentre(Point* point){
     if(point == NULL) error("Point NULL en param | setCentre - Navire");
-    this->centre->setAbscisse(point->getAbscisse());
-    this->centre->setOrdonnee(point->getOrdonnee());
+    if (this->centre != NULL) delete this->centre;
+    this->centre = point;
+}
+
+void Navire::deplacer(int abs, int ord){
+    this->centre->deplacer(abs, ord);
 }
 
 void Navire::setMove(bool b) {
@@ -89,8 +122,8 @@ void Navire::setPv(int pv){
     this->pv = pv;
 }
 
-void Navire::setVitesse(int* vitesse) {
-    if(vitesse == NULL) error("Pointeur NULL en param | setVitesse - Navire");
+void Navire::setVitesse(int vitesse) {
+    //if(vitesse == NULL) error("Pointeur NULL en param | setVitesse - Navire");
     this->vitesse = vitesse;
 }
 

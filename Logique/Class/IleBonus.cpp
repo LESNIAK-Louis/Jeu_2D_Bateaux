@@ -8,7 +8,7 @@
 #include "IleBonus.hpp"
 
 //Constructeur
-IleBonus::IleBonus(Point* centre, int taille, int forme, int rayonCapture, int controle, int bonustype, int bonusGain)
+IleBonus::IleBonus(Point* centre, int taille, int forme, int rayonCapture, int controle, int bonusType, int bonusGain)
 {
     if(centre == NULL) error("centre NULL en param | Constructeur - Ile");
     this->setCentre(centre);
@@ -25,7 +25,7 @@ IleBonus::~IleBonus()
 {   
     delete this->centre;
     this->removeAllDefenseurs();
-    this->defenseurs
+    this->defenseurs;
 }
 
 Point* IleBonus::getCentre()
@@ -63,6 +63,11 @@ Patrouilleur* IleBonus::getDefenseur(int index)
 int IleBonus::getControle()
 {
     return this->controle;
+}
+
+int IleBonus::getBonusType()
+{
+    return this->bonusType;
 }
 
 int IleBonus::getBonusGain()

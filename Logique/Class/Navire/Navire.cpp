@@ -11,10 +11,10 @@
 #include "../../../definitions.hpp"
 
 Navire::Navire(Flotte* flotte){
-  /*  this->setFlotte(flotte);
+this->setFlotte(flotte);
     this->setCentre(this->getFlotte()->getSpawnPoint());
     this->setMove(false);
-    this->setAngle(0);*/
+    this->setAngle(0);
 }
 
 Navire::Navire(Point* p, int angle, int pMax){
@@ -27,13 +27,13 @@ Navire::Navire(Point* p, int angle, int pMax){
 
 Navire::~Navire()
 {
-    delete[] this->centre;
-    delete[] this->destination;
-    delete[] this->pvMax;
-    delete[] this->degatArme;
-    delete[] this->cdArme;
-    delete[] this->portee;
-    delete[] this->cible;
+    delete this->centre;
+    delete this->destination;
+    delete this->pvMax;
+    delete this->degatArme;
+    delete this->cdArme;
+    delete this->portee;
+    delete this->cible;
 
 }
 
@@ -56,7 +56,7 @@ int Navire::getOrdonnee(){
     return this->getCentre()->getOrdonnee();
 }
 
-bool Navire::getMove(){
+bool Navire::isMoving(){
     return this->move;
 }
 
@@ -65,7 +65,7 @@ int Navire::getAngle() {
 }
 
 int Navire::getVitesse(){
-    return (this->vitesse);
+    return *(this->vitesse);
 }
 
 Point* Navire::getDestination(){
@@ -91,6 +91,8 @@ int Navire::getCdArme(){
 Navire* Navire::getCible(){
     return this->cible;
 }
+
+
 
 //Setter
 
@@ -122,7 +124,7 @@ void Navire::setPv(int pv){
     this->pv = pv;
 }
 
-void Navire::setVitesse(int vitesse) {
+void Navire::setVitesse(int* vitesse) {
     //if(vitesse == NULL) error("Pointeur NULL en param | setVitesse - Navire");
     this->vitesse = vitesse;
 }
@@ -140,6 +142,11 @@ void Navire::setDegatArme(int* degat){
 void Navire::setCdArme(int* cd){
     if(cd == NULL) error("Pointeur NULL en param | setCdArme - Navire");
     this->cdArme = cd;
+}
+
+void Navire::setPortee(int* por){
+    if(por == NULL) error("Pointeur NULL en param | setPotee - Navire");
+    this->portee = por;
 }
 
 void Navire::setCible(Navire* navire){

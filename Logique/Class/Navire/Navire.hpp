@@ -14,7 +14,7 @@
 #include <vector>
 #include "../Point.hpp"
 #include "../../../definitions.hpp"
-class Flotte;
+#include "../Flotte.hpp"
 
 class Navire
 {
@@ -25,7 +25,7 @@ class Navire
         bool move;
         int angle;
         int pv;
-        int vitesse;
+        int* vitesse;
         Point* destination;
         int *pvMax;
         int *degatArme;
@@ -43,7 +43,7 @@ class Navire
         Point* getCentre();
         int getAbscisse();
         int getOrdonnee();
-        bool getMove();
+        bool isMoving();
         int getAngle();
         int getPv();
         int getVitesse();
@@ -51,6 +51,7 @@ class Navire
         int getPvMax();
         int getDegatArme();
         int getCdArme();
+        int getPortee;
         Navire* getCible();
 
         void setFlotte(Flotte* flotte);
@@ -59,11 +60,12 @@ class Navire
         void setMove(bool b);
         void setAngle(int angle);
         void setPv(int pv);
-        void setVitesse(int vitesse);
+        void setVitesse(int* vitesse);
         void setDestination(Point* p);
         void setPvMax(int* pvMax);
         void setDegatArme(int* degat);
         void setCdArme(int* cd);
+        void setPortee(int* p);
         void setCible(Navire* navire);
 };
 

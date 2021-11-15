@@ -13,38 +13,44 @@
 #include <string>
 #include <vector>
 #include "./Point.hpp"
-#include "./Navire/Patrouilleur.hpp"
 #include "../../definitions.hpp"
+class Navire;
+class Patrouilleur;
 
-
+//TODO : fonction ~Flotte ; gerer création de tableau de patrouilleur
 
 class Flotte 
 {
     private : 
         int numeroFlotte;
         Point* coordBase;
-        int qteOr;
-        int gainOr;
+        Point* spawnPoint;
+        int qteRessource;
+        int gainRessource;
         int pvBase;
-        int caracPatrouilleur[4]; //index : 0: vitesse; 1: pvMax; 2: degatArme; 3: cooldown
+        int caracPatrouilleur[5]; //index : 0: vitesse; 1: pvMax; 2: degatArme; 3: cooldown; 4: portée;
         std::vector<Patrouilleur*> patrouilleurs;
 
     public : 
-        Flotte(int numero);
+        Flotte(int numero, Point* coord, Point* spawn, int ressource, int gain, int pv);
+
+        ~Flotte();
 
         int getNumero();
         Point* getCoordBase();
-        int getQteOr();
-        int getGainOr();
+        Point* getSpawnPoint();
+        int getQteRessource();
+        int getGainRessource();
         int getPvBase();
-        int getcaracPatrouilleur(int i);
+        int* getCaracPatrouilleur(int i);
 
         void setNumero(int i);
         void setCoordBase(Point* p);
-        void setQteOr(int q);
-        void setGainOr(int g);
+        void setSpawnPoint(Point* p);
+        void setQteRessource(int q);
+        void setGainRessource(int g);
         void setPvBase(int p);
-        void setcaracPatrouilleur(int v, int pv, int pMax, int degat, int cd);
+        void setCaracPatrouilleur(int v, int pMax, int degat, int cd, int p);
         
 };
 

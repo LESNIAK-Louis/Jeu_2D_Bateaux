@@ -8,12 +8,11 @@
 #ifndef PATROUILLEUR_HPP
 #define PATROUILLEUR_HPP
 
-#include "./Navire.hpp"
+#include "Navire.hpp"
 #include "../../../definitions.hpp"
 
 class Patrouilleur : protected Navire
 {
-    Patrouilleur(Point* p, int angle, int pMax, int v);
     Patrouilleur(Flotte* flotte);
 };
 

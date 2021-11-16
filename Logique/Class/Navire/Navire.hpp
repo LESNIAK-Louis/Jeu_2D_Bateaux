@@ -35,7 +35,6 @@ class Navire
 
     public : 
         Navire(Flotte*);
-        Navire(Point* p, int angle, int pMax); //Constructeur basique pour les tests
 
         ~Navire();
 

@@ -14,6 +14,7 @@
 #include <vector>
 #include "./Point.hpp"
 #include "../../definitions.hpp"
+
 class Navire;
 class Patrouilleur;
 
@@ -51,6 +52,8 @@ class Flotte
         void setGainRessource(int g);
         void setPvBase(int p);
         void setCaracPatrouilleur(int v, int pMax, int degat, int cd, int p);
+
+        void newPatrouilleur();
         
 };
 

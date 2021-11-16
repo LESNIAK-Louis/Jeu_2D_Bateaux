@@ -11,19 +11,11 @@
 #include "../../../definitions.hpp"
 
 Navire::Navire(Flotte* flotte){
-this->setFlotte(flotte);
+    this->setFlotte(flotte);
     this->setCentre(this->getFlotte()->getSpawnPoint());
     this->setMove(false);
     this->setAngle(0);
 }
-
-Navire::Navire(Point* p, int angle, int pMax){
-    this->centre = new Point(*p);
-    //this->setPvMax(pmax);
-    this->setAngle(angle);
-    this->setPv(pMax);
-}
-
 
 Navire::~Navire()
 {

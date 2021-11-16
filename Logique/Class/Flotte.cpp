@@ -86,4 +86,9 @@ void Flotte::setCaracPatrouilleur(int v, int pMax, int degat, int cd, int p){
 }
 
 
+void Flotte::newPatrouilleur(){
+    this->patrouilleurs.push_back(new Patrouilleur(this));
+}
+
+
         

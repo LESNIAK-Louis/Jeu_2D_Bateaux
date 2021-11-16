@@ -24,6 +24,7 @@ Flotte::~Flotte(){
     delete this->coordBase;
     delete this->spawnPoint;
     delete this->caracPatrouilleur;
+    removeAllPatrouilleurs();
 }
 
 int Flotte::getNumero(){
@@ -51,6 +52,10 @@ int Flotte::getPvBase(){
 
 int* Flotte::getCaracPatrouilleur(int i){
     return &(this->caracPatrouilleur[i]);
+}
+
+int Flotte::getNbPatrouilleurs(){
+    return this->patrouilleurs.size();
 }
 
 void Flotte::setNumero(int i){
@@ -86,8 +91,16 @@ void Flotte::setCaracPatrouilleur(int v, int pMax, int degat, int cd, int p){
 }
 
 
-void Flotte::newPatrouilleur(){
-    this->patrouilleurs.push_back(new Patrouilleur(this));
+void Flotte::newPatrouilleur(Patrouilleur* p){
+    this->patrouilleurs.push_back(p);
+}
+
+void Flotte::removeAllPatrouilleurs(){
+    while(this->getNbPatrouilleurs() != 0)
+    {
+        delete[] this->patrouilleurs.back();
+        this->patrouilleurs.pop_back();
+    }
 }
 
 

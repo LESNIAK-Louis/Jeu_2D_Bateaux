@@ -36,6 +36,7 @@ class Flotte
         Flotte(int numero, Point* coord, Point* spawn, int ressource, int gain, int pv);
 
         ~Flotte();
+        void removeAllPatrouilleurs();
 
         int getNumero();
         Point* getCoordBase();
@@ -44,6 +45,7 @@ class Flotte
         int getGainRessource();
         int getPvBase();
         int* getCaracPatrouilleur(int i);
+        int getNbPatrouilleurs();
 
         void setNumero(int i);
         void setCoordBase(Point* p);
@@ -53,7 +55,8 @@ class Flotte
         void setPvBase(int p);
         void setCaracPatrouilleur(int v, int pMax, int degat, int cd, int p);
 
-        void newPatrouilleur();
+        void newPatrouilleur(Patrouilleur* p);
+        //void removePatrouilleurs(int i);
         
 };
 

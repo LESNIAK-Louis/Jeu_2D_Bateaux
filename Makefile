@@ -19,7 +19,10 @@ OBJIleBonus = $(SRCIleBonus:.cpp=.o)
 SRCPatrouilleur = Logique/Class/tests/testPatrouilleur.cpp Logique/Class/Point.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Navire/Navire.cpp Logique/Class/Flotte.cpp
 OBJPatrouilleur = $(SRCPatrouilleur:.cpp=.o)
 
-SRCLogique = Logique/Tests/testLogique.cpp Logique/fichier.cpp Logique/logique.cpp 
+SRCFlotte = Logique/Flotte.cpp Logique/Class/Point.cpp Logique/Class/Navire/Navire.cpp Logique/Class/Navire/Patrouilleur.cpp
+OBJFlotte = $(SRCFlotte:.cpp=.o)
+
+SRCLogique = Logique/Tests/testLogique.cpp Logique/fichier.cpp Logique/logique.cpp Logique/Class/Navire/Patrouilleur.cpp
 OBJLogique = $(SRCLogique:.cpp=.o)
 
 
@@ -52,6 +55,11 @@ testPatrouilleur: $(OBJIleBonus)
 
 
 testLogique: $(OBJLogique)
+	$(CC) $(CFLAGS) -o $@ $^
+%.o: %.cpp
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+testFlotte: $(OBJFlotte)
 	$(CC) $(CFLAGS) -o $@ $^
 %.o: %.cpp
 	$(CC) $(CFLAGS) -o $@ -c $<

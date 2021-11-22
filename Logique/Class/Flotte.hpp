@@ -12,7 +12,7 @@
 #include <stdbool.h>
 #include <string>
 #include <vector>
-#include "./Point.hpp"
+#include "Point.hpp"
 #include "../../definitions.hpp"
 
 class Navire;

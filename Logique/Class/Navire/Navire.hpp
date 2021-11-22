@@ -50,7 +50,7 @@ class Navire
         int getPvMax();
         int getDegatArme();
         int getCdArme();
-        int getPortee;
+        int getPortee();
         Navire* getCible();
 
         void setFlotte(Flotte* flotte);

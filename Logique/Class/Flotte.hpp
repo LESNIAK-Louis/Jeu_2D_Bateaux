@@ -18,7 +18,7 @@
 class Navire;
 class Patrouilleur;
 
-//TODO : fonction ~Flotte ; gerer création de tableau de patrouilleur : régler le problème d'inclusion circulaire
+//TODO : gerer création de tableau de patrouilleur ; régler le problème d'inclusion circulaire
 
 class Flotte 
 {

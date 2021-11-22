@@ -9,11 +9,12 @@
 #include "Patrouilleur.hpp"
 
 
-Patrouilleur::Patrouilleur(Flotte* f) : Navire{f} {
+/*Patrouilleur::Patrouilleur(Flotte* f) : Navire{f} {
     this->setVitesse( (this->flotte->getCaracPatrouilleur(0)) );
     this->setPvMax( (this->getFlotte()->getCaracPatrouilleur(1)) );
     this->pv = *(this->pvMax);
     this->setDegatArme( (this->getFlotte()->getCaracPatrouilleur(2)) );
     this->setCdArme( (this->getFlotte()->getCaracPatrouilleur(3)) );
     this->setPortee( (this->getFlotte()->getCaracPatrouilleur(4)) );
-}
+}*/
+

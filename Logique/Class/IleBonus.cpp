@@ -154,7 +154,7 @@ void IleBonus::removeAllDefenseurs()
 {
     while(this->getNbDefenseur() != 0)
     {
-        delete this->defenseurs.back();
+        this->defenseurs.back()->~Navire();
         this->defenseurs.pop_back();
     }
 }

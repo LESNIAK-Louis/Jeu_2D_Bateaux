@@ -11,9 +11,10 @@
 #include "Navire.hpp"
 #include "../../../definitions.hpp"
 
-class Patrouilleur : protected Navire
+class Patrouilleur : public Navire
 {
-    Patrouilleur(Flotte* flotte);
+   // Patrouilleur(Flotte* flotte);
+   
 };
 
 #endif

@@ -14,31 +14,32 @@
 #include <vector>
 #include "../Point.hpp"
 #include "../../../definitions.hpp"
-#include "../Flotte.hpp"
+
 
 class Navire
 {
     protected :
        
-        Flotte* flotte;
+        int idFlotte;
         Point* centre;
         bool move;
         int angle;
         int pv;
-        int* vitesse;
+        int vitesse;
         Point* destination;
-        int *pvMax;
-        int *degatArme;
-        int *cdArme; //cool down pour le tir
-        int *portee;
+        int pvMax;
+        int degatArme;
+        int cdArme; //cool down pour le tir
+        int portee;
         Navire* cible;
 
     public : 
-        Navire(Flotte*);
+        Navire();
+        Navire(void* flotte, Point* p);
 
         ~Navire();
 
-        Flotte* getFlotte();
+        void* getFlotte();
         Point* getCentre();
         int getAbscisse();
         int getOrdonnee();
@@ -53,19 +54,19 @@ class Navire
         int getPortee();
         Navire* getCible();
 
-        void setFlotte(Flotte* flotte);
+        void setFlotte(int idFlotte);
         void setCentre(Point* centre);
         void deplacer(int abs, int ord);
         void setMove(bool b);
         void setAngle(int angle);
         void setPv(int pv);
-        void setVitesse(int* vitesse);
-        void setDestination(Point* p);
-        void setPvMax(int* pvMax);
-        void setDegatArme(int* degat);
-        void setCdArme(int* cd);
-        void setPortee(int* p);
-        void setCible(Navire* navire);
+        void setVitesse(int vitesse);
+        void setDestination(Point p);
+        void setPvMax(int pvMax);
+        void setDegatArme(int degat);
+        void setCdArme(int cd);
+        void setPortee(int p);
+        void setCible(Navire navire);
 };
 
 

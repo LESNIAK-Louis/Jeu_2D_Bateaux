@@ -10,9 +10,14 @@
 #include "Navire.hpp"
 #include "../../../definitions.hpp"
 
-Navire::Navire(Flotte* flotte){
+Navire::Navire(..........){
     this->setFlotte(flotte);
-    this->setCentre(this->getFlotte()->getSpawnPoint());
+    this->setCentre(p);
+    this->setMove(false);
+    this->setAngle(0);
+}
+
+Navire::Navire(){
     this->setMove(false);
     this->setAngle(0);
 }
@@ -21,9 +26,6 @@ Navire::~Navire()
 {
     delete this->centre;
     delete this->destination;
-    delete this->pvMax;
-    delete this->degatArme;
-    delete this->cdArme;
     delete this->portee;
     delete this->cible;
 
@@ -32,7 +34,7 @@ Navire::~Navire()
 
 //Getter
 
-Flotte* Navire::getFlotte(){
+void* Navire::getFlotte(){
     return this->flotte;
 }
 
@@ -57,7 +59,7 @@ int Navire::getAngle() {
 }
 
 int Navire::getVitesse(){
-    return *(this->vitesse);
+    return this->vitesse;
 }
 
 Point* Navire::getDestination(){
@@ -69,15 +71,15 @@ int Navire::getPv(){
 }
 
 int Navire::getPvMax(){
-    return *(this->pvMax);
+    return this->pvMax;
 }
 
 int Navire::getDegatArme(){
-    return *(this->degatArme);
+    return this->degatArme;
 }
 
 int Navire::getCdArme(){
-    return *(this->cdArme);
+    return this->cdArme;
 }
 
 Navire* Navire::getCible(){
@@ -88,7 +90,7 @@ Navire* Navire::getCible(){
 
 //Setter
 
-void Navire::setFlotte(Flotte* flotte){
+void Navire::setFlotte(intIdFlotte){
     if(flotte == NULL) error("Flotte NULL en param | Constructeur - Navire");
     this->flotte = flotte;
 }
@@ -116,32 +118,32 @@ void Navire::setPv(int pv){
     this->pv = pv;
 }
 
-void Navire::setVitesse(int* vitesse) {
+void Navire::setVitesse(int vitesse) {
     //if(vitesse == NULL) error("Pointeur NULL en param | setVitesse - Navire");
     this->vitesse = vitesse;
 }
 
-void Navire::setPvMax(int* pvMax){
+void Navire::setPvMax(int pvMax){
     if(pvMax == NULL) error("Pointeur NULL en param | setPvMax - Navire");
     this->pvMax = pvMax;
 }
 
-void Navire::setDegatArme(int* degat){
+void Navire::setDegatArme(int degat){
     if(degat == NULL) error("Pointeur NULL en param | setDegatArme - Navire");
     this->degatArme = degat;
 }
 
-void Navire::setCdArme(int* cd){
+void Navire::setCdArme(int cd){
     if(cd == NULL) error("Pointeur NULL en param | setCdArme - Navire");
     this->cdArme = cd;
 }
 
-void Navire::setPortee(int* por){
+void Navire::setPortee(int por){
     if(por == NULL) error("Pointeur NULL en param | setPotee - Navire");
     this->portee = por;
 }
 
-void Navire::setCible(Navire* navire){
+void Navire::setCible(Navire navire){
     if(navire == NULL) error("Navire NULL en param | setCible - Navire");
     this->cible = navire;
 }

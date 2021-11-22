@@ -105,7 +105,7 @@ void Flotte::newPatrouilleur(Patrouilleur* p){
 void Flotte::removeAllPatrouilleurs(){
     while(this->getNbPatrouilleurs() != 0)
     {
-        delete this->patrouilleurs.back();
+        this->patrouilleurs.back()->~Navire();
         this->patrouilleurs.pop_back();
     }
 }

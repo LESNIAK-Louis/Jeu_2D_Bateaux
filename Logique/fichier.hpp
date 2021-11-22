@@ -8,4 +8,17 @@
 #ifndef FICHIER_HPP
 #define FICHIER_HPP
 
+
+#include <iostream>
+#include <fstream>
+#include "../definitions.hpp"
+
+
+unsigned int getNombreLignesFichier(char* path);
+unsigned int getLongueurMaxColonne(char* path);
+char** lireSauvegarde(char* path);
+char** allouerTab2D(int n, int m);
+void desallouerTab2D(char** tab, int n);
+void afficherTab2D(char** tab, int n, int m);
+
 #endif

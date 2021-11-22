@@ -4,7 +4,7 @@ LIBS = -L./SDL2_ttf/.libs -L./SDL2_image/.libs
 LDFLAGS = `sdl2-config --cflags --libs` -lSDL2_ttf -lSDL2_image
 INCLUDES = -I./SDL2_ttf -I./SDL2_image
 EXEC = main testPoint testIle testIleBonus testLogique
-SRC = main.cpp Graphique/fonctions_SDL.cpp Input/input.cpp
+SRC = main.cpp Graphique/fonctions_SDL.cpp Input/input.cpp Logique/fichier.cpp
 OBJ = $(SRC:.cpp=.o)
 
 SRCPoint = Logique/Class/tests/testPoint.cpp Logique/Class/Point.cpp 

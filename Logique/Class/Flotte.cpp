@@ -90,6 +90,14 @@ void Flotte::setCaracPatrouilleur(int v, int pMax, int degat, int cd, int p){
     this->caracPatrouilleur[4] = p;
 }
 
+void addRessource(){
+    this->qteRessource += this->gainRessource;
+}
+
+void augmenterGainRessource(int a){
+    this->gainRessource += a;
+}
+
 
 void Flotte::newPatrouilleur(Patrouilleur* p){
     this->patrouilleurs.push_back(p);

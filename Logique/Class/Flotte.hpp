@@ -52,8 +52,12 @@ class Flotte
         void setSpawnPoint(Point* p);
         void setQteRessource(int q);
         void setGainRessource(int g);
+
         void setPvBase(int p);
         void setCaracPatrouilleur(int v, int pMax, int degat, int cd, int p);
+
+        void addRessource();
+        void augmenterGainRessource(int a);
 
         void newPatrouilleur(Patrouilleur* p);
         //void removePatrouilleurs(int i);

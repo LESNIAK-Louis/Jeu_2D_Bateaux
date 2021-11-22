@@ -23,8 +23,7 @@ Flotte::Flotte(int numero, Point* coord, Point* spawn, int ressource, int gain, 
 Flotte::~Flotte(){
     delete this->coordBase;
     delete this->spawnPoint;
-    delete this->caracPatrouilleur;
-    removeAllPatrouilleurs();
+    this->removeAllPatrouilleurs();
 }
 
 int Flotte::getNumero(){
@@ -90,11 +89,11 @@ void Flotte::setCaracPatrouilleur(int v, int pMax, int degat, int cd, int p){
     this->caracPatrouilleur[4] = p;
 }
 
-void addRessource(){
-    this->qteRessource += this->gainRessource;
+void Flotte::addRessource(){
+    this->qteRessource += this->getGainRessource();
 }
 
-void augmenterGainRessource(int a){
+void Flotte::augmenterGainRessource(int a){
     this->gainRessource += a;
 }
 
@@ -106,7 +105,7 @@ void Flotte::newPatrouilleur(Patrouilleur* p){
 void Flotte::removeAllPatrouilleurs(){
     while(this->getNbPatrouilleurs() != 0)
     {
-        delete[] this->patrouilleurs.back();
+        delete this->patrouilleurs.back();
         this->patrouilleurs.pop_back();
     }
 }

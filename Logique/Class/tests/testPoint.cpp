@@ -40,6 +40,22 @@ void testDeplacer()
     delete[] pt;
 }
 
+void testTrouverAngle()
+{
+    Point* p1 = new Point(0,0);
+    Point* p2 = new Point(2,2);
+    Point* p3 = new Point(-1,-3);
+    Point* p4 = new Point(2,0);
+    if (p1->trouverAngle(p2) != 45) error ("Le calcul de l'angle n'est pas bon. | testTrouverAngle - Point");
+    if (p2->trouverAngle(p1) != 225) error ("Le calcul de l'angle n'est pas bon. | testTrouverAngle - Point");
+    if (p1->trouverAngle(p3) != 198) error ("Le calcul de l'angle n'est pas bon. | testTrouverAngle - Point");
+    if (p1->trouverAngle(p4) != 90) error ("Le calcul de l'angle n'est pas bon. | testTrouverAngle - Point");
+    delete[] p1;
+    delete[] p2;
+    delete[] p3;
+    delete[] p4;
+}
+
 
 int main()
 {
@@ -47,5 +63,6 @@ int main()
     testDistance();
     testIsEqual();
     testDeplacer();
+    testTrouverAngle();
     return 0;
 }

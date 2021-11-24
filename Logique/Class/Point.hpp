@@ -25,6 +25,7 @@ class Point
         void setAbscisse(int abs);
 
         int distance(Point* pt);
+        int trouverAngle(Point* p2);
         bool isEqual(Point* pt);
         
         std::string toString();

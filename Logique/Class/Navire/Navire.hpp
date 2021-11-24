@@ -22,51 +22,58 @@ class Navire
        
         int idFlotte;
         Point* centre;
+        Point* destination;
+        Point* wayPoint;
+        std::vector<Point*> chemin;
+        Navire* cible;
         bool move;
         int angle;
         int pv;
         int vitesse;
-        Point* destination;
+        int vitesseVerticale;
+        int vitesseHorizontale;
         int pvMax;
         int degatArme;
         int cdArme; //cool down pour le tir
         int portee;
-        Navire* cible;
+        
 
     public : 
         Navire();
-        Navire(void* flotte, Point* p);
+        Navire(int idFlotte, Point* pos, Point* dest, int pvMax, int vitesse, int degatArme, int cdArme, int portee);
 
         ~Navire();
 
-        void* getFlotte();
+        int getIdFlotte();
         Point* getCentre();
+        Point* getDestination();
+        Point* getNextWayPoint();
         int getAbscisse();
         int getOrdonnee();
         bool isMoving();
         int getAngle();
         int getPv();
         int getVitesse();
-        Point* getDestination();
         int getPvMax();
         int getDegatArme();
         int getCdArme();
         int getPortee();
         Navire* getCible();
 
-        void setFlotte(int idFlotte);
+        void setIdFlotte(int idFlotte);
         void setCentre(Point* centre);
         void deplacer(int abs, int ord);
         void setMove(bool b);
         void setAngle(int angle);
         void setPv(int pv);
         void setVitesse(int vitesse);
-        void setDestination(Point p);
+        void setDestination(Point* dest);
+        void setChemin();
         void setPvMax(int pvMax);
         void setDegatArme(int degat);
         void setCdArme(int cd);
         void setPortee(int p);
-        void setCible(Navire navire);
+        void setCible(Navire* navire);
 };
 
 

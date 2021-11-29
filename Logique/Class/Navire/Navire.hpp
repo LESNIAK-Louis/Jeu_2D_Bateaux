@@ -21,6 +21,7 @@ class Navire
     protected :
        
         int idFlotte;
+        int id;
         Point* centre;
         Point* destination;
         Point* wayPoint;
@@ -40,11 +41,12 @@ class Navire
 
     public : 
         Navire();
-        Navire(int idFlotte, Point* pos, Point* dest, int pvMax, int vitesse, int degatArme, int cdArme, int portee);
+        Navire(int idFlotte, int id, Point* pos, Point* dest, int pvMax, int vitesse, int degatArme, int cdArme, int portee);
 
         ~Navire();
 
         int getIdFlotte();
+        int getId();
         Point* getCentre();
         Point* getDestination();
         Point* getNextWayPoint();
@@ -61,6 +63,7 @@ class Navire
         Navire* getCible();
 
         void setIdFlotte(int idFlotte);
+        void setId(int i);
         void setCentre(Point* centre);
         void deplacer(int abs, int ord);
         void setMove(bool b);
@@ -74,6 +77,8 @@ class Navire
         void setCdArme(int cd);
         void setPortee(int p);
         void setCible(Navire* navire);
+
+        void reduireId();
 };
 
 

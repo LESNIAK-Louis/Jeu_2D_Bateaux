@@ -10,8 +10,9 @@
 #include "Navire.hpp"
 #include "../../../definitions.hpp"
 
-Navire::Navire(int idFlotte, Point* pos, Point* dest, int pvMax, int vitesse, int degatArme, int cdArme, int portee){
+Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int pvMax, int vitesse, int degatArme, int cdArme, int portee){
     this->setIdFlotte(idFlotte);
+    this->setId(id);
     this->setCentre(pos);
     this->setDestination(dest);
     this->setMove(false);
@@ -44,6 +45,10 @@ Navire::~Navire()
 
 int Navire::getIdFlotte(){
     return this->idFlotte;
+}
+
+int Navire::getId(){
+    return this->id;
 }
 
 Point* Navire::getCentre(){
@@ -104,6 +109,14 @@ Navire* Navire::getCible(){
 
 void Navire::setIdFlotte(int idFlotte){
     this->idFlotte = idFlotte;
+}
+
+void Navire::setId(int id){
+    this->idFlotte = id;
+}
+
+void Navire::reduireId(){
+    this->setId(this->getId() - 1);
 }
 
 void Navire::setCentre(Point* point){

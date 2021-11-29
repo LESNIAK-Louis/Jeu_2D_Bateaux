@@ -61,7 +61,9 @@ class Flotte
         void augmenterGainRessource(int a);
 
         void newPatrouilleur(Patrouilleur* p);
-        //void removePatrouilleurs(int i);
+        void removePatrouilleur(int i);
+        //Réduit de 1 le numéro des patrouilleurs au delà de l'indice i
+        void reduireNumeroPatrouilleur(int indice);
 
 };
 

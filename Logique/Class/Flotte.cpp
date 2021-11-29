@@ -110,5 +110,16 @@ void Flotte::removeAllPatrouilleurs(){
     }
 }
 
+void Flotte::removePatrouilleur(int i){
+    this->patrouilleurs[i]->~Navire();
+    this->patrouilleurs.erase(patrouilleurs.begin() + i);
+    this->reduireNumeroPatrouilleur(i);
+}
+
+void Flotte::reduireNumeroPatrouilleur(int indice){
+    for (int i = indice; i < this->getNbPatrouilleurs() + 1; i++){
+        this->patrouilleurs[i]->reduireId();
+    }
+}
 
         

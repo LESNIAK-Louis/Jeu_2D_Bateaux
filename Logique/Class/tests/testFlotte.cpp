@@ -9,18 +9,18 @@
 
 void testGets()
 {
-    
+    Flotte* f = new Flotte(1, new Point(5,5), new Point(6,6), 0, 10, 500);
+    f->addRessource();
+    if (f->getQteRessource() != 10) perror("Problème lors de l'ajout de ressources");
+    f->newPatrouilleur();
+    if (f->getNbPatrouilleurs() != 1) perror("Problème lors de la création d'un patrouilleur dans une flotte.");
+    if (f->getPatrouilleur(0)->getId() != 0)("Problème lors de l'attribution de l'identifiant du patrouilleur.");
 }
 
-void testSets()
-{  
-    
-}
 
 int main()
 {
     testGets();
-    testSets();
 
     return 0;
 }

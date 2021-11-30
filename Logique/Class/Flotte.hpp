@@ -47,6 +47,7 @@ class Flotte
         int getPvBase();
         int getCaracPatrouilleur(int i);
         int getNbPatrouilleurs();
+        Patrouilleur* getPatrouilleur(int i);
 
         void setNumero(int i);
         void setCoordBase(Point* p);
@@ -58,6 +59,7 @@ class Flotte
         void setCaracPatrouilleur(int v, int pMax, int degat, int cd, int p);
 
         void addRessource();
+        void addRessource(int i);
         void augmenterGainRessource(int a);
 
         void newPatrouilleur();

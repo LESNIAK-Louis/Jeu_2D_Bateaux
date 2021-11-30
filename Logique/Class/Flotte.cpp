@@ -56,6 +56,10 @@ int Flotte::getNbPatrouilleurs(){
     return this->patrouilleurs.size();
 }
 
+Patrouilleur* Flotte::getPatrouilleur(int i){
+	return this->patrouilleurs[i];
+}
+
 void Flotte::setNumero(int i){
     this->numeroFlotte = i;
 }
@@ -90,6 +94,10 @@ void Flotte::setCaracPatrouilleur(int v, int pMax, int degat, int cd, int p){
 
 void Flotte::addRessource(){
     this->qteRessource += this->getGainRessource();
+}
+
+void Flotte::addRessource(int i){
+	this->qteRessource += i;
 }
 
 void Flotte::augmenterGainRessource(int a){
@@ -131,5 +139,3 @@ void Flotte::updatePatrouilleur(){
         this->patrouilleurs[i]->setCdArme(this->getCaracPatrouilleur(4));
     }
 }
-
-        

@@ -133,7 +133,7 @@ void Navire::setDestination(Point* point){
 ####################   FONCTION DE PATHFINDING A REALISER #################################################
 */
 void Navire::setChemin() {
-    this->chemin = this->getCentre()->findPathTo(this->destination);
+    //this->chemin = this->getCentre()->findPathTo(this->destination);
 }
 
 void Navire::deplacer(int abs, int ord){
@@ -151,6 +151,13 @@ void Navire::setAngle(int angle){
 
 void Navire::setPv(int pv){
     this->pv = pv;
+}
+
+void Navire::ajouterPV(int pv){
+    this->setPv(this->getPv() + pv);
+    if (this->pv > this->pvMax) {
+        this->setPv(this->getPvMax());
+    }
 }
 
 void Navire::setVitesse(int vitesse) {

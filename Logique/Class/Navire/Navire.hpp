@@ -64,11 +64,13 @@ class Navire
 
         void setIdFlotte(int idFlotte);
         void setId(int i);
+        void reduireId();
         void setCentre(Point* centre);
         void deplacer(int abs, int ord);
         void setMove(bool b);
         void setAngle(int angle);
         void setPv(int pv);
+        void ajouterPV(int pv);
         void setVitesse(int vitesse);
         void setDestination(Point* dest);
         void setChemin();
@@ -78,7 +80,8 @@ class Navire
         void setPortee(int p);
         void setCible(Navire* navire);
 
-        void reduireId();
+        
+        void ajouterPV();
 };
 
 

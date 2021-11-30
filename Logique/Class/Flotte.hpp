@@ -45,7 +45,7 @@ class Flotte
         int getQteRessource();
         int getGainRessource();
         int getPvBase();
-        int* getCaracPatrouilleur(int i);
+        int getCaracPatrouilleur(int i);
         int getNbPatrouilleurs();
 
         void setNumero(int i);
@@ -60,10 +60,11 @@ class Flotte
         void addRessource();
         void augmenterGainRessource(int a);
 
-        void newPatrouilleur(Patrouilleur* p);
+        void newPatrouilleur();
         void removePatrouilleur(int i);
-        //Réduit de 1 le numéro des patrouilleurs au delà de l'indice i
+        //Réduit de 1 le numéro des patrouilleurs à l'indice i et au delà : 
         void reduireNumeroPatrouilleur(int indice);
+        void updatePatrouilleur();
 
 };
 

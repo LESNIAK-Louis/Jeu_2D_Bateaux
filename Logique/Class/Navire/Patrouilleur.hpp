@@ -13,7 +13,8 @@
 
 class Patrouilleur : public Navire
 {
-   // Patrouilleur(Flotte* flotte);
+   public :
+   Patrouilleur(int idFlotte, int id, Point* pos, Point* dest, int vitesse,  int pvMax, int degatArme, int cdArme, int portee);
    
 };
 

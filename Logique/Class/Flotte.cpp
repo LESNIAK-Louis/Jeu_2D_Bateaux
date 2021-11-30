@@ -6,7 +6,6 @@
 */
 
 
-//TODO : Supression propre des tableaux
 #include "Flotte.hpp"
 
 
@@ -49,8 +48,8 @@ int Flotte::getPvBase(){
     return this->pvBase;
 }
 
-int* Flotte::getCaracPatrouilleur(int i){
-    return &(this->caracPatrouilleur[i]);
+int Flotte::getCaracPatrouilleur(int i){
+    return this->caracPatrouilleur[i];
 }
 
 int Flotte::getNbPatrouilleurs(){
@@ -98,7 +97,8 @@ void Flotte::augmenterGainRessource(int a){
 }
 
 
-void Flotte::newPatrouilleur(Patrouilleur* p){
+void Flotte::newPatrouilleur(){
+    Patrouilleur* p = new Patrouilleur(this->getNumero(), this->getNbPatrouilleurs(), this->getSpawnPoint(), this->getSpawnPoint(), this->getCaracPatrouilleur(0), this->getCaracPatrouilleur(1), this->getCaracPatrouilleur(2), this->getCaracPatrouilleur(3), this->getCaracPatrouilleur(4));
     this->patrouilleurs.push_back(p);
 }
 
@@ -119,6 +119,16 @@ void Flotte::removePatrouilleur(int i){
 void Flotte::reduireNumeroPatrouilleur(int indice){
     for (int i = indice; i < this->getNbPatrouilleurs() + 1; i++){
         this->patrouilleurs[i]->reduireId();
+    }
+}
+
+void Flotte::updatePatrouilleur(){
+    for (int i = 0; i < this->getNbPatrouilleurs() + 1; i++){
+        this->patrouilleurs[i]->setVitesse(this->getCaracPatrouilleur(0));
+        this->patrouilleurs[i]->setPvMax(this->getCaracPatrouilleur(1));
+        this->patrouilleurs[i]->setDegatArme(this->getCaracPatrouilleur(2));
+        this->patrouilleurs[i]->setCdArme(this->getCaracPatrouilleur(3));
+        this->patrouilleurs[i]->setCdArme(this->getCaracPatrouilleur(4));
     }
 }
 

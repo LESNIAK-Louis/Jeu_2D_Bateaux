@@ -5,17 +5,17 @@
  * \date 10 Nov. 2021
 */
 
-//TODO : Finir le constructeur à partir d'une flotte
+//TODO : Pathfinding à faire
 
 #include "Navire.hpp"
 #include "../../../definitions.hpp"
 
-Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int pvMax, int vitesse, int degatArme, int cdArme, int portee){
+Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int pvMax, int degatArme, int cdArme, int portee){
     this->setIdFlotte(idFlotte);
     this->setId(id);
     this->setCentre(pos);
     this->setDestination(dest);
-    this->setMove(false);
+    this->setMove(pos->isEqual(dest));
     //this->setChemin();
     this->setAngle(0);
     this->pvMax = pvMax;

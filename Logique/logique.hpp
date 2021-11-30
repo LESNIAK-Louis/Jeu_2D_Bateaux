@@ -5,7 +5,11 @@
  * \date 10 Nov. 2021
 */
 
+#include "Class/Monde.hpp"
+
 #ifndef LOGIQUE_HPP
 #define LOGIQUE_HPP
+
+void moveSelectedShips(Monde* monde, int x, int y);
 
 #endif

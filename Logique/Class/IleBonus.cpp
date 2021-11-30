@@ -25,7 +25,7 @@ IleBonus::~IleBonus()
 {   
     delete this->centre;
     this->removeAllDefenseurs();
-    this->defenseurs;
+    delete this->defenseurs;
 }
 
 Point* IleBonus::getCentre()
@@ -50,13 +50,13 @@ int IleBonus::getRayonCapture()
 
 int IleBonus::getNbDefenseur()
 {
-    return this->defenseurs.size();
+    return this->defenseurs->size();
 }
 
 Patrouilleur* IleBonus::getDefenseur(int index)
 {
     if(index < 0 || index >= this->getNbDefenseur()) error("index out of range | getDefenseur - IleBonus");
-    return this->defenseurs[index];
+    return this->defenseurs->at(index);
 }
 
 
@@ -132,30 +132,30 @@ void IleBonus::setTempsDebut(int tempsDebut)
 void IleBonus::addDefenseur(Patrouilleur* defenseur)
 {
     if(defenseur == NULL) error("defenseur NULL en param | addDefenseur - IleBonus");
-    this->defenseurs.push_back(defenseur);
+    this->defenseurs->push_back(defenseur);
 }
 
 void IleBonus::removeDefenseur(int index)
 {
     if(index < 0 || index >= this->getNbDefenseur()) error("index out of range | removeDefenseur - IleBonus");
-    if(this->defenseurs[index] != NULL) delete this->defenseurs[index];
-    this->defenseurs.erase(this->defenseurs.begin() + index);
+    if(this->defenseurs->at(index) != NULL) delete this->defenseurs->at(index);
+    this->defenseurs->erase(this->defenseurs->begin() + index);
 }
 
 void IleBonus::replaceDefenseur(int index, Patrouilleur* defenseur)
 {
     if(defenseur == NULL) error("defenseur NULL en param | replaceDefenseur - IleBonus");
     if(index < 0 || index >= this->getNbDefenseur()) error("index out of range | replaceDefenseur - IleBonus");
-    if(this->defenseurs[index] != NULL) delete this->defenseurs[index];
-    this->defenseurs[index] = defenseur;
+    if(this->defenseurs->at(index) != NULL) delete this->defenseurs->at(index);
+    this->defenseurs->at(index) = defenseur;
 }
 
 void IleBonus::removeAllDefenseurs()
 {
     while(this->getNbDefenseur() != 0)
     {
-        this->defenseurs.back()->~Navire();
-        this->defenseurs.pop_back();
+        this->defenseurs->back()->~Navire();
+        this->defenseurs->pop_back();
     }
 }
 

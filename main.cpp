@@ -1,6 +1,7 @@
 #include "Graphique/fonctions_SDL.hpp"
-#include "Input/input.hpp"
-
+#include "Logique/Class/Monde.hpp"
+#include "Input-Output/input.hpp"
+/*
 #define objW 640
 #define objH 192
 
@@ -66,8 +67,38 @@ int main()
         SDL_RenderPresent(ecran);
         
         gestion_evenements(&evenements);
+        SDL_Delay(20);
     }
 
     cleanSDL(ecran, fenetre, &textures, &polices);
+    return 0;
+}*/
+
+int main()
+{
+    SDL_Window* fenetre; SDL_Event evenements;SDL_Renderer* ecran; bool terminer = false;
+    initSDL(&fenetre, &ecran, 600, 600);
+    SDL_Texture* fond = charger_image("Ressources/fond.bmp", ecran);
+    SDL_Texture* bateau = charger_image("Ressources/test_bateau.bmp", ecran);
+
+    Monde* monde = new Monde(1,0,0,0,0,0,0);
+    monde->addFlotte(new Flotte(0, new Point(50,50), new Point(50,50), 0,0,0));
+    monde->getFlotte(0)->newPatrouilleur();/*
+    monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
+    SDL_Rect DestR;
+*/
+    while(!terminer){
+        //DestR = {0, 0, monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->getAbscisse(), monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->getOrdonnee()};
+        
+        SDL_Rect DestR = {0,0,32,32};
+        SDL_RenderClear(ecran);
+        SDL_RenderCopy(ecran, fond, NULL, NULL);
+        SDL_RenderCopy(ecran, bateau, NULL, &DestR);
+
+        gestion_evenements(&evenements, monde);
+        SDL_RenderPresent(ecran);
+        SDL_Delay(20);
+    }
+
     return 0;
 }

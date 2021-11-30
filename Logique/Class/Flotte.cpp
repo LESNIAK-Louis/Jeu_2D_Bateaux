@@ -23,6 +23,7 @@ Flotte::~Flotte(){
     delete this->coordBase;
     delete this->spawnPoint;
     this->removeAllPatrouilleurs();
+    delete this->patrouilleurs;
 }
 
 int Flotte::getNumero(){
@@ -53,11 +54,11 @@ int Flotte::getCaracPatrouilleur(int i){
 }
 
 int Flotte::getNbPatrouilleurs(){
-    return this->patrouilleurs.size();
+    return this->patrouilleurs->size();
 }
 
 Patrouilleur* Flotte::getPatrouilleur(int i){
-	return this->patrouilleurs[i];
+	return this->patrouilleurs->at(i);
 }
 
 void Flotte::setNumero(int i){
@@ -107,35 +108,35 @@ void Flotte::augmenterGainRessource(int a){
 
 void Flotte::newPatrouilleur(){
     Patrouilleur* p = new Patrouilleur(this->getNumero(), this->getNbPatrouilleurs(), this->getSpawnPoint(), this->getSpawnPoint(), this->getCaracPatrouilleur(0), this->getCaracPatrouilleur(1), this->getCaracPatrouilleur(2), this->getCaracPatrouilleur(3), this->getCaracPatrouilleur(4));
-    this->patrouilleurs.push_back(p);
+    this->patrouilleurs->push_back(p);
 }
 
 void Flotte::removeAllPatrouilleurs(){
     while(this->getNbPatrouilleurs() != 0)
     {
-        this->patrouilleurs.back()->~Navire();
-        this->patrouilleurs.pop_back();
+        this->patrouilleurs->back()->~Navire();
+        this->patrouilleurs->pop_back();
     }
 }
 
 void Flotte::removePatrouilleur(int i){
-    this->patrouilleurs[i]->~Navire();
-    this->patrouilleurs.erase(patrouilleurs.begin() + i);
+    this->patrouilleurs->at(i)->~Navire();
+    this->patrouilleurs->erase(patrouilleurs->begin() + i);
     this->reduireNumeroPatrouilleur(i);
 }
 
 void Flotte::reduireNumeroPatrouilleur(int indice){
     for (int i = indice; i < this->getNbPatrouilleurs() + 1; i++){
-        this->patrouilleurs[i]->reduireId();
+        this->patrouilleurs->at(i)->reduireId();
     }
 }
 
 void Flotte::updatePatrouilleur(){
     for (int i = 0; i < this->getNbPatrouilleurs() + 1; i++){
-        this->patrouilleurs[i]->setVitesse(this->getCaracPatrouilleur(0));
-        this->patrouilleurs[i]->setPvMax(this->getCaracPatrouilleur(1));
-        this->patrouilleurs[i]->setDegatArme(this->getCaracPatrouilleur(2));
-        this->patrouilleurs[i]->setCdArme(this->getCaracPatrouilleur(3));
-        this->patrouilleurs[i]->setCdArme(this->getCaracPatrouilleur(4));
+        this->patrouilleurs->at(i)->setVitesse(this->getCaracPatrouilleur(0));
+        this->patrouilleurs->at(i)->setPvMax(this->getCaracPatrouilleur(1));
+        this->patrouilleurs->at(i)->setDegatArme(this->getCaracPatrouilleur(2));
+        this->patrouilleurs->at(i)->setCdArme(this->getCaracPatrouilleur(3));
+        this->patrouilleurs->at(i)->setCdArme(this->getCaracPatrouilleur(4));
     }
 }

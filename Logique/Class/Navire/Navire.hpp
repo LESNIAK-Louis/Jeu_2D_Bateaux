@@ -25,7 +25,7 @@ class Navire
         Point* centre;
         Point* destination;
         Point* wayPoint;
-        std::vector<Point*> chemin;
+        std::vector<Point*>* chemin;
         Navire* cible;
         bool move;
         int angle;
@@ -37,6 +37,7 @@ class Navire
         int degatArme;
         int cdArme; //cool down pour le tir
         int portee;
+        bool isSelected;
         
 
     public : 
@@ -61,6 +62,7 @@ class Navire
         int getCdArme();
         int getPortee();
         Navire* getCible();
+        bool getIsSelected();
 
         void setIdFlotte(int idFlotte);
         void setId(int i);
@@ -79,6 +81,7 @@ class Navire
         void setCdArme(int cd);
         void setPortee(int p);
         void setCible(Navire* navire);
+        void setIsSelected(bool isSelected);
 
         
         void ajouterPV();

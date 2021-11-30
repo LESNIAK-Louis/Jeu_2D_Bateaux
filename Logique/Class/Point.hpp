@@ -5,8 +5,8 @@
 * \date 10 Nov. 2021
 */
 
-#ifndef POINT
-#define POINT
+#ifndef POINT_HPP
+#define POINT_HPP
 
 #include <string>
 #include <cmath>

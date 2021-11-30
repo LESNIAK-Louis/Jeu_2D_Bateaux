@@ -5,8 +5,8 @@
 * \date 10 Nov. 2021
 */
 
-#ifndef ILEBONUS_H
-#define ILEBONUS_H
+#ifndef ILEBONUS_HPP
+#define ILEBONUS_HPP
 
 #include <string>
 #include <vector>
@@ -20,7 +20,7 @@ class IleBonus {
         int taille;
         int forme;
         int rayonCapture;
-        std::vector<Patrouilleur*> defenseurs;
+        std::vector<Patrouilleur*>* defenseurs;
         int controle; //0 : neutre, 1...n : numéro de la flotte
         int bonusType;
         int bonusGain;

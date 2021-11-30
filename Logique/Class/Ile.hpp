@@ -5,8 +5,8 @@
 * \date 10 Nov. 2021
 */
 
-#ifndef  ILE_H
-#define ILE_H
+#ifndef  ILE_HPP
+#define ILE_HPP
 
 #include <string> 
 #include "Point.hpp"

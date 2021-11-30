@@ -31,7 +31,7 @@ class Flotte
         int gainRessource;
         int pvBase;
         int caracPatrouilleur[5]; //index : 0: vitesse; 1: pvMax; 2: degatArme; 3: cooldown; 4: portée;
-        std::vector<Patrouilleur*> patrouilleurs;
+        std::vector<Patrouilleur*>* patrouilleurs;
 
     public : 
         Flotte(int numero, Point* coord, Point* spawn, int ressource, int gain, int pv);

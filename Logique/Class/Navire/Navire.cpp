@@ -8,7 +8,6 @@
 //TODO : Pathfinding à faire
 
 #include "Navire.hpp"
-#include "../../../definitions.hpp"
 
 Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int pvMax, int degatArme, int cdArme, int portee){
     this->setIdFlotte(idFlotte);
@@ -24,6 +23,7 @@ Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int p
     this->degatArme = degatArme;
     this->cdArme = cdArme;
     this->portee = portee;    
+    this->isSelected = false;
 }
 
 Navire::Navire(){
@@ -37,7 +37,6 @@ Navire::~Navire()
     delete this->destination;
     delete this->wayPoint;
     delete this->cible;
-
 }
 
 
@@ -101,6 +100,11 @@ int Navire::getCdArme(){
 
 Navire* Navire::getCible(){
     return this->cible;
+}
+
+bool Navire::getIsSelected()
+{
+    return this->isSelected;
 }
 
 
@@ -183,4 +187,9 @@ void Navire::setPortee(int por){
 void Navire::setCible(Navire* navire){
     if(navire == NULL) error("Navire NULL en param | setCible - Navire");
     this->cible = navire;
+}
+
+void Navire::setIsSelected(bool isSelected)
+{
+    this->isSelected = isSelected;
 }

@@ -24,6 +24,7 @@ Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int p
     this->cdArme = cdArme;
     this->portee = portee;    
     this->isSelected = false;
+    this->chemin = new std::vector<Point*>();
 }
 
 Navire::Navire(){

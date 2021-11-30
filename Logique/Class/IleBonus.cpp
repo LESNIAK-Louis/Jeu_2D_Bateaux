@@ -19,6 +19,7 @@ IleBonus::IleBonus(Point* centre, int taille, int forme, int rayonCapture, int c
     this->setBonusType(bonusType);
     this->setBonusGain(bonusGain);
     this->tempsDebut = 0;
+    this->defenseurs = new std::vector<Patrouilleur*>();
 }
 
 IleBonus::~IleBonus()

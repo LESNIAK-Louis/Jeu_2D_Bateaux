@@ -17,6 +17,7 @@ Flotte::Flotte(int numero, Point* coord, Point* spawn, int ressource, int gain, 
     this->gainRessource = gain;
     this->pvBase = pv;
     this->setCaracPatrouilleur(30,10,10,2, 100);
+    this->patrouilleurs = new std::vector<Patrouilleur*>();
 }
 
 Flotte::~Flotte(){

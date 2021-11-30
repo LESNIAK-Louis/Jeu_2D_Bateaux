@@ -29,9 +29,9 @@ Monde::~Monde()
     void removeAllTorpilles();
     delete this->torpilles;
     void removeAllIles();
-    this->nbIles = 0;
+    free(this->iles);
     void removeAllIlesBonus();
-    this->nbIlesBonus = 0;
+    free(this->ilesBonus);
 }
 
 int Monde::getNbFlottes()
@@ -138,7 +138,7 @@ void Monde::addMine(Mine* mine)
 
 void Monde::addTorpille(Torpille* torpille)
 {
-    if(torpille == NULL) error("mine a add NULL | addMine - Monde");
+    if(torpille == NULL) error("mine a add NULL | addTorpille - Monde");
     this->torpilles->push_back(torpille);
 }
 
@@ -196,7 +196,7 @@ void Monde::removeAllIles()
     {
         this->iles[i]->~Ile();
     }
-    free(this->iles);
+    this->nbIles = 0;
 }
 
 void Monde::removeAllIlesBonus()
@@ -205,7 +205,7 @@ void Monde::removeAllIlesBonus()
     {
         this->ilesBonus[i]->~IleBonus();
     }
-    free(this->ilesBonus);
+    this->nbIlesBonus = 0;
 }
 
 std::string Monde::toString()

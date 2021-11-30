@@ -74,6 +74,8 @@ int main()
     return 0;
 }*/
 
+#include <iostream>
+
 int main()
 {
     SDL_Window* fenetre; SDL_Event evenements;SDL_Renderer* ecran; bool terminer = false;
@@ -83,8 +85,8 @@ int main()
 
     Monde* monde = new Monde(1,0,0,0,0,0,0);
     monde->addFlotte(new Flotte(0, new Point(50,50), new Point(50,50), 0,0,0));
-    monde->getFlotte(0)->newPatrouilleur();/*
-    monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
+    monde->getFlotte(0)->newPatrouilleur();
+    /*monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
     SDL_Rect DestR;
 */
     while(!terminer){

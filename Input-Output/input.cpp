@@ -20,17 +20,19 @@ void gestion_evenements(SDL_Event *event, Monde* monde)
                 switch (event->key.keysym.sym)
                 {
                     case SDLK_RIGHT :
-                        moveSelectedShips(monde, 50, 0);
+                        moveSelectedShips(monde, 8, 0);
                         break;
                     case SDLK_LEFT :
+                        moveSelectedShips(monde, -8, 0);
                         break;
                     case SDLK_UP :
+                        moveSelectedShips(monde, 0, -8);
                         break;
                     case SDLK_DOWN :
-                        break;
-                    case SDLK_SPACE :
+                        moveSelectedShips(monde, 0, 8);
                         break;
                     case SDLK_ESCAPE : 
+                        unSelectAll(monde);
                         break;
                     default:
                     break;

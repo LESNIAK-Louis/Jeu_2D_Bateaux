@@ -18,3 +18,15 @@ void moveSelectedShips(Monde* monde, int x, int y)
         }
     }
 }
+
+void unSelectAll(Monde* monde)
+{
+    for(int i = 0; i < monde->getNbFlottes(); i++)
+    {
+        for(int j = 0; j < monde->getFlotte(i)->getNbPatrouilleurs(); j++)
+        {
+            if(monde->getFlotte(i)->getPatrouilleur(j)->getIsSelected())
+                monde->getFlotte(i)->getPatrouilleur(j)->setIsSelected(false);
+        }
+    }
+}

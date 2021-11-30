@@ -83,16 +83,14 @@ int main()
     SDL_Texture* fond = charger_image("Ressources/fond.bmp", ecran);
     SDL_Texture* bateau = charger_image("Ressources/test_bateau.bmp", ecran);
 
-    Monde* monde = new Monde(1,0,0,0,0,0,0);
-    monde->addFlotte(new Flotte(0, new Point(50,50), new Point(50,50), 0,0,0));
+    Monde* monde = new Monde(1,1,1,1);
+    monde->addFlotte(new Flotte(0, new Point(0,0), new Point(0,0), 0,10,500));
     monde->getFlotte(0)->newPatrouilleur();
-    /*monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
+    monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
     SDL_Rect DestR;
-*/
+
     while(!terminer){
-        //DestR = {0, 0, monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->getAbscisse(), monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->getOrdonnee()};
-        
-        SDL_Rect DestR = {0,0,32,32};
+        DestR = {monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->getAbscisse(), monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->getOrdonnee(),32, 32};
         SDL_RenderClear(ecran);
         SDL_RenderCopy(ecran, fond, NULL, NULL);
         SDL_RenderCopy(ecran, bateau, NULL, &DestR);

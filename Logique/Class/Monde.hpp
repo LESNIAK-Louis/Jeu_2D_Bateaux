@@ -29,7 +29,7 @@ class Monde {
         int timer;
         int difficulte;
     public : 
-        Monde(int nbFlottes, int nbIles, int nbIlesBonus, int nbMines, int nbTorpilles, int time, int difficulte);
+        Monde(int nbIles, int nbIlesBonus, int time, int difficulte);
         ~Monde();
 
         Flotte* getFlotte(int index);

@@ -7,15 +7,15 @@
 
 #include "Monde.hpp"
 
-Monde::Monde(int nbFlottes, int nbIles, int nbIlesBonus, int nbMines, int nbTorpilles, int time, int difficulte)
+Monde::Monde(int nbIles, int nbIlesBonus, int time, int difficulte)
 {
-    this->flottes = new std::vector<Flotte*>(nbFlottes);
+    this->flottes = new std::vector<Flotte*>();
     this->nbIles = nbIles;
     this->iles = (Ile**)malloc(sizeof(Ile*)*nbIles);
     this->nbIlesBonus = nbIlesBonus;
     this->ilesBonus = (IleBonus**)malloc(sizeof(IleBonus*)*nbIlesBonus);
-    this->mines = new std::vector<Mine*>(nbMines);
-    this->torpilles = new std::vector<Torpille*>(nbTorpilles);
+    this->mines = new std::vector<Mine*>();
+    this->torpilles = new std::vector<Torpille*>();
     this->timer = time;
     this->difficulte = difficulte;
 }

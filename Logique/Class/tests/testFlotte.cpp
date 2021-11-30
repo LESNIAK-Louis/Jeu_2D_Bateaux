@@ -9,7 +9,7 @@
 
 void testGets()
 {
-    Flotte* f = new Flotte(1, new Point(5,5), new Point(6,6), 0, 10, 500);
+    Flotte* f = new Flotte(0, new Point(5,5), new Point(6,6), 0, 10, 500);
     f->addRessource();
     if (f->getQteRessource() != 10) error("Problème lors de l'ajout de ressources");
     if (f->getNbPatrouilleurs() != 0) error("Problème lors de la création d'un patrouilleur dans une flotte.");

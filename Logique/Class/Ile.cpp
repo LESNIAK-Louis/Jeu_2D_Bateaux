@@ -21,7 +21,6 @@ Ile::~Ile()
     delete[] this->centre;
 }
 
-
 //Getteur
 Point* Ile::getCentre()
 {
@@ -60,4 +59,15 @@ void Ile::setForme(int forme)
 std::string Ile::toString()
 {
     return "<" + std::to_string(this->getCentre()->getAbscisse()) + ", " + std::to_string(this->getCentre()->getOrdonnee()) + ">" + "\n" + "Taille = " + std::to_string(this->getTaille()) + "\n";
+}
+
+std::string Ile::formattedInfo()
+{
+    std::string info = "I{" + 
+    this->centre->formattedInfo() +
+    std::to_string(this->getTaille()) + ";" +
+    std::to_string(this->getForme()) + "}";
+
+    return info;
+        
 }

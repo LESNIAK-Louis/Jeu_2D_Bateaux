@@ -22,8 +22,8 @@ char** lireSauvegarde(char* path);
 char** allouerTab2D(int n, int m);
 void desallouerTab2D(char** tab, int n);
 void afficherTab2D(char** tab, int n, int m);
-void ecrireMonde(char* path, Monde* monde);
-bool isFileExist(const char *fileName);
-void sauvegarder(char* path, Monde* monde);
+void ecrireMonde(std::string fileName, Monde* monde);
+bool isFileExist(std::string fileName);
+void sauvegarder(std::string path, Monde* monde);
 
 #endif

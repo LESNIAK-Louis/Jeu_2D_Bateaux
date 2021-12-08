@@ -32,6 +32,7 @@ class Ile
         void setTaille(int taille);
         void setForme(int forme);
         std::string toString();
+        std::string formattedInfo();
 };
 
 #endif

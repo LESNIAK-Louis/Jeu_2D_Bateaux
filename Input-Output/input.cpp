@@ -32,7 +32,7 @@ void gestion_evenements(SDL_Event *event, Monde* monde)
                         moveSelectedShips(monde, 0, 8);
                         break;
                     case SDLK_ESCAPE : 
-                        unSelectAll(monde);
+                        //unSelectAll(monde);
                         break;
                     default:
                     break;

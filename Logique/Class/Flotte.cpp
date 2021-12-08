@@ -145,7 +145,7 @@ void Flotte::updatePatrouilleur(){
 std::string Flotte::formattedInfo()
 {
     std::string info;
-    info = "Flotte" + std::to_string(this->getNumero()) + "{" + 
+    info = "F" + std::to_string(this->getNumero()) + "{" + 
     this->getCoordBase()->formattedInfo() + 
     this->getSpawnPoint()->formattedInfo() +
     std::to_string(this->getQteRessource()) + ";" +

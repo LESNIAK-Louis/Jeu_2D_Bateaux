@@ -92,40 +92,17 @@ void afficherTab2D(char** tab, int n, int m)
      } 
 }
 
-/*
-int idFlotte;
-        int id;
-        Point* centre;
-        Point* destination;
-        Point* wayPoint;
-        std::vector<Point*>* chemin;
-        Navire* cible;
-        bool move;
-        int angle;
-        int pv;
-        int vitesse;
-        int vitesseVerticale;
-        int vitesseHorizontale;
-        int pvMax;
-        int degatArme;
-        int cdArme; //cool down pour le tir
-        int portee;
-        bool isSelected;
-        */
-
-void ecrireMonde(char* path, Monde* monde)
+void ecrireMonde(std::string path, Monde* monde)
 {
-    std::ofstream fichierSauvegarde(path, std::ios::out | std::ios::app);
+    std::ofstream fichierSauvegarde(path.c_str(), std::ios::out | std::ios::app);
     if(!fichierSauvegarde.is_open())  error("Erreur dans l'ouverture du fichier | sauvegarder - fichier");
 
     for(int i = 0 ; i < monde->getNbFlottes(); i++)
         fichierSauvegarde << monde->getFlotte(i)->formattedInfo() + '\n';
-/*
-    for(int i = 0 ; i < monde->getNbIles(); i++)
-    {
-        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
-    }
 
+    for(int i = 0 ; i < monde->getNbIles(); i++)
+        fichierSauvegarde << monde->getIle(i)->formattedInfo() + '\n';
+/*
     for(int i = 0 ; i < monde->getNbIlesBonus(); i++)
     {
         fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
@@ -139,23 +116,23 @@ void ecrireMonde(char* path, Monde* monde)
     for(int i = 0 ; i < monde->getNbTorpilles(); i++)
     {
         fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
-    }
-*/
+    }*/
+
     fichierSauvegarde.close();
 }
 
-bool isFileExist(const char *fileName)
+bool isFileExist(std::string fileName)
 {
-    std::ifstream infile(fileName);
+    std::ifstream infile(fileName.c_str());
     return infile.good();
 }
 
-void sauvegarder(char* path, Monde* monde)
+void sauvegarder(std::string path, Monde* monde)
 {
     if(monde == NULL) error("Monde null en param | sauvegarder - fichier");
-    if(isFileExist(path))
+    if(isFileExist(path.c_str()))
     {
-        if(remove(path) != 0)
+        if(remove(path.c_str()) != 0)
             error("Erreur, un fichier porte deja le nom de la sauvegarde et est impossible a supprimer | sauvegarder - fichier");
     }
     ecrireMonde(path, monde);

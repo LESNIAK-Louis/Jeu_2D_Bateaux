@@ -22,6 +22,8 @@ void testSauvegarder()
     monde->getFlotte(1)->newPatrouilleur();
     monde->getFlotte(1)->getPatrouilleur(1)->setIsSelected(true);
 
+    monde->setIle(0, new Ile(new Point(5,6), 5, 1));
+
     sauvegarder("testSauvegarde.txt", monde);
 }
 

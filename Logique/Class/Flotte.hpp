@@ -30,7 +30,7 @@ class Flotte
         int qteRessource;
         int gainRessource;
         int pvBase;
-        int caracPatrouilleur[5]; //index : 0: vitesse; 1: pvMax; 2: degatArme; 3: cooldown; 4: portée;
+        int caracPatrouilleur[NB_CARAC_PATROUILLEUR]; //index : 0: vitesse; 1: pvMax; 2: degatArme; 3: cooldown; 4: portée;
         std::vector<Patrouilleur*>* patrouilleurs;
 
     public : 
@@ -67,6 +67,8 @@ class Flotte
         //Réduit de 1 le numéro des patrouilleurs à l'indice i et au delà : 
         void reduireNumeroPatrouilleur(int indice);
         void updatePatrouilleur();
+
+        std::string formattedInfo();
 
 };
 

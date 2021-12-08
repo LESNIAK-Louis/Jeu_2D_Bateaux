@@ -91,3 +91,72 @@ void afficherTab2D(char** tab, int n, int m)
           }
      } 
 }
+
+/*
+int idFlotte;
+        int id;
+        Point* centre;
+        Point* destination;
+        Point* wayPoint;
+        std::vector<Point*>* chemin;
+        Navire* cible;
+        bool move;
+        int angle;
+        int pv;
+        int vitesse;
+        int vitesseVerticale;
+        int vitesseHorizontale;
+        int pvMax;
+        int degatArme;
+        int cdArme; //cool down pour le tir
+        int portee;
+        bool isSelected;
+        */
+
+void ecrireMonde(char* path, Monde* monde)
+{
+    std::ofstream fichierSauvegarde(path, std::ios::out | std::ios::app);
+    if(!fichierSauvegarde.is_open())  error("Erreur dans l'ouverture du fichier | sauvegarder - fichier");
+
+    for(int i = 0 ; i < monde->getNbFlottes(); i++)
+        fichierSauvegarde << monde->getFlotte(i)->formattedInfo() + '\n';
+/*
+    for(int i = 0 ; i < monde->getNbIles(); i++)
+    {
+        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
+    }
+
+    for(int i = 0 ; i < monde->getNbIlesBonus(); i++)
+    {
+        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
+    }
+
+    for(int i = 0 ; i < monde->getNbMines(); i++)
+    {
+        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
+    }
+
+    for(int i = 0 ; i < monde->getNbTorpilles(); i++)
+    {
+        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
+    }
+*/
+    fichierSauvegarde.close();
+}
+
+bool isFileExist(const char *fileName)
+{
+    std::ifstream infile(fileName);
+    return infile.good();
+}
+
+void sauvegarder(char* path, Monde* monde)
+{
+    if(monde == NULL) error("Monde null en param | sauvegarder - fichier");
+    if(isFileExist(path))
+    {
+        if(remove(path) != 0)
+            error("Erreur, un fichier porte deja le nom de la sauvegarde et est impossible a supprimer | sauvegarder - fichier");
+    }
+    ecrireMonde(path, monde);
+}

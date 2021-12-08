@@ -141,3 +141,24 @@ void Flotte::updatePatrouilleur(){
         this->patrouilleurs->at(i)->setCdArme(this->getCaracPatrouilleur(4));
     }
 }
+
+std::string Flotte::formattedInfo()
+{
+    std::string info;
+    info = "Flotte" + std::to_string(this->getNumero()) + "{" + 
+    this->getCoordBase()->formattedInfo() + 
+    this->getSpawnPoint()->formattedInfo() +
+    std::to_string(this->getQteRessource()) + ";" +
+    std::to_string(this->getGainRessource()) + ";" +
+    std::to_string(this->getPvBase()) + ";" +
+    std::to_string(this->getNbPatrouilleurs()) + ";";
+    for(int k = 0; k < NB_CARAC_PATROUILLEUR; k++)
+        info += std::to_string(this->getCaracPatrouilleur(k)) + ";";
+    info += "[";
+    for(int k = 0; k <  this->getNbPatrouilleurs()-1; k++)
+        info +=  this->getPatrouilleur(k)->formattedInfo() + ";";
+    info +=  this->getPatrouilleur(this->getNbPatrouilleurs()-1)->formattedInfo() + "]}";
+
+    return info;
+        
+}

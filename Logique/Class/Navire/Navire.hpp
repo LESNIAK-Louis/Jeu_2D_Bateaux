@@ -91,6 +91,8 @@ class Navire
 
         
         void ajouterPV();
+
+        std::string formattedInfo();
 };
 
 

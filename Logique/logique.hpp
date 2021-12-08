@@ -11,5 +11,6 @@
 #define LOGIQUE_HPP
 
 void moveSelectedShips(Monde* monde, int x, int y);
+void unSelectAll(Monde* monde);
 
 #endif

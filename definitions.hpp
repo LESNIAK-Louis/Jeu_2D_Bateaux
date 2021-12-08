@@ -13,3 +13,5 @@
         exit(EXIT_FAILURE); }
 
 #endif
+
+#define NB_CARAC_PATROUILLEUR 5 

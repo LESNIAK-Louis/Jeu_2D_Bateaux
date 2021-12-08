@@ -3,7 +3,7 @@ CFLAGS = -Wno-unused-value -W -Wall -ansi -std=c++14 -g
 LIBS = -L./SDL2_ttf/.libs -L./SDL2_image/.libs
 LDFLAGS = `sdl2-config --cflags --libs` -lSDL2_ttf -lSDL2_image
 INCLUDES = -I./SDL2_ttf -I./SDL2_image
-EXEC = main testPoint testIle testIleBonus testLogique testMonde
+EXEC = main testPoint testIle testIleBonus testLogique testMonde testIO
 SRC = main.cpp Graphique/fonctions_SDL.cpp Input-Output/input.cpp Logique/logique.cpp Logique/Class/Point.cpp Logique/Class/Ile.cpp Logique/Class/Flotte.cpp Logique/Class/IleBonus.cpp Logique/Class/Navire/Navire.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Armes_Explosives.cpp Logique/Class/Monde.cpp
 OBJ = $(SRC:.cpp=.o)
 
@@ -27,6 +27,9 @@ OBJFlotte = $(SRCFlotte:.cpp=.o)
 
 SRCLogique = Logique/Tests/testLogique.cpp Logique/fichier.cpp Logique/logique.cpp Logique/Class/Navire/Patrouilleur.cpp
 OBJLogique = $(SRCLogique:.cpp=.o)
+
+SRCIO = Input-Output/Test/testIO.cpp Input-Output/fichier.cpp Logique/logique.cpp Input-Output/input.cpp Logique/Class/Point.cpp Logique/Class/Ile.cpp Logique/Class/Flotte.cpp Logique/Class/IleBonus.cpp Logique/Class/Navire/Navire.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Armes_Explosives.cpp Logique/Class/Monde.cpp 
+OBJIO = $(SRCIO:.cpp=.o)
 
 
 all: $(EXEC)
@@ -69,6 +72,11 @@ testLogique: $(OBJLogique)
 
 testFlotte: $(OBJFlotte)
 	$(CC) $(CFLAGS) -o $@ $^
+%.o: %.cpp
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+testIO: $(OBJIO)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIBS) $(LDFLAGS)
 %.o: %.cpp
 	$(CC) $(CFLAGS) -o $@ -c $<
 

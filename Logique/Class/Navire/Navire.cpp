@@ -189,7 +189,7 @@ void Navire::setVitesseVerticale(int vv){
 }
 
 void Navire::calculerVitesseHorVert(){
-    printf("Calcul \n");
+    //printf("Calcul \n");
     int vh, vv;
     int angle = this->getAngle();
     float a = angle * (3.1415/180);
@@ -197,9 +197,9 @@ void Navire::calculerVitesseHorVert(){
         case 0:
             
             vh = round( this->getVitesse() * std::sin(a)  );
-            printf("vh = %i ", vh);
+            //printf("vh = %i ", vh);
             vv = round( this->getVitesse() * std::cos(a)  );
-            printf("vv = %i \n", vv);
+            //printf("vv = %i \n", vv);
         break;
         case 1:
            
@@ -215,6 +215,8 @@ void Navire::calculerVitesseHorVert(){
             
             vh = round( this->getVitesse() * std::sin(a)  );
             vv = round( this->getVitesse() * std::cos(a)  );
+        break;
+        default:
         break;
     }
     this->setVitesseHorizontale(vh);
@@ -245,4 +247,47 @@ void Navire::setCible(Navire* navire){
 void Navire::setIsSelected(bool isSelected)
 {
     this->isSelected = isSelected;
+}
+
+/*
+        Point* centre;
+        Point* destination;
+        Point* wayPoint;
+        std::vector<Point*>* chemin;
+        Navire* cible;
+        bool move;
+        int angle;
+        int pv;
+        int vitesse;
+        int vitesseVerticale;
+        int vitesseHorizontale;
+        int pvMax;
+        int degatArme;
+        int cdArme; //cool down pour le tir
+        int portee;
+        bool isSelected;
+*/
+
+std::string Navire::formattedInfo()
+{
+    std::string info = this->getCentre()->formattedInfo(); + ";" +
+    this->getDestination()->formattedInfo(); + ";";/* +
+    this->getNextWayPoint()->formattedInfo(); + ";";
+    /*info += "(";
+    for(int i=0; i < this->chemin->size();i++)
+        info += this->chemin->at(i)->formattedInfo;
+    info += ")";*/
+    //info += this->getCible()->formattedInfo() + ";" +
+    info += (this->isMoving()?"1;":"0;") + 
+    std::to_string(this->getAngle()) + ";" + 
+    std::to_string(this->getPv()) + ";" + 
+    std::to_string(this->getVitesse()) + ";" + 
+    std::to_string(this->getVitesseVerticale()) + ";" + 
+    std::to_string(this->getVitesseHorizontale()) + ";" + 
+    std::to_string(this->getPvMax()) + ";" + 
+    std::to_string(this->getDegatArme()) + ";" + 
+    std::to_string(this->getCdArme()) + ";" + 
+   //std::to_string(this->getPortee()) + ";" + 
+    (this->getIsSelected()?"1":"0"); 
+    return info;
 }

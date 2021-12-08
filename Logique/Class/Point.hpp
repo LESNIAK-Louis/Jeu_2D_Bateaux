@@ -29,6 +29,7 @@ class Point
         bool isEqual(Point* pt);
         
         std::string toString();
+        std::string formattedInfo();
 
     private:
         int abs;

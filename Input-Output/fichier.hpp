@@ -11,7 +11,9 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "../definitions.hpp"
+#include "../Logique/Class/Monde.hpp"
 
 
 unsigned int getNombreLignesFichier(char* path);
@@ -20,5 +22,8 @@ char** lireSauvegarde(char* path);
 char** allouerTab2D(int n, int m);
 void desallouerTab2D(char** tab, int n);
 void afficherTab2D(char** tab, int n, int m);
+void ecrireMonde(char* path, Monde* monde);
+bool isFileExist(const char *fileName);
+void sauvegarder(char* path, Monde* monde);
 
 #endif

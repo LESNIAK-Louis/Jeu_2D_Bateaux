@@ -8,6 +8,8 @@
 #ifndef NAVIRE_HPP
 #define NAVIRE_HPP
 
+#define TAILLE_PATROUILLEUR 24
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <string>
@@ -52,6 +54,7 @@ class Navire
         Point* getCentre();
         Point* getDestination();
         Point* getNextWayPoint();
+        int taille;
         int getAbscisse();
         int getOrdonnee();
         bool isMoving();
@@ -82,6 +85,8 @@ class Navire
         void calculerVitesseHorVert();
         void setDestination(Point* dest);
         void setChemin();
+        void estEnCollisionAvec(int taille, Point ctr);
+        void deplacer();
         void setPvMax(int pvMax);
         void setDegatArme(int degat);
         void setCdArme(int cd);
@@ -91,6 +96,7 @@ class Navire
 
         
         void ajouterPV();
+        void findPathTo(Point p);
 
         std::string formattedInfo();
 };

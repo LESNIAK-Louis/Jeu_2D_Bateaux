@@ -84,17 +84,22 @@ int main()
     SDL_Texture* bateau = charger_image("Ressources/test_bateau.bmp", ecran);
 
     Monde* monde = new Monde(1,1,1,1);
-    monde->addFlotte(new Flotte(0, new Point(0,0), new Point(0,0), 0,10,500));
+    monde->addFlotte(new Flotte(0, new Point(50,50), new Point(50,50), 0,10,500));
     monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
     SDL_Rect DestR;
-
+    int i = 0;
     while(!terminer){
         DestR = {monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->getAbscisse(), monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->getOrdonnee(),32, 32};
         SDL_RenderClear(ecran);
         SDL_RenderCopy(ecran, fond, NULL, NULL);
         SDL_RenderCopy(ecran, bateau, NULL, &DestR);
-
+        if (i == 20){ 
+            i = 0;
+            monde->getFlotte(0)->getPatrouilleur(0)->setAngle(monde->getFlotte(0)->getPatrouilleur(0)->getAngle()+45);
+        }
+        i++;
+        monde->getFlotte(0)->getPatrouilleur(0)->deplacer();
         gestion_evenements(&evenements, monde);
         SDL_RenderPresent(ecran);
         SDL_Delay(20);

@@ -139,16 +139,10 @@ void Navire::setCentre(Point* point){
     this->centre = point;
 }
 
-void Navire::setDestination(Point* point){
-    this->destination = point;
-}
-
 /*
 ####################   FONCTION DE PATHFINDING A REALISER #################################################
 */
-void Navire::setChemin() {
-    //this->chemin = this->getCentre()->findPathTo(this->destination);
-}
+
 
 void Navire::deplacer(int abs, int ord){
     this->centre->deplacer(abs, ord);
@@ -189,38 +183,50 @@ void Navire::setVitesseVerticale(int vv){
 }
 
 void Navire::calculerVitesseHorVert(){
-    //printf("Calcul \n");
     int vh, vv;
     int angle = this->getAngle();
     float a = angle * (3.1415/180);
     switch (angle/(90)) {
         case 0:
-            
             vh = round( this->getVitesse() * std::sin(a)  );
-            //printf("vh = %i ", vh);
-            vv = round( this->getVitesse() * std::cos(a)  );
-            //printf("vv = %i \n", vv);
+            vv = - round( this->getVitesse() * std::cos(a)  );
         break;
         case 1:
            
             vh = round( this->getVitesse() * std::sin(a)  );
-            vv = round( this->getVitesse() * std::cos(a)  );
+            vv = -round( this->getVitesse() * std::cos(a)  );
         break;
         case 2:
            
             vh = round( this->getVitesse() * std::sin(a)  );
-            vv = round( this->getVitesse() * std::cos(a)  );
+            vv = -round( this->getVitesse() * std::cos(a)  );
         break;
         case 3:
             
             vh = round( this->getVitesse() * std::sin(a)  );
-            vv = round( this->getVitesse() * std::cos(a)  );
+            vv = -round( this->getVitesse() * std::cos(a)  );
         break;
         default:
         break;
     }
     this->setVitesseHorizontale(vh);
     this->setVitesseVerticale(vv);
+}
+
+void Navire::setDestination(Point* point){
+    this->destination = point;
+}
+
+void Navire::setChemin() {
+    //this->chemin = this->getCentre()->findPathTo(this->destination);
+}
+
+void Navire::estEnCollisionAvec(int taille, Point ctr){
+    return (this->getCentre()->distance(ctr) < this->getTaille() + taille);
+}
+
+void Navire::deplacer(){
+    this->getCentre()->deplacer(this->getVitesseHorizontale(), this->getVitesseVerticale());
 }
 
 void Navire::setPvMax(int pvMax){

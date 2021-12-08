@@ -69,13 +69,13 @@ int Point::trouverAngle(Point* p2){
     }
     double angle = std::atan( ((double) (p2->getAbscisse() - this->getAbscisse())) / ((double)(p2->getOrdonnee() - this->getOrdonnee()))  );
     angle *= (180/3.1415);
-    if (p2->getAbscisse() >= this->getAbscisse() && p2->getOrdonnee() < this->getOrdonnee() ){ //p2 est en bas à droite de p1
+    if (p2->getAbscisse() >= this->getAbscisse() && p2->getOrdonnee() > this->getOrdonnee() ){ //p2 est en bas à droite de p1
         angle += 90;
     }
-    if (p2->getAbscisse() <= this->getAbscisse() && p2->getOrdonnee() < this->getOrdonnee()){ //p2 est en bas à gauche de p1
+    if (p2->getAbscisse() <= this->getAbscisse() && p2->getOrdonnee() > this->getOrdonnee()){ //p2 est en bas à gauche de p1
         angle += 180;
     }
-    if (p2->getAbscisse() < this->getAbscisse() && p2->getOrdonnee() > this->getOrdonnee()){ //p2 est en haut à gauche de p1
+    if (p2->getAbscisse() < this->getAbscisse() && p2->getOrdonnee() < this->getOrdonnee()){ //p2 est en haut à gauche de p1
         angle += 270;
     }
     return round(angle);

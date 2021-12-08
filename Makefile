@@ -59,7 +59,7 @@ testIleBonus: $(OBJIleBonus)
 %.o: %.cpp
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-testPatrouilleur: $(OBJIleBonus)
+testPatrouilleur: $(OBJPatrouilleur)
 	$(CC) $(CFLAGS) -o $@ $^
 %.o: %.cpp
 	$(CC) $(CFLAGS) -o $@ -c $<

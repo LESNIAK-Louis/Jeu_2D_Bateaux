@@ -10,13 +10,13 @@
 #include "Navire.hpp"
 
 Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int pvMax, int degatArme, int cdArme, int portee){
-    this->setIdFlotte(idFlotte);
-    this->setId(id);
+    this->idFlotte = idFlotte;
+    this->id = id;
     this->setCentre(pos);
     this->setDestination(dest);
     this->setMove(pos->isEqual(dest));
     //this->setChemin();
-    this->setAngle(0);
+    this->angle = 0;
     this->pvMax = pvMax;
     this->setPv(pvMax);
     this->vitesse = vitesse;
@@ -24,6 +24,7 @@ Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int p
     this->cdArme = cdArme;
     this->portee = portee;    
     this->isSelected = false;
+    this->calculerVitesseHorVert();
     this->chemin = new std::vector<Point*>();
 }
 
@@ -73,6 +74,14 @@ int Navire::getAngle() {
 
 int Navire::getVitesse(){
     return this->vitesse;
+}
+
+int Navire::getVitesseHorizontale(){
+    return this->vitesseHorizontale;
+}
+
+int Navire::getVitesseVerticale(){
+    return this->vitesseVerticale;
 }
 
 Point* Navire::getNextWayPoint(){
@@ -152,6 +161,7 @@ void Navire::setMove(bool b) {
 void Navire::setAngle(int angle){
     angle%=360;
     this->angle = angle;
+    this->calculerVitesseHorVert();
 }
 
 void Navire::setPv(int pv){
@@ -167,6 +177,48 @@ void Navire::ajouterPV(int pv){
 
 void Navire::setVitesse(int vitesse) {
     this->vitesse = vitesse;
+    this->calculerVitesseHorVert();
+}
+
+void Navire::setVitesseHorizontale(int vh){
+    this->vitesseHorizontale = vh;
+}
+
+void Navire::setVitesseVerticale(int vv){
+    this->vitesseVerticale = vv;
+}
+
+void Navire::calculerVitesseHorVert(){
+    printf("Calcul \n");
+    int vh, vv;
+    int angle = this->getAngle();
+    float a = angle * (3.1415/180);
+    switch (angle/(90)) {
+        case 0:
+            
+            vh = round( this->getVitesse() * std::sin(a)  );
+            printf("vh = %i ", vh);
+            vv = round( this->getVitesse() * std::cos(a)  );
+            printf("vv = %i \n", vv);
+        break;
+        case 1:
+           
+            vh = round( this->getVitesse() * std::sin(a)  );
+            vv = round( this->getVitesse() * std::cos(a)  );
+        break;
+        case 2:
+           
+            vh = round( this->getVitesse() * std::sin(a)  );
+            vv = round( this->getVitesse() * std::cos(a)  );
+        break;
+        case 3:
+            
+            vh = round( this->getVitesse() * std::sin(a)  );
+            vv = round( this->getVitesse() * std::cos(a)  );
+        break;
+    }
+    this->setVitesseHorizontale(vh);
+    this->setVitesseVerticale(vv);
 }
 
 void Navire::setPvMax(int pvMax){

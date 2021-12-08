@@ -12,6 +12,7 @@
 #include <stdbool.h>
 #include <string>
 #include <vector>
+#include <cmath>
 #include "../Point.hpp"
 #include "../../../definitions.hpp"
 
@@ -57,6 +58,8 @@ class Navire
         int getAngle();
         int getPv();
         int getVitesse();
+        int getVitesseHorizontale();
+        int getVitesseVerticale();
         int getPvMax();
         int getDegatArme();
         int getCdArme();
@@ -74,6 +77,9 @@ class Navire
         void setPv(int pv);
         void ajouterPV(int pv);
         void setVitesse(int vitesse);
+        void setVitesseHorizontale(int vh);
+        void setVitesseVerticale(int vt);
+        void calculerVitesseHorVert();
         void setDestination(Point* dest);
         void setChemin();
         void setPvMax(int pvMax);

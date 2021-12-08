@@ -18,7 +18,7 @@
 
 unsigned int getNombreLignesFichier(char* path);
 unsigned int getLongueurMaxColonne(char* path);
-char** lireSauvegarde(char* path);
+Monde* lireSauvegarde(std::string path);
 char** allouerTab2D(int n, int m);
 void desallouerTab2D(char** tab, int n);
 void afficherTab2D(char** tab, int n, int m);

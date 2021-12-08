@@ -39,25 +39,59 @@ unsigned int getLongueurMaxColonne(char* path) {
     return nombreMaxColonne;
 }
 
-char** lireSauvegarde(char* path){}/*
+int ctoi(char x)
 {
-    
-    unsigned int nbLigne = getNombreLignesFichier(path);
-    unsigned int nbColonne = getLongueurMaxColonne(path);
-    char** tab =  allouerTab2D(nbLigne, nbColonne);
+    return (int)x -49;
+}
 
-    FILE *fichier = fopen(path, "r");
-    if (fichier == NULL)  error("Erreur dans l'ouverture du fichier | lireSauvegarde - fichier");
-    for(unsigned int i = 0; i < nbLigne; i++)
+void lirePoint(std::string *line, int *x, int *y)
+{
+    *x = std::stoi(line.substr(line->find_first_of("<")+1, line->find_first_of(";") - line->find_first_of("<") -1));
+    *y = std::stoi(line.substr(line->find_first_of(";")+1, line->find_first_of(">") - line->find_first_of(";") -1));
+    *line = line->substr(line.find_first_of(";")+2);
+}
+
+Monde* lireSauvegarde(std::string path)
+{
+    std::ifstream fichierSauvegarde(path.c_str());
+    if(!fichierSauvegarde.good()) error("Erreur dans la lecture du fichier de sauvegarde | lireSauvegarde - fichier ");
+
+    std::string line;
+    getline(fichierSauvegarde, line);
+    //std::cout << line << "\n";
+    if(line.length() != 7) error("Format incorrect : donnees du monde | lireSauvegarde - fichier ");
+    Monde* monde = new Monde(ctoi(line[0]), ctoi(line[2]), ctoi(line[4]), ctoi(line[6]));
+    while(getline(fichierSauvegarde, line))
     {
-        for(unsigned int j = 0; j < nbColonne; j++)
+        switch(line[0])
         {
-            tab[i][j] = 0 ;
+            case 'F':
+            { // int numero, Point* coord, Point* spawn, int ressource, int gain, int pv){
+                int numero = std::stoi(line.substr(1, line.find_first_of("{")-1));
+                int CoordX;
+                int CoordY;
+            
+                Point* Coord = new Point(CoordX, CoordY);
+                lirePoint(&CoordX, &CoordY);
+                 std::cout << CoordX << "  " << CoordY << "\n";
+                //monde = new FlotteS
+            }
+            break;
+            case 'I':
+            break;
+            case 'B':
+            break;
+            case 'M':
+            break;
+            case 'T':
+            break;
+            default:
+                error("Erreur de format | lireSauvegarde - fichier ");
+            break;
         }
     }
-    fclose(fichier);
-    return tab;
-}*/
+    return monde;
+}
 
 char** allouerTab2D(int n, int m)
 {
@@ -97,26 +131,7 @@ void ecrireMonde(std::string path, Monde* monde)
     std::ofstream fichierSauvegarde(path.c_str(), std::ios::out | std::ios::app);
     if(!fichierSauvegarde.is_open())  error("Erreur dans l'ouverture du fichier | sauvegarder - fichier");
 
-    for(int i = 0 ; i < monde->getNbFlottes(); i++)
-        fichierSauvegarde << monde->getFlotte(i)->formattedInfo() + '\n';
-
-    for(int i = 0 ; i < monde->getNbIles(); i++)
-        fichierSauvegarde << monde->getIle(i)->formattedInfo() + '\n';
-/*
-    for(int i = 0 ; i < monde->getNbIlesBonus(); i++)
-    {
-        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
-    }
-
-    for(int i = 0 ; i < monde->getNbMines(); i++)
-    {
-        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
-    }
-
-    for(int i = 0 ; i < monde->getNbTorpilles(); i++)
-    {
-        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
-    }*/
+    fichierSauvegarde << monde->formattedInfo() + '\n';
 
     fichierSauvegarde.close();
 }

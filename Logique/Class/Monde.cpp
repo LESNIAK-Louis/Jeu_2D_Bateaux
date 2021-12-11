@@ -211,10 +211,40 @@ void Monde::removeAllIlesBonus()
 std::string Monde::toString()
 {
     return "Nombre Flottes : " + std::to_string(this->flottes->size()) + "\n"
-    + "Nombre Iles : " + std::to_string(this->nbIles) + "\n"
-    + "Nombre IlesBonus : " + std::to_string(this->nbIlesBonus) + "\n"
+    + "Nombre Iles : " + std::to_string(this->getNbIles()) + "\n"
+    + "Nombre IlesBonus : " + std::to_string(this->getNbIlesBonus()) + "\n"
     + "Nombre Mines : " + std::to_string(this->mines->size()) + "\n"
     + "Nombre Torpilles : " + std::to_string(this->torpilles->size()) + "\n"
     + "Timer : " + std::to_string(this->timer) + "s" + "\n"
     + "Difficulte : " + std::to_string(this->difficulte);
+}
+
+std::string Monde::formattedInfo()
+{
+    std::string info = std::to_string(this->getNbIles()) + ";" +
+    std::to_string(this->getNbIlesBonus()) + ";" +
+    std::to_string(this->getTimer()) + ";" +
+    std::to_string(this->getDifficulte()) + "\n";
+    for(int i = 0 ; i < this->getNbFlottes(); i++)
+        info += this->getFlotte(i)->formattedInfo() + '\n';
+    for(int i = 0 ; i < this->getNbIles(); i++)
+        info += this->getIle(i)->formattedInfo() + '\n';
+/*
+    for(int i = 0 ; i < monde->getNbIlesBonus(); i++)
+    {
+        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
+    }
+
+    for(int i = 0 ; i < monde->getNbMines(); i++)
+    {
+        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
+    }
+
+    for(int i = 0 ; i < monde->getNbTorpilles(); i++)
+    {
+        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
+    }*/
+
+    return info;
+        
 }

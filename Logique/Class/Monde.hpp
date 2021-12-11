@@ -66,6 +66,7 @@ class Monde {
         void removeAllIlesBonus();
 
         std::string toString();
+        std::string formattedInfo();
 };
 
 #endif

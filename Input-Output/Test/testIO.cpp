@@ -24,12 +24,19 @@ void testSauvegarder()
 
     monde->setIle(0, new Ile(new Point(5,6), 5, 1));
 
-    sauvegarder("testSauvegarde.txt", monde);
+    //sauvegarder("testSauvegarde.txt", monde);
+    monde->~Monde();
+}
+
+void testLireSauvegarde()
+{
+    lireSauvegarde("testSauvegarde.txt");
 }
 
 int main()
 {
     testSauvegarder();
+    testLireSauvegarde();
 
     return 0;
 }

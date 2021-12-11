@@ -95,8 +95,8 @@ class Navire
         void setIsSelected(bool isSelected);
         void ajouterPV();
 
-        bool estEnCollisionAvec(int taille, Point ctr);
-        void findPathTo(Point p);
+        bool estEnCollisionAvec(int taille, Point* ctr);
+        void findPathTo(Point* p);
 
         std::string formattedInfo();
 };

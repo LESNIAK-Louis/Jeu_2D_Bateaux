@@ -39,45 +39,84 @@ unsigned int getLongueurMaxColonne(char* path) {
     return nombreMaxColonne;
 }
 
-int ctoi(char x)
+Point* readPoint(std::string *line)
 {
-    return (int)x -49;
+    try{
+        int x = std::stoi(line->substr(line->find_first_of("<")+1, line->find_first_of(";") - line->find_first_of("<") -1));
+        int y = std::stoi(line->substr(line->find_first_of(";")+1, line->find_first_of(">") - line->find_first_of(";") -1));
+        if(line->find_first_of(">")+2 < line->length() && line->find_first_of(">")+2 > 0) // Verification si on est pas en fin de ligne
+            *line = line->substr(line->find_first_of(">")+2);
+
+        return new Point(x, y);
+    }catch(std::invalid_argument &e){error("Format incorrect du fichier de sauvegarde | readSave - fichier ");}
 }
 
-void lirePoint(std::string *line, int *x, int *y)
+
+int readNextNumber(std::string *line)
 {
-    *x = std::stoi(line.substr(line->find_first_of("<")+1, line->find_first_of(";") - line->find_first_of("<") -1));
-    *y = std::stoi(line.substr(line->find_first_of(";")+1, line->find_first_of(">") - line->find_first_of(";") -1));
-    *line = line->substr(line.find_first_of(";")+2);
+    try{
+        int number = std::stoi(line->substr(0, line->find_first_of(";")));
+        if(line->find_first_of(";")+1 < line->length() && line->find_first_of(";")+1 > 0) // Verification si on est pas en fin de ligne
+            *line = line->substr(line->find_first_of(";")+1);
+
+        return number;
+    }catch(std::invalid_argument &e){error("Format incorrect du fichier de sauvegarde | readSave - fichier ");}
 }
 
-Monde* lireSauvegarde(std::string path)
+void addPatrouilleurs(std::string *line, Flotte* flotte, int nbPatrouilleurs)
 {
-    std::ifstream fichierSauvegarde(path.c_str());
-    if(!fichierSauvegarde.good()) error("Erreur dans la lecture du fichier de sauvegarde | lireSauvegarde - fichier ");
+    line->substr(1);
+    for(int i = 0; i < nbPatrouilleurs; i++)
+    {
+        flotte->addPatrouilleur(new Patrouilleur(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+        flotte->getPatrouilleur(i)->setPv(readNextNumber(line));
+    }
+    line->substr(2);
+}
+
+Monde* readSave(std::string path)
+{
+    std::ifstream fileSave(path.c_str());
+    if(!fileSave.good()) error("Erreur dans la lecture du fichier de sauvegarde | readSave - fichier ");
 
     std::string line;
-    getline(fichierSauvegarde, line);
-    //std::cout << line << "\n";
-    if(line.length() != 7) error("Format incorrect : donnees du monde | lireSauvegarde - fichier ");
-    Monde* monde = new Monde(ctoi(line[0]), ctoi(line[2]), ctoi(line[4]), ctoi(line[6]));
-    while(getline(fichierSauvegarde, line))
+    getline(fileSave, line);
+
+    int nbIles = readNextNumber(&line);
+    int nbIlesBonus = readNextNumber(&line);
+    int time = readNextNumber(&line);
+    int difficulte = readNextNumber(&line);
+    
+    Monde* monde = new Monde(nbIles, nbIlesBonus, time, difficulte);
+    
+    while(getline(fileSave, line))
     {
         switch(line[0])
         {
             case 'F':
-            { // int numero, Point* coord, Point* spawn, int ressource, int gain, int pv){
+            {
                 int numero = std::stoi(line.substr(1, line.find_first_of("{")-1));
-                int CoordX;
-                int CoordY;
-            
-                Point* Coord = new Point(CoordX, CoordY);
-                lirePoint(&CoordX, &CoordY);
-                 std::cout << CoordX << "  " << CoordY << "\n";
-                //monde = new FlotteS
+                Point* Coord = readPoint(&line);
+                Point* Spawn = readPoint(&line);
+                int ressource = readNextNumber(&line);
+                int gain = readNextNumber(&line);
+                int pv = readNextNumber(&line);
+                Flotte* flotte = new Flotte(numero, Coord, Spawn, ressource, gain, pv);
+                int nbPatrouilleurs = readNextNumber(&line);
+                addPatrouilleurs(&line, flotte, nbPatrouilleurs);
+                monde->addFlotte(flotte);
             }
             break;
             case 'I':
+            {
+                line.substr(line.find_first_of("{")+1);
+                Point* Pos = readPoint(&line);
+                int taille = readNextNumber(&line);
+                int forme = readNextNumber(&line);
+                Ile* ile = new Ile(Pos, taille, forme);
+                monde->setIle(nbIles-1, ile); 
+                nbIles--;
+            }
             break;
             case 'B':
             break;
@@ -86,10 +125,11 @@ Monde* lireSauvegarde(std::string path)
             case 'T':
             break;
             default:
-                error("Erreur de format | lireSauvegarde - fichier ");
+                error("Erreur de format | readSave - fichier ");
             break;
         }
     }
+    std::cout << monde->formattedInfo();
     return monde;
 }
 
@@ -126,14 +166,14 @@ void afficherTab2D(char** tab, int n, int m)
      } 
 }
 
-void ecrireMonde(std::string path, Monde* monde)
+void writeMonde(std::string path, Monde* monde)
 {
-    std::ofstream fichierSauvegarde(path.c_str(), std::ios::out | std::ios::app);
-    if(!fichierSauvegarde.is_open())  error("Erreur dans l'ouverture du fichier | sauvegarder - fichier");
+    std::ofstream fileSave(path.c_str(), std::ios::out | std::ios::app);
+    if(!fileSave.is_open())  error("Erreur dans l'ouverture du fichier | sauvegarder - fichier");
 
-    fichierSauvegarde << monde->formattedInfo() + '\n';
+    fileSave << monde->formattedInfo();
 
-    fichierSauvegarde.close();
+    fileSave.close();
 }
 
 bool isFileExist(std::string fileName)
@@ -142,7 +182,7 @@ bool isFileExist(std::string fileName)
     return infile.good();
 }
 
-void sauvegarder(std::string path, Monde* monde)
+void save(std::string path, Monde* monde)
 {
     if(monde == NULL) error("Monde null en param | sauvegarder - fichier");
     if(isFileExist(path.c_str()))
@@ -150,5 +190,5 @@ void sauvegarder(std::string path, Monde* monde)
         if(remove(path.c_str()) != 0)
             error("Erreur, un fichier porte deja le nom de la sauvegarde et est impossible a supprimer | sauvegarder - fichier");
     }
-    ecrireMonde(path, monde);
+    writeMonde(path, monde);
 }

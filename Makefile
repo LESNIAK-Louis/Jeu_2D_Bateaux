@@ -3,7 +3,7 @@ CFLAGS = -Wno-unused-value -W -Wall -ansi -std=c++14 -g
 LIBS = -L./SDL2_ttf/.libs -L./SDL2_image/.libs
 LDFLAGS = `sdl2-config --cflags --libs` -lSDL2_ttf -lSDL2_image
 INCLUDES = -I./SDL2_ttf -I./SDL2_image
-EXEC = main testPoint testIle testIleBonus testLogique testMonde testIO
+EXEC = main testPoint testIle testIleBonus testLogique testMonde testIO testSave.txt
 SRC = main.cpp Graphique/fonctions_SDL.cpp Input-Output/input.cpp Logique/logique.cpp Logique/Class/Point.cpp Logique/Class/Ile.cpp Logique/Class/Flotte.cpp Logique/Class/IleBonus.cpp Logique/Class/Navire/Navire.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Armes_Explosives.cpp Logique/Class/Monde.cpp
 OBJ = $(SRC:.cpp=.o)
 
@@ -81,6 +81,6 @@ testIO: $(OBJIO)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	rm -rf *.o *~ Graphique/*.o Graphique/*~ Logique/*.o Logique/*~ Input-Output/*.o Input-Output/*~ Logique/Class/*.o Logique/Class/*~ Logique/Class/Navire/*.o Logique/Class/Navire/*~ Logique/Class/tests/*.o Logique/Class/tests/*~ Logique/Tests*.o Logique/Tests/*~
+	rm -rf *.o *~ Graphique/*.o Graphique/*~ Logique/*.o Logique/*~ Input-Output/*.o Input-Output/*~ Input-Output/Test/*~ Input-Output/Test/*.o Logique/Class/*.o Logique/Class/*~ Logique/Class/Navire/*.o Logique/Class/Navire/*~ Logique/Class/tests/*.o Logique/Class/tests/*~ Logique/Tests*.o Logique/Tests/*~
 mrproper: clean
 	rm -rf $(EXEC)

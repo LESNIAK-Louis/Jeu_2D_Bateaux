@@ -112,6 +112,11 @@ void Flotte::newPatrouilleur(){
     this->patrouilleurs->push_back(p);
 }
 
+void Flotte::addPatrouilleur(Patrouilleur* p){
+    if(p == NULL) error("Patrouilleur NULL en param | ajouterPatrouilleur");
+    this->patrouilleurs->push_back(p);
+}
+
 void Flotte::removeAllPatrouilleurs(){
     while(this->getNbPatrouilleurs() != 0)
     {
@@ -146,18 +151,19 @@ std::string Flotte::formattedInfo()
 {
     std::string info;
     info = "F" + std::to_string(this->getNumero()) + "{" + 
-    this->getCoordBase()->formattedInfo() + 
-    this->getSpawnPoint()->formattedInfo() +
+    this->getCoordBase()->formattedInfo() + ";" +
+    this->getSpawnPoint()->formattedInfo() + ";" +
     std::to_string(this->getQteRessource()) + ";" +
     std::to_string(this->getGainRessource()) + ";" +
     std::to_string(this->getPvBase()) + ";" +
-    std::to_string(this->getNbPatrouilleurs()) + ";";
-    for(int k = 0; k < NB_CARAC_PATROUILLEUR; k++)
-        info += std::to_string(this->getCaracPatrouilleur(k)) + ";";
-    info += "[";
-    for(int k = 0; k <  this->getNbPatrouilleurs()-1; k++)
-        info +=  this->getPatrouilleur(k)->formattedInfo() + ";";
-    info +=  this->getPatrouilleur(this->getNbPatrouilleurs()-1)->formattedInfo() + "]}";
+    std::to_string(this->getNbPatrouilleurs());
+    if(this->getNbPatrouilleurs() != 0)
+    {
+        info += ";[";
+        for(int k = 0; k <  this->getNbPatrouilleurs()-1; k++)
+            info +=  this->getPatrouilleur(k)->formattedInfo() + ";";
+        info +=  this->getPatrouilleur(this->getNbPatrouilleurs()-1)->formattedInfo() + "]}";
+    }
 
     return info;
         

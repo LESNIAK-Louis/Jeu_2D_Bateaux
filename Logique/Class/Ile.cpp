@@ -64,7 +64,7 @@ std::string Ile::toString()
 std::string Ile::formattedInfo()
 {
     std::string info = "I{" + 
-    this->centre->formattedInfo() +
+    this->centre->formattedInfo() + ";" +
     std::to_string(this->getTaille()) + ";" +
     std::to_string(this->getForme()) + "}";
 

@@ -18,12 +18,15 @@
 
 unsigned int getNombreLignesFichier(char* path);
 unsigned int getLongueurMaxColonne(char* path);
-Monde* lireSauvegarde(std::string path);
+Point* readPoint(std::string *line);
+int readNextNumber(std::string *line);
+void addPatrouilleurs(std::string *line, Flotte* flotte, int nbPatrouilleurs);
+Monde* readSave(std::string path);
 char** allouerTab2D(int n, int m);
 void desallouerTab2D(char** tab, int n);
 void afficherTab2D(char** tab, int n, int m);
-void ecrireMonde(std::string fileName, Monde* monde);
+void writeMonde(std::string fileName, Monde* monde);
 bool isFileExist(std::string fileName);
-void sauvegarder(std::string path, Monde* monde);
+void save(std::string path, Monde* monde);
 
 #endif

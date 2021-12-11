@@ -89,5 +89,5 @@ std::string Point::toString()
 
 std::string Point::formattedInfo()
 {
-    return "<" + std::to_string(this->getAbscisse()) + ";" + std::to_string(this->getOrdonnee()) + ">;";
+    return "<" + std::to_string(this->getAbscisse()) + ";" + std::to_string(this->getOrdonnee()) + ">";
 }

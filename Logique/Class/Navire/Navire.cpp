@@ -112,6 +112,11 @@ int Navire::getCdArme(){
     return this->cdArme;
 }
 
+int Navire::getPortee(){
+    return this->portee;
+}
+
+
 Navire* Navire::getCible(){
     return this->cible;
 }
@@ -258,52 +263,23 @@ void Navire::setIsSelected(bool isSelected)
 
 //Pathfinding
 
-bool Navire::estEnCollisionAvec(int taille, Point ctr){
+bool Navire::estEnCollisionAvec(int taille, Point* ctr){
     return (this->getCentre()->distance(ctr) < (this->getTaille() + taille)/2);
 }
 
 void Navire::avancer(){
     this->getCentre()->deplacer(this->getVitesseHorizontale(), this->getVitesseVerticale());
 }
-/*
-        Point* centre;
-        Point* destination;
-        Point* wayPoint;
-        std::vector<Point*>* chemin;
-        Navire* cible;
-        bool move;
-        int angle;
-        int pv;
-        int vitesse;
-        int vitesseVerticale;
-        int vitesseHorizontale;
-        int pvMax;
-        int degatArme;
-        int cdArme; //cool down pour le tir
-        int portee;
-        bool isSelected;
-*/
 
 std::string Navire::formattedInfo()
 {
-    std::string info = this->getCentre()->formattedInfo(); + ";" +
-    this->getDestination()->formattedInfo(); + ";";/* +
-    this->getNextWayPoint()->formattedInfo(); + ";";
-    /*info += "(";
-    for(int i=0; i < this->chemin->size();i++)
-        info += this->chemin->at(i)->formattedInfo;
-    info += ")";*/
-    //info += this->getCible()->formattedInfo() + ";" +
-    info += (this->isMoving()?"1;":"0;") + 
-    std::to_string(this->getAngle()) + ";" + 
-    std::to_string(this->getPv()) + ";" + 
+    std::string info = this->getCentre()->formattedInfo() + ";" +
+    this->getDestination()->formattedInfo() + ";" +
     std::to_string(this->getVitesse()) + ";" + 
-    std::to_string(this->getVitesseVerticale()) + ";" + 
-    std::to_string(this->getVitesseHorizontale()) + ";" + 
     std::to_string(this->getPvMax()) + ";" + 
     std::to_string(this->getDegatArme()) + ";" + 
     std::to_string(this->getCdArme()) + ";" + 
-   //std::to_string(this->getPortee()) + ";" + 
-    (this->getIsSelected()?"1":"0"); 
+    std::to_string(this->getPortee()) + ";" + 
+    std::to_string(this->getPv());
     return info;
 }

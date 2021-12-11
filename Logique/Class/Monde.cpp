@@ -224,11 +224,11 @@ std::string Monde::formattedInfo()
     std::string info = std::to_string(this->getNbIles()) + ";" +
     std::to_string(this->getNbIlesBonus()) + ";" +
     std::to_string(this->getTimer()) + ";" +
-    std::to_string(this->getDifficulte()) + "\n";
+    std::to_string(this->getDifficulte());
     for(int i = 0 ; i < this->getNbFlottes(); i++)
-        info += this->getFlotte(i)->formattedInfo() + '\n';
+        info += '\n' + this->getFlotte(i)->formattedInfo();
     for(int i = 0 ; i < this->getNbIles(); i++)
-        info += this->getIle(i)->formattedInfo() + '\n';
+        info += '\n' + this->getIle(i)->formattedInfo();
 /*
     for(int i = 0 ; i < monde->getNbIlesBonus(); i++)
     {

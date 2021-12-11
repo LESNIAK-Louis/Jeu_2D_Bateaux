@@ -64,6 +64,10 @@ int Navire::getOrdonnee(){
     return this->getCentre()->getOrdonnee();
 }
 
+int Navire::getTaille(){
+    return this->taille;
+}
+
 bool Navire::isMoving(){
     return this->move;
 }
@@ -140,8 +144,11 @@ void Navire::setCentre(Point* point){
 }
 
 /*
-####################   FONCTION DE PATHFINDING A REALISER #################################################
+####################   FONCTIONS DE PATHFINDING #################################################
 */
+
+
+
 
 
 void Navire::deplacer(int abs, int ord){
@@ -221,13 +228,7 @@ void Navire::setChemin() {
     //this->chemin = this->getCentre()->findPathTo(this->destination);
 }
 
-void Navire::estEnCollisionAvec(int taille, Point ctr){
-    return (this->getCentre()->distance(ctr) < this->getTaille() + taille);
-}
 
-void Navire::deplacer(){
-    this->getCentre()->deplacer(this->getVitesseHorizontale(), this->getVitesseVerticale());
-}
 
 void Navire::setPvMax(int pvMax){
     this->pvMax = pvMax;
@@ -255,6 +256,15 @@ void Navire::setIsSelected(bool isSelected)
     this->isSelected = isSelected;
 }
 
+//Pathfinding
+
+bool Navire::estEnCollisionAvec(int taille, Point ctr){
+    return (this->getCentre()->distance(ctr) < (this->getTaille() + taille)/2);
+}
+
+void Navire::avancer(){
+    this->getCentre()->deplacer(this->getVitesseHorizontale(), this->getVitesseVerticale());
+}
 /*
         Point* centre;
         Point* destination;

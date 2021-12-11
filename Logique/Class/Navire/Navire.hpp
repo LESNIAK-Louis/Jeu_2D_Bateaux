@@ -30,6 +30,7 @@ class Navire
         Point* wayPoint;
         std::vector<Point*>* chemin;
         Navire* cible;
+        int taille;
         bool move;
         int angle;
         int pv;
@@ -54,7 +55,7 @@ class Navire
         Point* getCentre();
         Point* getDestination();
         Point* getNextWayPoint();
-        int taille;
+        int getTaille();
         int getAbscisse();
         int getOrdonnee();
         bool isMoving();
@@ -85,17 +86,16 @@ class Navire
         void calculerVitesseHorVert();
         void setDestination(Point* dest);
         void setChemin();
-        void estEnCollisionAvec(int taille, Point ctr);
-        void deplacer();
+        void avancer();
         void setPvMax(int pvMax);
         void setDegatArme(int degat);
         void setCdArme(int cd);
         void setPortee(int p);
         void setCible(Navire* navire);
         void setIsSelected(bool isSelected);
-
-        
         void ajouterPV();
+
+        bool estEnCollisionAvec(int taille, Point ctr);
         void findPathTo(Point p);
 
         std::string formattedInfo();

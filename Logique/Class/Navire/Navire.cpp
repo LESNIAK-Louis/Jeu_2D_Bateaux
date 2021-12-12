@@ -14,7 +14,6 @@ Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int p
     this->id = id;
     this->setCentre(pos);
     this->setDestination(dest);
-    this->setMove(pos->isEqual(dest));
     //this->setChemin();
     this->angle = 0;
     this->pvMax = pvMax;
@@ -148,16 +147,16 @@ void Navire::setCentre(Point* point){
     this->centre = point;
 }
 
-/*
-####################   FONCTIONS DE PATHFINDING #################################################
-*/
+void Navire::setAbscisse(int abs){
+    this->getCentre()->setAbscisse(abs);
+}
 
+void Navire::setOrdonnee(int ord){
+    this->getCentre()->setOrdonnee(ord);
+}
 
-
-
-
-void Navire::deplacer(int abs, int ord){
-    this->centre->deplacer(abs, ord);
+void Navire::deplacer(int delta_abs, int delta_ord){
+    this->centre->deplacer(delta_abs, delta_ord);
 }
 
 void Navire::setMove(bool b) {
@@ -227,13 +226,13 @@ void Navire::calculerVitesseHorVert(){
 
 void Navire::setDestination(Point* point){
     this->destination = point;
+    this->setMove(!(this->getCentre()->isEqual(point)));
+    setAngle(this->getCentre()->trouverAngle(this->destination));
 }
 
 void Navire::setChemin() {
     //this->chemin = this->getCentre()->findPathTo(this->destination);
 }
-
-
 
 void Navire::setPvMax(int pvMax){
     this->pvMax = pvMax;
@@ -269,6 +268,11 @@ bool Navire::estEnCollisionAvec(int taille, Point* ctr){
 
 void Navire::avancer(){
     this->getCentre()->deplacer(this->getVitesseHorizontale(), this->getVitesseVerticale());
+    if (this->getAbscisse() < 0) { this->setAbscisse(0);}
+    if (this->getAbscisse() > LARGEUR_ECRAN) {this->setAbscisse(LARGEUR_ECRAN);}
+    if (this->getOrdonnee() < 0){ this->setOrdonnee(0);}
+    if (this->getOrdonnee() > HAUTEUR_ECRAN) { this->setOrdonnee(HAUTEUR_ECRAN);}
+    if (this->getCentre()->isEqual(this->getDestination())) { this->move = false;}
 }
 
 std::string Navire::formattedInfo()

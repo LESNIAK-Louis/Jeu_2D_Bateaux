@@ -13,6 +13,10 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include "../definitions.hpp"
+#include "../Logique/logique.hpp"
+#include "../Logique/Class/Monde.hpp"
+#include "../Logique/Class/Flotte.hpp"
+#include "../Logique/Class/Navire/Patrouilleur.hpp"
 
 /**
  * \brief La fonction initialise la SDL et TTF : elle crée la fenêtre du jeu ainsi que le renderer
@@ -41,6 +45,23 @@ SDL_Texture* charger_image(const char* nomfichier, SDL_Renderer* renderer);
  * \return la texture SDL contenant l'image avec la couleur RGB (r,g,b) rendue transparente
 */
 SDL_Texture* charger_image_transparente(const char* nomfichier, SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b);
+
+/**
+ * @brief  La fonction affiche les navire du monde
+ * @param ecran l'ecran
+ * @param monde le monde
+ * @param texturePatrouilleur la texture correspondant aux parouilleurs
+ */
+void renderNavires(SDL_Renderer* ecran, Monde* monde, SDL_Texture* texturePatrouilleur);
+
+/**
+ * @brief affiche les patrouilleurs
+ * @param ecran l'ecran
+ * @param monde 
+ * @param texturePatrouilleur la texture correspondant aux parouilleurs
+ */
+void renderPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, SDL_Texture* texturePatrouilleur);
+
 
 /**
  * \brief La fonction charge une police

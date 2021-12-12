@@ -10,7 +10,10 @@
 #ifndef LOGIQUE_HPP
 #define LOGIQUE_HPP
 
+
 void moveSelectedShips(Monde* monde, int x, int y);
 void unSelectAll(Monde* monde);
+
+void moveShips(Monde* monde);
 
 #endif

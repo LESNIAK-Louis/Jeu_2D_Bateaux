@@ -75,6 +75,8 @@ class Navire
         void setId(int i);
         void reduireId();
         void setCentre(Point* centre);
+        void setAbscisse(int abs);
+        void setOrdonnee(int ord);
         void deplacer(int abs, int ord);
         void setMove(bool b);
         void setAngle(int angle);

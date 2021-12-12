@@ -53,6 +53,22 @@ SDL_Texture* charger_image_transparente(const char* nomfichier, SDL_Renderer* re
     return texture;
 }
 
+void renderNavires(SDL_Renderer* ecran, Monde* monde, SDL_Texture* texturePatrouilleur){
+    for (int f = 0; f < monde->getNbFlottes(); f++){
+        renderPatrouilleurs(ecran, monde->getFlotte(f), texturePatrouilleur);
+    }
+
+}
+
+void renderPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, SDL_Texture* texturePatrouilleur){
+    for (int p = 0; p < flotte->getNbPatrouilleurs(); p++) {
+        SDL_Rect DestR = {flotte->getPatrouilleur(p)->getAbscisse()+TAILLE_PATROUILLEUR/2, flotte->getPatrouilleur(p)->getOrdonnee()+TAILLE_PATROUILLEUR/2,TAILLE_PATROUILLEUR, TAILLE_PATROUILLEUR};
+        SDL_RenderCopyEx(ecran, texturePatrouilleur, NULL, &DestR, flotte->getPatrouilleur(p)->getAngle(), NULL, SDL_FLIP_NONE);
+    }
+}
+
+
+
 TTF_Font* charger_police(const char *path, int font_size)
 {
     if(path == NULL) error("path NULL en param | charger_police - fonctions_sdl");

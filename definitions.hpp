@@ -15,3 +15,5 @@
 #endif
 
 #define NB_CARAC_PATROUILLEUR 5 
+#define HAUTEUR_ECRAN 600
+#define LARGEUR_ECRAN 600

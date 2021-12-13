@@ -16,10 +16,6 @@
 #include "../../definitions.hpp"
 
 #include "Navire/Patrouilleur.hpp"
-/*class Navire;
-class Patrouilleur;*/
-
-//TODO : gerer création de tableau de patrouilleur ; régler le problème d'inclusion circulaire
 
 class Flotte 
 {

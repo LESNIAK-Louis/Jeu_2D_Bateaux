@@ -226,7 +226,7 @@ void Navire::calculerVitesseHorVert(){
 
 void Navire::setDestination(Point* point){
     this->destination = point;
-    this->setMove(!(this->getCentre()->isEqual(point)));
+    this->setMove(!(this->estEnCollisionAvec(8, this->getDestination())));
     setAngle(this->getCentre()->trouverAngle(this->destination));
 }
 
@@ -272,7 +272,8 @@ void Navire::avancer(){
     if (this->getAbscisse() > LARGEUR_ECRAN) {this->setAbscisse(LARGEUR_ECRAN);}
     if (this->getOrdonnee() < 0){ this->setOrdonnee(0);}
     if (this->getOrdonnee() > HAUTEUR_ECRAN) { this->setOrdonnee(HAUTEUR_ECRAN);}
-    if (this->getCentre()->isEqual(this->getDestination())) { this->move = false;}
+    setAngle(this->getCentre()->trouverAngle(this->destination));
+    this->setMove(!(this->estEnCollisionAvec(8, this->getDestination() )));
 }
 
 std::string Navire::formattedInfo()

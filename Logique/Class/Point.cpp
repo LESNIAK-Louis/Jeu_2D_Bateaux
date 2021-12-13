@@ -67,6 +67,13 @@ int Point::trouverAngle(Point* p2){
             return 270;
         }
     }
+    if (this->getAbscisse() == p2->getAbscisse()) { //mes points sont l'un en dessous de l'autre
+        if (this->getOrdonnee() <= p2->getOrdonnee()){
+            return 180;
+        }else {
+            return 0;
+        }
+    }
     double angle = std::atan( ((double) (p2->getAbscisse() - this->getAbscisse())) / ((double)(p2->getOrdonnee() - this->getOrdonnee()))  );
     angle *= (180/3.1415);
     if (p2->getAbscisse() >= this->getAbscisse() && p2->getOrdonnee() > this->getOrdonnee() ){ //p2 est en bas à droite de p1

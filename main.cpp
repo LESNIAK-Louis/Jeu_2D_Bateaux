@@ -89,7 +89,7 @@ int main()
     monde->getFlotte(0)->newPatrouilleur();
     //monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
-    monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(300, 100));
+    monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(50, 300));
     //monde->getFlotte(0)->getPatrouilleur(1)->setCentre(new Point(100,100));
 
     while(!terminer){
@@ -98,6 +98,8 @@ int main()
         SDL_RenderCopy(ecran, fond, NULL, NULL);
         renderNavires(ecran, monde, texturePatrouilleur);
         moveShips(monde);
+        std::cout << "Pat 0" + monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->toString()<< "\n";
+        //std::cout << "Pat 1" + monde->getFlotte(0)->getPatrouilleur(1)->getCentre()->toString()<< "\n";
         gestion_evenements(&evenements, monde);
         SDL_RenderPresent(ecran);
         SDL_Delay(50);

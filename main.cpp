@@ -87,8 +87,8 @@ int main()
     SDL_Texture* texturePatrouilleur = charger_image("Ressources/test_bateau.bmp", ecran);
 
     Monde* monde;
-    monde = readSave("Save.txt");
-    /*
+    //monde = readSave("Save.txt");
+    
         monde = new Monde(0,0,1,1);
         monde->addFlotte(new Flotte(0, new Point(50,50), new Point(50,50), 0,10,500));
         monde->getFlotte(0)->newPatrouilleur();
@@ -97,7 +97,7 @@ int main()
         monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(50, 300));
         //monde->getFlotte(0)->getPatrouilleur(1)->setCentre(new Point(100,100));
     
-    */
+    
     while(!terminer){
         SDL_RenderClear(ecran);
         SDL_RenderCopy(ecran, fond, NULL, NULL);

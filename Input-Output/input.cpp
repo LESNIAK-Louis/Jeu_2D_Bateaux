@@ -6,6 +6,7 @@
 */
 
 #include "input.hpp"
+#include <iostream>
 
 void gestion_evenements(SDL_Event *event, Monde* monde, bool *terminer)
 {
@@ -42,16 +43,23 @@ void gestion_evenements(SDL_Event *event, Monde* monde, bool *terminer)
                 switch(event->button.button)
                 {
                     case SDL_BUTTON_LEFT:
+                    {
                         int x;
                         int y;
                         SDL_GetMouseState(&x, &y);
-                        for(int i; i < monde->getNbFlotte(); i++)
+                        Point* posSouris = new Point(x,y);
+                        for(int i = 0; i < monde->getNbFlottes(); i++)
                         {
-                            
+                            for(int j = 0; j < monde->getFlotte(i)->getNbPatrouilleurs(); j++)
+                            {
+                                bool res = monde->getFlotte(i)->getPatrouilleur(j)->estEnCollisionAvec(5,posSouris);
+                                if(res) *terminer = true;
+                            }
                         }
-                        
+                        delete posSouris;
                     break;
-                    case SDL_BUTTON_RIGHT:
+                    }
+                    case SDL_BUTTON_RIGHT:{}
                     break;
                 }
             default:

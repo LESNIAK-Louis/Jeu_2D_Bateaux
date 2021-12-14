@@ -8,12 +8,13 @@
 #ifndef FICHIER_HPP
 #define FICHIER_HPP
 
-
+#include <SDL2/SDL.h>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include "../definitions.hpp"
 #include "../Logique/Class/Monde.hpp"
+
 
 
 unsigned int getNombreLignesFichier(char* path);

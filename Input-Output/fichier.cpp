@@ -129,7 +129,7 @@ Monde* readSave(std::string path)
             break;
         }
     }
-    std::cout << monde->formattedInfo();
+    fileSave.close();
     return monde;
 }
 
@@ -174,12 +174,15 @@ void writeMonde(std::string path, Monde* monde)
     fileSave << monde->formattedInfo();
 
     fileSave.close();
+    SDL_Delay(50);
 }
 
 bool isFileExist(std::string fileName)
 {
     std::ifstream infile(fileName.c_str());
-    return infile.good();
+    bool exist = infile.good();
+    SDL_Delay(50);
+    return exist;
 }
 
 void save(std::string path, Monde* monde)

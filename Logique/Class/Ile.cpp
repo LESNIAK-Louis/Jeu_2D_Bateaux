@@ -18,7 +18,7 @@ Ile::Ile(Point* centre, int t, int f)
 
 Ile::~Ile()
 {
-    delete[] this->centre;
+    delete this->centre;
 }
 
 //Getteur
@@ -40,7 +40,6 @@ int Ile::getForme()
 void Ile::setCentre(Point* centre)
 {
     if(centre == NULL) error("centre NULL en param | setCentre - Ile");
-    if(this->centre != NULL) delete[] this->centre;
     this->centre = centre;
 }
 

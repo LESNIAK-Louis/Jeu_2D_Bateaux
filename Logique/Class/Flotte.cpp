@@ -109,7 +109,7 @@ void Flotte::augmenterGainRessource(int a){
 
 void Flotte::newPatrouilleur(){
     Patrouilleur* p = new Patrouilleur(this->getNumero(), this->getNbPatrouilleurs(), this->getSpawnPoint(), this->getSpawnPoint(), this->getCaracPatrouilleur(0), this->getCaracPatrouilleur(1), this->getCaracPatrouilleur(2), this->getCaracPatrouilleur(3), this->getCaracPatrouilleur(4));
-    this->patrouilleurs->push_back(p);
+    this->addPatrouilleur(p);
 }
 
 void Flotte::addPatrouilleur(Patrouilleur* p){

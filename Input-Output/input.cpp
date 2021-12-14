@@ -45,7 +45,7 @@ void gestion_evenements(SDL_Event *event, Monde* monde, bool *terminer)
                         int x;
                         int y;
                         SDL_GetMouseState(&x, &y);
-                        for(int i; i < monde->getNbFlotte(); i++)
+                        for(int i; i < monde->getNbFlottes(); i++)
                         {
                             
                         }

@@ -46,21 +46,39 @@ SDL_Texture* charger_image(const char* nomfichier, SDL_Renderer* renderer);
 */
 SDL_Texture* charger_image_transparente(const char* nomfichier, SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b);
 
+
+/**
+ * @brief La foncion qui affiche le monde
+ * @param ecran l'écran
+ * @param monde le monde
+ * @param textureIles la texture correspondant aux iles
+ * @param texturePatrouilleur la texture correspondant aux patrouilleurs
+ */
+void afficherMonde(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIles, SDL_Texture* texturePatrouilleur);
+
+/**
+ * @brief La fonction qui affiche les iles
+ * @param ecran l'écran
+ * @param monde le monde
+ * @param textureIles la texture correspondant aux iles
+ */
+void afficherIles(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIles);
+
 /**
  * @brief  La fonction affiche les navire du monde
  * @param ecran l'ecran
  * @param monde le monde
- * @param texturePatrouilleur la texture correspondant aux parouilleurs
+ * @param texturePatrouilleur la texture correspondant aux patrouilleurs
  */
-void renderNavires(SDL_Renderer* ecran, Monde* monde, SDL_Texture* texturePatrouilleur);
+void afficherNavires(SDL_Renderer* ecran, Monde* monde, SDL_Texture* texturePatrouilleur);
 
 /**
  * @brief affiche les patrouilleurs
  * @param ecran l'ecran
  * @param monde 
- * @param texturePatrouilleur la texture correspondant aux parouilleurs
+ * @param texturePatrouilleur la texture correspondant aux patrouilleurs
  */
-void renderPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, SDL_Texture* texturePatrouilleur);
+void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, SDL_Texture* texturePatrouilleur);
 
 
 /**

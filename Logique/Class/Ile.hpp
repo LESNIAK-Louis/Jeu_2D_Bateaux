@@ -22,11 +22,14 @@ class Ile
 
     public : 
         Ile(Point* centre, int taille, int forme);
+        Ile(Ile* ile);
         ~Ile();
 
         Point* getCentre();
         int getTaille();
         int getForme();
+        int getAbscisse();
+        int getOrdonnee();
 
         void setCentre(Point* centre);
         void setTaille(int taille);

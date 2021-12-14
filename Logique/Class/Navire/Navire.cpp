@@ -230,9 +230,6 @@ void Navire::setDestination(Point* point){
     setAngle(this->getCentre()->trouverAngle(this->destination));
 }
 
-void Navire::setChemin() {
-    //this->chemin = this->getCentre()->findPathTo(this->destination);
-}
 
 void Navire::setPvMax(int pvMax){
     this->pvMax = pvMax;

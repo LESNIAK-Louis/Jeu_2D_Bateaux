@@ -82,23 +82,25 @@ int main()
     SDL_Window* fenetre; SDL_Event evenements;SDL_Renderer* ecran; bool terminer = false;
     initSDL(&fenetre, &ecran, LARGEUR_ECRAN, HAUTEUR_ECRAN);
     SDL_Texture* fond = charger_image("Ressources/fond.bmp", ecran);
+    SDL_Texture* textureIle = charger_image("Ressources/ile.bmp", ecran);
     SDL_Texture* texturePatrouilleur = charger_image("Ressources/test_bateau.bmp", ecran);
 
-    Monde* monde = new Monde(1,1,1,1);
+    Monde* monde = new Monde(1,0,1,1);
+    monde->setIle(0, new Ile(new Point(200,200), 1, 1));
     monde->addFlotte(new Flotte(0, new Point(50,50), new Point(50,50), 0,10,500));
     monde->getFlotte(0)->newPatrouilleur();
-    //monde->getFlotte(0)->newPatrouilleur();
+    monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
-    monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(50, 300));
-    //monde->getFlotte(0)->getPatrouilleur(1)->setCentre(new Point(100,100));
+    monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(300, 300));
+     //monde->getFlotte(0)->getPatrouilleur(1)->setDestination(new Point(150, 300));
 
     while(!terminer){
     
         SDL_RenderClear(ecran);
         SDL_RenderCopy(ecran, fond, NULL, NULL);
-        renderNavires(ecran, monde, texturePatrouilleur);
+        afficherMonde(ecran, monde, textureIle, texturePatrouilleur);
         moveShips(monde);
-        std::cout << "Pat 0" + monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->toString()<< "\n";
+        //std::cout << "Pat 0" + monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->toString()<< "\n";
         //std::cout << "Pat 1" + monde->getFlotte(0)->getPatrouilleur(1)->getCentre()->toString()<< "\n";
         gestion_evenements(&evenements, monde);
         SDL_RenderPresent(ecran);

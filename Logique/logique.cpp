@@ -23,9 +23,8 @@ void moveSelectedShips(Monde* monde, int x, int y)
 void moveShips(Monde* monde){
     for (int f = 0; f < monde->getNbFlottes(); f++){
         for (int p = 0; p < monde->getFlotte(f)->getNbPatrouilleurs(); p++) {
-            Patrouilleur* pat = monde->getFlotte(f)->getPatrouilleur(p);
-            if (pat->isMoving()){
-                pat->avancer();
+            if (monde->getFlotte(f)->getPatrouilleur(p)->isMoving()){
+                monde->getFlotte(f)->getPatrouilleur(p)->avancer();
             }
             /*for (int i = 0; i < monde->getNbIles(); i++) {
                 while

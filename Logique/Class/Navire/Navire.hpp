@@ -87,7 +87,6 @@ class Navire
         void setVitesseVerticale(int vt);
         void calculerVitesseHorVert();
         void setDestination(Point* dest);
-        void setChemin();
         void avancer();
         void setPvMax(int pvMax);
         void setDegatArme(int degat);

@@ -88,6 +88,7 @@ int main()
 
     Monde* monde;
     //monde = readSave("Save.txt");
+<<<<<<< HEAD
     monde = new Monde(0,0,1,1);
     monde->addFlotte(new Flotte(0, new Point(50,50), new Point(50,50), 0,10,500));
     Ile* ile = new Ile(new Point(250, 150), 1 , 1);

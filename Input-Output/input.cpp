@@ -7,14 +7,14 @@
 
 #include "input.hpp"
 
-void gestion_evenements(SDL_Event *event, Monde* monde)
+void gestion_evenements(SDL_Event *event, Monde* monde, bool *terminer)
 {
     while(SDL_PollEvent(event)) 
     {
         switch(event->type)
         {
             case SDL_QUIT : // Si l'utilisateur a cliqué sur le X de la fenêtre
-                exit(0);
+                *terminer = true;
             break;
             case SDL_KEYDOWN :  // Si une touche clavier est appuyée
                 switch (event->key.keysym.sym)
@@ -42,6 +42,14 @@ void gestion_evenements(SDL_Event *event, Monde* monde)
                 switch(event->button.button)
                 {
                     case SDL_BUTTON_LEFT:
+                        int x;
+                        int y;
+                        SDL_GetMouseState(&x, &y);
+                        for(int i; i < monde->getNbFlotte(); i++)
+                        {
+                            
+                        }
+                        
                     break;
                     case SDL_BUTTON_RIGHT:
                     break;

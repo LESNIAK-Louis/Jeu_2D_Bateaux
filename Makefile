@@ -4,7 +4,7 @@ LIBS = -L./SDL2_ttf/.libs -L./SDL2_image/.libs
 LDFLAGS = `sdl2-config --cflags --libs` -lSDL2_ttf -lSDL2_image
 INCLUDES = -I./SDL2_ttf -I./SDL2_image
 EXEC = main testPoint testIle testIleBonus testLogique testMonde testIO testSave.txt
-SRC = main.cpp Graphique/fonctions_SDL.cpp Input-Output/input.cpp Logique/logique.cpp Logique/Class/Point.cpp Logique/Class/Ile.cpp Logique/Class/Flotte.cpp Logique/Class/IleBonus.cpp Logique/Class/Navire/Navire.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Armes_Explosives.cpp Logique/Class/Monde.cpp
+SRC = main.cpp Input-Output/fichier.cpp Graphique/fonctions_SDL.cpp Input-Output/input.cpp Logique/logique.cpp Logique/Class/Point.cpp Logique/Class/Ile.cpp Logique/Class/Flotte.cpp Logique/Class/IleBonus.cpp Logique/Class/Navire/Navire.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Armes_Explosives.cpp Logique/Class/Monde.cpp
 OBJ = $(SRC:.cpp=.o)
 
 SRCPoint = Logique/Class/tests/testPoint.cpp Logique/Class/Point.cpp 

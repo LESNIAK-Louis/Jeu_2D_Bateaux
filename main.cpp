@@ -2,6 +2,7 @@
 #include "Logique/Class/Monde.hpp"
 #include "Input-Output/input.hpp"
 #include "Logique/logique.hpp"
+#include "Input-Output/fichier.hpp"
 /*
 #define objW 640
 #define objH 192
@@ -85,27 +86,33 @@ int main()
     SDL_Texture* textureIle = charger_image("Ressources/ile.bmp", ecran);
     SDL_Texture* texturePatrouilleur = charger_image("Ressources/test_bateau.bmp", ecran);
 
-    Monde* monde = new Monde(1,0,1,1);
-    monde->setIle(0, new Ile(new Point(200,200), 1, 1));
-    monde->addFlotte(new Flotte(0, new Point(50,50), new Point(50,50), 0,10,500));
-    monde->getFlotte(0)->newPatrouilleur();
-    monde->getFlotte(0)->newPatrouilleur();
-    monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
-    monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(300, 300));
-     //monde->getFlotte(0)->getPatrouilleur(1)->setDestination(new Point(150, 300));
-
-    while(!terminer){
+    Monde* monde;
+    monde = readSave("Save.txt");
+    /*
+        monde = new Monde(0,0,1,1);
+        monde->addFlotte(new Flotte(0, new Point(50,50), new Point(50,50), 0,10,500));
+        monde->getFlotte(0)->newPatrouilleur();
+        //monde->getFlotte(0)->newPatrouilleur();
+        monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
+        monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(50, 300));
+        //monde->getFlotte(0)->getPatrouilleur(1)->setCentre(new Point(100,100));
     
+    */
+    while(!terminer){
         SDL_RenderClear(ecran);
         SDL_RenderCopy(ecran, fond, NULL, NULL);
         afficherMonde(ecran, monde, textureIle, texturePatrouilleur);
         moveShips(monde);
         //std::cout << "Pat 0" + monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->toString()<< "\n";
         //std::cout << "Pat 1" + monde->getFlotte(0)->getPatrouilleur(1)->getCentre()->toString()<< "\n";
-        gestion_evenements(&evenements, monde);
+        gestion_evenements(&evenements, monde, &terminer);
         SDL_RenderPresent(ecran);
         SDL_Delay(50);
     }
+
+    save("Save.txt", monde);
+    monde->~Monde();
+
 
     return 0;
 }

@@ -54,7 +54,7 @@ SDL_Texture* charger_image_transparente(const char* nomfichier, SDL_Renderer* re
  * @param textureIles la texture correspondant aux iles
  * @param texturePatrouilleur la texture correspondant aux patrouilleurs
  */
-void afficherMonde(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIles, SDL_Texture* texturePatrouilleur);
+void afficherMonde(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIle, SDL_Texture* texturePatrouilleur);
 
 /**
  * @brief La fonction qui affiche les iles
@@ -62,7 +62,7 @@ void afficherMonde(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIles, 
  * @param monde le monde
  * @param textureIles la texture correspondant aux iles
  */
-void afficherIles(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIles);
+void afficherIles(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIle);
 
 /**
  * @brief  La fonction affiche les navire du monde

@@ -88,11 +88,12 @@ int main()
 
     Monde* monde;
     //monde = readSave("Save.txt");
-<<<<<<< HEAD
     monde = new Monde(0,0,1,1);
     monde->addFlotte(new Flotte(0, new Point(50,50), new Point(50,50), 0,10,500));
+    monde->addFlotte(new Flotte(1, new Point(400,400), new Point(400,400), 0,10,500));
     Ile* ile = new Ile(new Point(250, 150), 1 , 1);
     monde->getFlotte(0)->newPatrouilleur();
+    monde->getFlotte(1)->newPatrouilleur();
     monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
     monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(50, 300));

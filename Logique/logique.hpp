@@ -6,6 +6,7 @@
 */
 
 #include "Class/Monde.hpp"
+#include <stdio.h>
 
 #ifndef LOGIQUE_HPP
 #define LOGIQUE_HPP

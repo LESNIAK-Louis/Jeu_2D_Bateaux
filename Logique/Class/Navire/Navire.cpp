@@ -12,8 +12,8 @@
 Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int pvMax, int degatArme, int cdArme, int portee){
     this->idFlotte = idFlotte;
     this->id = id;
-    this->setCentre(pos);
-    this->setDestination(dest);
+    this->centre = new Point(pos);
+    this->destination = new Point(dest);
     //this->setChemin();
     this->angle = 0;
     this->pvMax = pvMax;
@@ -225,7 +225,7 @@ void Navire::calculerVitesseHorVert(){
 }
 
 void Navire::setDestination(Point* point){
-    this->destination = new Point(point);
+    this->getDestination()->copierPoint(point);
     this->setMove(!(this->estEnCollisionAvec(1, this->getDestination())));
     setAngle(this->getCentre()->trouverAngle(this->destination));
 }

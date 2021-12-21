@@ -17,6 +17,7 @@ class Point
     public:
         Point(int abs, int ord);
         Point(Point* point);
+        void copierPoint(Point* point);
         void deplacer(int delta_abs, int deltaord);
         int getOrdonnee();
         int getAbscisse();

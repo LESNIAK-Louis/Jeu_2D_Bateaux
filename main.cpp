@@ -96,8 +96,8 @@ int main()
     monde->getFlotte(1)->newPatrouilleur();
     monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
-    monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(50, 300));
-    //monde->getFlotte(0)->getPatrouilleur(1)->setCentre(new Point(300,300));
+    monde->getFlotte(0)->getPatrouilleur(1)->setDestination(new Point(50, 300));
+    monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(300,300));
 
     while(!terminer){
         SDL_RenderClear(ecran);
@@ -106,8 +106,10 @@ int main()
         SDL_Rect DestR = {ile->getAbscisse()-TAILLE_ILE1/2, ile->getOrdonnee()-TAILLE_ILE1/2,TAILLE_ILE1, TAILLE_ILE1};
         SDL_RenderCopy(ecran, textureIle, NULL, &DestR);
         moveShips(monde);
-        //std::cout << "Pat 0" + monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->toString()<< "\n";
-        //std::cout << "Pat 1" + monde->getFlotte(0)->getPatrouilleur(1)->getCentre()->toString()<< "\n";
+        /*std::cout << "Pat 0" + monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->toString()<< "\n";
+        std::cout << "Pat 0 dest : " + monde->getFlotte(0)->getPatrouilleur(0)->getDestination()->toString()<< "\n";
+        std::cout << "Pat 1" + monde->getFlotte(0)->getPatrouilleur(1)->getCentre()->toString()<< "\n";
+        std::cout << "Pat 1 dest : " + monde->getFlotte(0)->getPatrouilleur(1)->getDestination()->toString()<< "\n";*/
         gestion_evenements(&evenements, monde, &terminer);
         SDL_RenderPresent(ecran);
         SDL_Delay(50);

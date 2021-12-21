@@ -19,6 +19,11 @@ Point::Point(Point* point)
     this->setOrdonnee(point->getOrdonnee());
 }
 
+void Point::copierPoint(Point* point){
+    this->setAbscisse(point->getAbscisse());
+    this->setOrdonnee(point->getOrdonnee());
+}
+
 void Point::deplacer(int delta_abs, int delta_ord) 
 {
     this->abs += delta_abs;

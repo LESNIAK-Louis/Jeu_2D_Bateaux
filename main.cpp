@@ -91,12 +91,13 @@ int main()
     monde = new Monde(0,0,1,1);
     monde->addFlotte(new Flotte(0, new Point(50,50), new Point(50,50), 0,10,500));
     monde->addFlotte(new Flotte(1, new Point(400,400), new Point(400,400), 0,10,500));
-    Ile* ile = new Ile(new Point(250, 150), 1 , 1);
+    Ile* ile = new Ile(new Point(150, 150), 1 , 1);
     monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(1)->newPatrouilleur();
     monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
-    monde->getFlotte(0)->getPatrouilleur(1)->setDestination(new Point(50, 300));
+    monde->getFlotte(0)->getPatrouilleur(1)->setCentre(new Point(320, 230));
+    monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(320, 230));
     monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(300,300));
 
     while(!terminer){

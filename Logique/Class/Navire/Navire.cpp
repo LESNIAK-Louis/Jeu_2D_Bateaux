@@ -169,6 +169,11 @@ void Navire::setAngle(int angle){
     this->calculerVitesseHorVert();
 }
 
+void Navire::modifierAngle(int deltaAngle){
+    deltaAngle%=360;
+    this->setAngle(this->getAngle() + deltaAngle);
+}
+
 void Navire::setPv(int pv){
     this->pv = pv;
 }

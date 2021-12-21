@@ -80,6 +80,7 @@ class Navire
         void deplacer(int abs, int ord);
         void setMove(bool b);
         void setAngle(int angle);
+        void modifierAngle(int deltaAngle);
         void setPv(int pv);
         void ajouterPV(int pv);
         void setVitesse(int vitesse);

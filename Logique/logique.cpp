@@ -22,14 +22,22 @@ void moveSelectedShips(Monde* monde, int x, int y)
 
 void moveShips(Monde* monde){
     for (int f = 0; f < monde->getNbFlottes(); f++){
-        for (int p = 0; p < monde->getFlotte(f)->getNbPatrouilleurs(); p++) {
-            
+        for (int p = 0; p < monde->getFlotte(f)->getNbPatrouilleurs(); p++) {  
             if (monde->getFlotte(f)->getPatrouilleur(p)->isMoving()){
+                //Permet d'éviter la collision avec une ile
+                for (int i = 0; i < monde->getNbIles(); i++) {
+                    if (monde->getFlotte(f)->getPatrouilleur(p)->estEnCollisionAvec(monde->getIle(i)->getTaille() , monde->getIle(i)->getCentre()) ) {
+                        int angleRelatif = monde->getFlotte(f)->getPatrouilleur(p)->getCentre()->trouverAngle(monde->getIle(i)->getCentre()) - monde->getFlotte(f)->getPatrouilleur(p)->getAngle();
+                        if (angleRelatif > 0 && angleRelatif < 90){
+                            monde->getFlotte(f)->getPatrouilleur(p)->modifierAngle(-90);
+                        }
+                        if (angleRelatif > -90 && angleRelatif <= 0){
+                            monde->getFlotte(f)->getPatrouilleur(p)->modifierAngle(90);
+                        }
+                    }
+                }
                 monde->getFlotte(f)->getPatrouilleur(p)->avancer();
             }
-            /*for (int i = 0; i < monde->getNbIles(); i++) {
-                while
-            }*/
         }
     }
 }

@@ -274,7 +274,7 @@ void Navire::avancer(){
     if (this->getAbscisse() > LARGEUR_ECRAN) {this->setAbscisse(LARGEUR_ECRAN);}
     if (this->getOrdonnee() < 0){ this->setOrdonnee(0);}
     if (this->getOrdonnee() > HAUTEUR_ECRAN) { this->setOrdonnee(HAUTEUR_ECRAN);}
-    setAngle(this->getCentre()->trouverAngle(this->destination));
+    setAngle(this->getCentre()->trouverAngle(this->getDestination()));
     this->setMove(!(this->estEnCollisionAvec(1, this->getDestination() )));
 }
 

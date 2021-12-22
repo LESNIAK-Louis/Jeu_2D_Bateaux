@@ -91,20 +91,35 @@ int main()
     monde = new Monde(0,0,1,1);
     monde->addFlotte(new Flotte(0, new Point(50,50), new Point(50,50), 0,10,500));
     monde->addFlotte(new Flotte(1, new Point(400,400), new Point(400,400), 0,10,500));
-    Ile* ile = new Ile(new Point(150, 150), 1 , 1);
+    Ile* ile = new Ile(new Point(80, 150), 1 , 1);
+    monde->getFlotte(0)->newPatrouilleur();
+    monde->getFlotte(0)->newPatrouilleur();
+    monde->getFlotte(0)->newPatrouilleur();
+    monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(1)->newPatrouilleur();
-    monde->getFlotte(0)->newPatrouilleur();
+    
     monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
-    monde->getFlotte(0)->getPatrouilleur(1)->setCentre(new Point(320, 230));
-    monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(320, 230));
+    monde->getFlotte(0)->getPatrouilleur(1)->setCentre(new Point(50, 150-64));
+
+    monde->getFlotte(0)->getPatrouilleur(4)->setCentre(new Point(50, 150-64));
+    monde->getFlotte(0)->getPatrouilleur(4)->setAngle(90);
+
+    monde->getFlotte(0)->getPatrouilleur(2)->setCentre(new Point(50, 150));
+    monde->getFlotte(0)->getPatrouilleur(2)->setAngle(90);
+
+    monde->getFlotte(0)->getPatrouilleur(3)->setCentre(new Point(50, 150+64));
+    monde->getFlotte(0)->getPatrouilleur(3)->setAngle(90);
+
+    monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(300, 300));
     monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(300,300));
+    monde->getFlotte(0)->removePatrouilleur(1);
 
     while(!terminer){
         SDL_RenderClear(ecran);
         SDL_RenderCopy(ecran, fond, NULL, NULL);
         afficherMonde(ecran, monde, textureIle, texturePatrouilleur);
-        SDL_Rect DestR = {ile->getAbscisse()-TAILLE_ILE1/2, ile->getOrdonnee()-TAILLE_ILE1/2,TAILLE_ILE1, TAILLE_ILE1};
+        SDL_Rect DestR = {ile->getAbscisse()-(TAILLE_ILE1/2), ile->getOrdonnee()-(TAILLE_ILE1/2),TAILLE_ILE1, TAILLE_ILE1};
         SDL_RenderCopy(ecran, textureIle, NULL, &DestR);
         moveShips(monde);
         /*std::cout << "Pat 0" + monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->toString()<< "\n";
@@ -115,6 +130,7 @@ int main()
         SDL_RenderPresent(ecran);
         SDL_Delay(50);
     }
+
 
     save("Save.txt", monde);
     monde->~Monde();

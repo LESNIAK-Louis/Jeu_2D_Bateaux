@@ -88,25 +88,24 @@ int main()
 
     Monde* monde;
     //monde = readSave("Save.txt");
-    monde = new Monde(0,0,1,1);
+    monde = new Monde(1,0,1,1);
     monde->addFlotte(new Flotte(0, new Point(50,50), new Point(200,200), 0,10,500));
     monde->addFlotte(new Flotte(1, new Point(400,400), new Point(400,400), 0,10,500));
-    Ile* ile = new Ile(new Point(250, 250), 1 , 1);
-    monde->getFlotte(0)->newPatrouilleur();
-    monde->getFlotte(0)->newPatrouilleur();
-    monde->getFlotte(0)->newPatrouilleur();
-    monde->getFlotte(0)->newPatrouilleur();
-    monde->getFlotte(0)->newPatrouilleur();
-    monde->getFlotte(0)->newPatrouilleur();
-    monde->getFlotte(0)->newPatrouilleur();
+    monde->setIle(0, new Ile(new Point(300, 300), TAILLE_ILE1 , 1));
     monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(1)->newPatrouilleur();
+    /*monde->getFlotte(0)->newPatrouilleur();
+    monde->getFlotte(0)->newPatrouilleur();
+    monde->getFlotte(0)->newPatrouilleur();
+    monde->getFlotte(0)->newPatrouilleur();
+    monde->getFlotte(0)->newPatrouilleur();
+    monde->getFlotte(0)->newPatrouilleur();
+    monde->getFlotte(1)->newPatrouilleur();*/
     
     monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
-    monde->getFlotte(0)->getPatrouilleur(1)->setCentre(new Point(50, 150-90));
 
-    /*monde->getFlotte(0)->getPatrouilleur(4)->setCentre(new Point(80-32, 150-32));
-    monde->getFlotte(0)->getPatrouilleur(4)->setAngle(90);
+    //monde->getFlotte(1)->getPatrouilleur(0)->setCentre(new Point(150, 250));
+    /*monde->getFlotte(0)->getPatrouilleur(4)->setAngle(90);
 
     monde->getFlotte(0)->getPatrouilleur(2)->setCentre(new Point(80-32, 150));
     monde->getFlotte(0)->getPatrouilleur(2)->setAngle(90);
@@ -123,23 +122,22 @@ int main()
     monde->getFlotte(0)->getPatrouilleur(7)->setCentre(new Point(80+32, 150+32));
     monde->getFlotte(0)->getPatrouilleur(7)->setAngle(90);*/
 
-    monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(250, 250));
-    monde->getFlotte(0)->getPatrouilleur(1)->setDestination(new Point(250, 150));
+    monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(400,420));
+    /*monde->getFlotte(0)->getPatrouilleur(1)->setDestination(new Point(250, 150));
     monde->getFlotte(0)->getPatrouilleur(2)->setDestination(new Point(150, 150));
     monde->getFlotte(0)->getPatrouilleur(3)->setDestination(new Point(150, 250));
-    monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(300,300));
-    monde->getFlotte(0)->removePatrouilleur(1);
+    monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(300,300));*/
 
     while(!terminer){
         SDL_RenderClear(ecran);
         SDL_RenderCopy(ecran, fond, NULL, NULL);
         afficherMonde(ecran, monde, textureIle, texturePatrouilleur);
-        //SDL_Rect DestR = {ile->getAbscisse()-(TAILLE_ILE1/2), ile->getOrdonnee()-(TAILLE_ILE1/2),TAILLE_ILE1, TAILLE_ILE1};
-        //SDL_RenderCopy(ecran, textureIle, NULL, &DestR);
+        SDL_Rect DestR = {monde->getIle(0)->getAbscisse()-(TAILLE_ILE1/2), monde->getIle(0)->getOrdonnee()-(TAILLE_ILE1/2),TAILLE_ILE1, TAILLE_ILE1};
+        SDL_RenderCopy(ecran, textureIle, NULL, &DestR);
         moveShips(monde);
         std::cout << "Pat 0 angle : " << monde->getFlotte(0)->getPatrouilleur(0)->getAngle()<< "\n";
-        /*std::cout << "Pat 0" + monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->toString()<< "\n";
-        std::cout << "Pat 0 dest : " + monde->getFlotte(0)->getPatrouilleur(0)->getDestination()->toString()<< "\n";
+        std::cout << "Pat 0" + monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->toString()<< "\n";
+        /*std::cout << "Pat 0 dest : " + monde->getFlotte(0)->getPatrouilleur(0)->getDestination()->toString()<< "\n";
         std::cout << "Pat 1" + monde->getFlotte(0)->getPatrouilleur(1)->getCentre()->toString()<< "\n";
         std::cout << "Pat 1 dest : " + monde->getFlotte(0)->getPatrouilleur(1)->getDestination()->toString()<< "\n";*/
         gestion_evenements(&evenements, monde, &terminer);

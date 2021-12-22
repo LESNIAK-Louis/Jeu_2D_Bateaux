@@ -54,7 +54,7 @@ int Point::distance(Point* pt)
     if(pt == NULL) error("point NULL en param. | distance - Point");
     int x = std::abs(this->getAbscisse() - pt->getAbscisse());
     int y = std::abs(this->getOrdonnee() - pt->getOrdonnee());
-    return (int)sqrt(x*x + y*y);
+    return round(sqrt((double)x*x + (double)y*y));
 }
 
 bool Point::isEqual(Point* pt)
@@ -65,43 +65,38 @@ bool Point::isEqual(Point* pt)
 
 
 int Point::trouverAngle(Point* p2){
-    /*if (this->getOrdonnee() == p2->getOrdonnee()){ // les points ont à la même hauteur
+   if (this->getOrdonnee() == p2->getOrdonnee()){ // les points ont à la même hauteur
         if (this->getAbscisse() <= p2->getAbscisse()){
             return 90;
         }else {
             return 270;
         }
     }
-    if (this->getAbscisse() == p2->getAbscisse()) { //mes points sont l'un en dessous de l'autre
+    if (this->getAbscisse() == p2->getAbscisse()) { //les points sont l'un en dessous de l'autre
         if (this->getOrdonnee() <= p2->getOrdonnee()){
             return 180;
         }else {
             return 0;
         }
     }
-    double angle = std::atan( ((double) (p2->getAbscisse() - this->getAbscisse())) / ((double)(p2->getOrdonnee() - this->getOrdonnee()))  );
-    angle *= (180/3.1415);
+    double param = ((double)(p2->getAbscisse() - this->getAbscisse())) / ((double)(p2->getOrdonnee() - this->getOrdonnee()));
+    if (param<0){
+        param = -param;
+    }
+    double angle = std::atan( param  );
+    angle *= (180/3.14159);
     if (p2->getAbscisse() >= this->getAbscisse() && p2->getOrdonnee() > this->getOrdonnee() ){ //p2 est en bas à droite de p1
-        angle += 90;
+        angle = 180-angle;
     }
     if (p2->getAbscisse() <= this->getAbscisse() && p2->getOrdonnee() > this->getOrdonnee()){ //p2 est en bas à gauche de p1
         angle += 180;
     }
     if (p2->getAbscisse() < this->getAbscisse() && p2->getOrdonnee() < this->getOrdonnee()){ //p2 est en haut à gauche de p1
-        angle += 270;
+        angle = 360-angle;
     }
     return round(angle);
-}*/
-    int v1 = 0;
-    int v2 = -1;
-    double norme1 = 1;
-    int u1 = p2->getAbscisse()-this->getAbscisse();
-    int u2 = p2->getOrdonnee() - this->getOrdonnee();
-    double norme2 = round(sqrt(u1*u1 + u2*u2));
-    double produitScalaire = u1*v1 + u2*v2;
-    double angle = acos(produitScalaire/(norme2*norme1));
-    return round(angle);
 }
+
 
 std::string Point::toString()
 {

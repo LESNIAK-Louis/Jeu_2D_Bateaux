@@ -12,12 +12,7 @@ Ile::Ile(Point* centre, int t, int f)
 {
     if(centre == NULL) error("centre NULL en param | Constructeur - Ile");
     this->setCentre(centre);
-    switch (taille){
-        case 1:
-            this->setTaille(TAILLE_ILE1);
-            break;
-    }
-    this->setForme(f);
+    this->setTaille(t);
 }
 
 Ile::Ile(Ile* ile)

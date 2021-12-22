@@ -120,13 +120,13 @@ void Flotte::addPatrouilleur(Patrouilleur* p){
 void Flotte::removeAllPatrouilleurs(){
     while(this->getNbPatrouilleurs() != 0)
     {
-        this->patrouilleurs->back()->~Navire();
+        this->patrouilleurs->back()->~Patrouilleur();
         this->patrouilleurs->pop_back();
     }
 }
 
 void Flotte::removePatrouilleur(int i){
-    //this->patrouilleurs->at(i)->~Navire();
+    //this->patrouilleurs->at(i)->~Patrouilleur();
     this->patrouilleurs->erase(patrouilleurs->begin() + i);
     this->reduireNumeroPatrouilleur(i);
 }

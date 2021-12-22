@@ -65,7 +65,7 @@ bool Point::isEqual(Point* pt)
 
 
 int Point::trouverAngle(Point* p2){
-    if (this->getOrdonnee() == p2->getOrdonnee()){ // les points ont à la même hauteur
+    /*if (this->getOrdonnee() == p2->getOrdonnee()){ // les points ont à la même hauteur
         if (this->getAbscisse() <= p2->getAbscisse()){
             return 90;
         }else {
@@ -91,8 +91,17 @@ int Point::trouverAngle(Point* p2){
         angle += 270;
     }
     return round(angle);
+}*/
+    int v1 = 0;
+    int v2 = -1;
+    double norme1 = 1;
+    int u1 = p2->getAbscisse()-this->getAbscisse();
+    int u2 = p2->getOrdonnee() - this->getOrdonnee();
+    double norme2 = round(sqrt(u1*u1 + u2*u2));
+    double produitScalaire = u1*v1 + u2*v2;
+    double angle = acos(produitScalaire/(norme2*norme1));
+    return round(angle);
 }
-
 
 std::string Point::toString()
 {

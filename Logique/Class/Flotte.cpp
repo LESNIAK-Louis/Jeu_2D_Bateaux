@@ -4,10 +4,44 @@
  * @date 14/09/2021
  * Definition d'une flotte (~= un joueur)
 */
-
-
 #include "Flotte.hpp"
 
+
+/* Liste chainée */
+
+selectedNavire* consVide()
+{
+    return NULL;
+}
+
+selectedNavire* consListe(Navire* nav, selectedNavire* liste)
+{
+    selectedNavire* listeNew = (selectedNavire*)malloc(sizeof(*listeNew));
+    if (listeNew == NULL) error("Erreur allocation liste");
+    listeNew->nav = nav;
+    listeNew->suivant = liste;
+    return listeNew;
+}
+
+Navire* prem(selectedNavire* liste)
+{
+    if(liste->nav == NULL) error("Prem su element null liste");
+    return liste->nav;
+}
+
+selectedNavire* rest(selectedNavire* liste){ return liste->suivant; }
+
+bool estVide(selectedNavire* liste) { return liste == NULL; }
+
+void freeListe(selectedNavire* L)
+{
+    if (estVide(L))
+        return;
+    freeListe(rest(L));
+    free(L);
+}
+
+/* Class Flotte */ 
 
 Flotte::Flotte(int numero, Point* coord, Point* spawn, int ressource, int gain, int pv){
     this->numeroFlotte = numero;
@@ -18,6 +52,7 @@ Flotte::Flotte(int numero, Point* coord, Point* spawn, int ressource, int gain, 
     this->pvBase = pv;
     this->setCaracPatrouilleur(2,10,10,2, 100);
     this->patrouilleurs = new std::vector<Patrouilleur*>();
+    this->listeSelected = consVide();
 }
 
 Flotte::~Flotte(){
@@ -25,6 +60,7 @@ Flotte::~Flotte(){
     delete this->spawnPoint;
     this->removeAllPatrouilleurs();
     delete this->patrouilleurs;
+    freeListe(this->listeSelected);
 }
 
 int Flotte::getNumero(){
@@ -92,6 +128,33 @@ void Flotte::setCaracPatrouilleur(int v, int pMax, int degat, int cd, int p){
     this->caracPatrouilleur[2] = degat;
     this->caracPatrouilleur[3] = cd;
     this->caracPatrouilleur[4] = p;
+}
+
+selectedNavire* Flotte::getListeSelected()
+{
+    return this->listeSelected;
+}
+
+void Flotte::viderListeSelected()
+{
+    freeListe(this->getListeSelected());
+    this->listeSelected = consVide();
+}
+
+void Flotte::addElemListeSelected(Navire* nav)
+{
+    this->listeSelected = consListe(nav,this->listeSelected);
+}
+
+void Flotte::deplacerSelected(Point* destination)
+{
+    selectedNavire* listeTemp = this->getListeSelected();
+    while(!estVide(listeTemp))
+    {
+        if(listeTemp->nav == NULL) error("elem NULL dans la liste");
+        listeTemp->nav->setDestination(destination);
+        listeTemp = rest(listeTemp);
+    }
 }
 
 void Flotte::addRessource(){

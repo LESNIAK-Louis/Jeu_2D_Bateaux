@@ -7,7 +7,6 @@
 
 #include "Mouse.hpp"
 
-
 Mouse::Mouse()
 {
     this->selecting = false;

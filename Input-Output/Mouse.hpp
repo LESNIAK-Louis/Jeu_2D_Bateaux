@@ -16,7 +16,6 @@
 class Mouse
 {
     protected :
-       
         Point* startPosMouse;
         Point* endPosMouse;
         bool selecting;

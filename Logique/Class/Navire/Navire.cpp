@@ -22,7 +22,6 @@ Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int p
     this->degatArme = degatArme;
     this->cdArme = cdArme;
     this->portee = portee;    
-    this->isSelected = false;
     this->calculerVitesseHorVert();
     this->chemin = new std::vector<Point*>();
 }
@@ -118,11 +117,6 @@ int Navire::getPortee(){
 
 Navire* Navire::getCible(){
     return this->cible;
-}
-
-bool Navire::getIsSelected()
-{
-    return this->isSelected;
 }
 
 
@@ -258,10 +252,6 @@ void Navire::setCible(Navire* navire){
     this->cible = navire;
 }
 
-void Navire::setIsSelected(bool isSelected)
-{
-    this->isSelected = isSelected;
-}
 
 //Pathfinding
 

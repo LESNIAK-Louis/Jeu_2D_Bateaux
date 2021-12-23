@@ -19,5 +19,7 @@
  * \param event evenement
 */
 void gestion_evenements(Game* jeu);
+bool isPointingIle(Game* jeu);
+void addNavToSelection(Flotte* flotte, Mouse* mouse);
 
 #endif

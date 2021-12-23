@@ -88,6 +88,7 @@ int main()
     monde->addFlotte(new Flotte(1, new Point(400,400), new Point(400,400), 0,10,500));
     monde->setIle(0, new Ile(new Point(300, 300), TAILLE_ILE1 , 1));
     monde->getFlotte(0)->newPatrouilleur();
+    monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(1)->newPatrouilleur();
     /*monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->newPatrouilleur();
@@ -96,8 +97,6 @@ int main()
     monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(1)->newPatrouilleur();*/
-    
-    monde->getFlotte(0)->getPatrouilleur(0)->setIsSelected(true);
 
     //monde->getFlotte(1)->getPatrouilleur(0)->setCentre(new Point(150, 250));
     /*monde->getFlotte(0)->getPatrouilleur(4)->setAngle(90);
@@ -118,6 +117,7 @@ int main()
     monde->getFlotte(0)->getPatrouilleur(7)->setAngle(90);*/
 
     monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(400,420));
+    monde->getFlotte(0)->getPatrouilleur(1)->setDestination(new Point(222,222));
     /*monde->getFlotte(0)->getPatrouilleur(1)->setDestination(new Point(250, 150));
     monde->getFlotte(0)->getPatrouilleur(2)->setDestination(new Point(150, 150));
     monde->getFlotte(0)->getPatrouilleur(3)->setDestination(new Point(150, 250));

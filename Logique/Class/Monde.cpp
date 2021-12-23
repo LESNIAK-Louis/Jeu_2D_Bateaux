@@ -103,7 +103,7 @@ void Monde::setIle(int index, Ile* ile)
 {
     if(index >= this->getNbIles()) error("index out of range | setIle - Monde");
     if(ile == NULL) error("ile a set NULL | setIle - Monde");
-    this->iles[index] = new Ile(ile);
+    this->iles[index] = ile;
 }
 
 void Monde::setIleBonus(int index, IleBonus* ilebonus)

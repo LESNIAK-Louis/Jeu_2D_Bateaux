@@ -11,18 +11,15 @@
 Ile::Ile(Point* centre, int t, int f)
 {
     if(centre == NULL) error("centre NULL en param | Constructeur - Ile");
-    this->setCentre(centre);
+    this->centre = centre;
     this->setTaille(t);
+    this->setForme(f);
 }
 
 Ile::Ile(Ile* ile)
 {
     this->setCentre(ile->getCentre());
-    switch (taille){
-        case 1:
-            this->setTaille(ile->getTaille());
-            break;
-    }
+    this->setTaille(ile->getTaille());
     this->setForme(ile->getForme());
 }
 
@@ -58,6 +55,7 @@ int Ile::getOrdonnee(){
 void Ile::setCentre(Point* centre)
 {
     if(centre == NULL) error("centre NULL en param | setCentre - Ile");
+    if (this->centre != NULL) delete this->centre;
     this->centre = centre;
 }
 

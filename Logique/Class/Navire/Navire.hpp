@@ -8,16 +8,10 @@
 #ifndef NAVIRE_HPP
 #define NAVIRE_HPP
 
-#define TAILLE_PATROUILLEUR 24
-
-#include <stdio.h>
-#include <stdbool.h>
 #include <string>
 #include <vector>
-#include <cmath>
 #include "../Point.hpp"
 #include "../../../definitions.hpp"
-
 
 class Navire
 {

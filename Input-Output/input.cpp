@@ -6,66 +6,113 @@
 */
 
 #include "input.hpp"
-#include <iostream>
 
-void gestion_evenements(SDL_Event *event, Monde* monde, bool *terminer)
+void gestion_evenements(Game* jeu)
 {
-    while(SDL_PollEvent(event)) 
+    while(SDL_PollEvent(jeu->getEvent())) 
     {
-        switch(event->type)
+        if(jeu->getEtatJeu() == 0) // dans le menu
         {
-            case SDL_QUIT : // Si l'utilisateur a cliqué sur le X de la fenêtre
-                *terminer = true;
-            break;
-            case SDL_KEYDOWN :  // Si une touche clavier est appuyée
-                switch (event->key.keysym.sym)
-                {
-                    case SDLK_RIGHT :
-                        moveSelectedShips(monde, 8, 0);
-                        break;
-                    case SDLK_LEFT :
-                        moveSelectedShips(monde, -8, 0);
-                        break;
-                    case SDLK_UP :
-                        moveSelectedShips(monde, 0, -8);
-                        break;
-                    case SDLK_DOWN :
-                        moveSelectedShips(monde, 0, 8);
-                        break;
-                    case SDLK_ESCAPE : 
-                        //unSelectAll(monde);
-                        break;
-                    default:
-                    break;
-                }
-            break;
-            case SDL_MOUSEBUTTONDOWN: // Si une touche souris est appuyée
-                switch(event->button.button)
-                {
-                    case SDL_BUTTON_LEFT:
+
+        }
+        else // en jeu
+        {
+            switch(jeu->getEvent()->type)
+            {
+                case SDL_QUIT : // Si l'utilisateur a cliqué sur le X de la fenêtre
+                    jeu->setTerminer(true);
+                break;
+                case SDL_KEYDOWN :  // Si une touche clavier est appuyée
+                    switch (jeu->getEvent()->key.keysym.sym)
                     {
-                        int x;
-                        int y;
-                        SDL_GetMouseState(&x, &y);
+                        case SDLK_RIGHT :
+                            moveSelectedShips(jeu->getMonde(), 8, 0);
+                            break;
+                        case SDLK_LEFT :
+                            moveSelectedShips(jeu->getMonde(), -8, 0);
+                            break;
+                        case SDLK_UP :
+                            moveSelectedShips(jeu->getMonde(), 0, -8);
+                            break;
+                        case SDLK_DOWN :
+                            moveSelectedShips(jeu->getMonde(), 0, 8);
+                            break;
+                        case SDLK_ESCAPE : 
+                            //unSelectAll(monde);
+                            break;
+                        default:
+                        break;
+                    }
+                break;
+                case SDL_MOUSEBUTTONDOWN: // Si une touche souris est enfoncée
+                    if(jeu->getEvent()->button.button == SDL_BUTTON_LEFT)
+                    {
+                        jeu->getMouse()->startSelection();
+                    }
+                break;
+                case SDL_MOUSEMOTION: // Si la souris subit un mouvement
+                    if(jeu->getEvent()->button.button == SDL_BUTTON_LEFT)
+                    {
+                        jeu->getMouse()->updateSelection(); // si on veut ajouter un affichage lors de la selection (rectangle dessiné)
+                    }
+                break;
+                case SDL_MOUSEBUTTONUP: // Si une touche souris est relachée
+                    if(jeu->getEvent()->button.button == SDL_BUTTON_LEFT)
+                    {
+                        jeu->getMouse()->endSelection();
 
-                        Point* posSouris = new Point(x,y);
-                        for(int i = 0; i < monde->getNbFlottes(); i++)
-
+                        if(jeu->getMouse()->isSimpleClick())
                         {
-                            for(int j = 0; j < monde->getFlotte(i)->getNbPatrouilleurs(); j++)
+                            bool isPointingEntity = false;
+                            for(int j = 0; j < jeu->getMonde()->getFlotte(0)->getNbPatrouilleurs(); j++)
                             {
-                                bool res = monde->getFlotte(i)->getPatrouilleur(j)->estEnCollisionAvec(5,posSouris);
-                                if(res) *terminer = true;
+                                if(jeu->getMonde()->getFlotte(0)->getPatrouilleur(j)->estEnCollisionAvec(5,jeu->getMouse()->getEndPosMouse()))
+                                {
+                                    unSelectAll(jeu->getMonde());
+                                    jeu->getMonde()->getFlotte(0)->getPatrouilleur(j)->setIsSelected(true);
+                                    isPointingEntity = true;
+                                    break;
+                                }
+                            }
+                            if(!isPointingEntity)
+                            {
+                                for(int j = 0; j < jeu->getMonde()->getNbIles(); j++)
+                                {
+                                    if(collisionCercles(jeu->getMonde()->getIle(j)->getCentre(), /*jeu->getMonde()->getIle(j)->getTaille()*/64, jeu->getMouse()->getCurrentPosMouse(), 5))
+                                    {
+                                        isPointingEntity = true;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if(!isPointingEntity)
+                            {
+                                for(int j = 0; j < jeu->getMonde()->getFlotte(0)->getNbPatrouilleurs(); j++)
+                                {
+                                    if(jeu->getMonde()->getFlotte(0)->getPatrouilleur(j)->getIsSelected())
+                                        jeu->getMonde()->getFlotte(0)->getPatrouilleur(j)->setDestination(jeu->getMouse()->getEndPosMouse());
+                                }
                             }
                         }
-                        delete posSouris;
-                    break;
+                        else
+                        {
+                            unSelectAll(jeu->getMonde());
+                            Rectangle* rect = jeu->getMouse()->getRectangleSelection();
+                            for(int j = 0; j < jeu->getMonde()->getFlotte(0)->getNbPatrouilleurs(); j++)
+                            {
+                                if(collisionCercleRectangle(jeu->getMonde()->getFlotte(0)->getPatrouilleur(j)->getCentre(), jeu->getMonde()->getFlotte(0)->getPatrouilleur(j)->getTaille(), rect))
+                                {
+                                    jeu->getMonde()->getFlotte(0)->getPatrouilleur(j)->setIsSelected(true);
+                                }
+                            }
+                            delete rect;
+                        }
                     }
-                    case SDL_BUTTON_RIGHT:{}
-                    break;
-                }
-            default:
-            break;
+                break;
+                default:
+                break;
+            }
         }
     }
 }

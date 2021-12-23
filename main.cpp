@@ -3,6 +3,7 @@
 #include "Input-Output/input.hpp"
 #include "Logique/logique.hpp"
 #include "Input-Output/fichier.hpp"
+#include "Game.hpp"
 /*
 #define objW 640
 #define objH 192
@@ -80,12 +81,6 @@ int main()
 
 int main()
 {
-    SDL_Window* fenetre; SDL_Event evenements;SDL_Renderer* ecran; bool terminer = false;
-    initSDL(&fenetre, &ecran, LARGEUR_ECRAN, HAUTEUR_ECRAN);
-    SDL_Texture* fond = charger_image("Ressources/fond.bmp", ecran);
-    SDL_Texture* textureIle = charger_image("Ressources/ile.bmp", ecran);
-    SDL_Texture* texturePatrouilleur = charger_image("Ressources/test_bateau.bmp", ecran);
-
     Monde* monde;
     //monde = readSave("Save.txt");
     monde = new Monde(1,0,1,1);
@@ -128,26 +123,31 @@ int main()
     monde->getFlotte(0)->getPatrouilleur(3)->setDestination(new Point(150, 250));
     monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(300,300));*/
 
-    while(!terminer){
-        SDL_RenderClear(ecran);
-        SDL_RenderCopy(ecran, fond, NULL, NULL);
-        afficherMonde(ecran, monde, textureIle, texturePatrouilleur);
+    Game* jeu = new Game(monde);
+    SDL_Texture* fond = charger_image("Ressources/fond.bmp", jeu->getEcran());
+    SDL_Texture* textureIle = charger_image("Ressources/ile.bmp", jeu->getEcran());
+    SDL_Texture* texturePatrouilleur = charger_image("Ressources/test_bateau.bmp", jeu->getEcran());
+
+    while(!jeu->getTerminer()){
+        SDL_RenderClear(jeu->getEcran());
+        SDL_RenderCopy(jeu->getEcran(), fond, NULL, NULL);
+        afficherMonde(jeu->getEcran(), monde, textureIle, texturePatrouilleur);
         SDL_Rect DestR = {monde->getIle(0)->getAbscisse()-(TAILLE_ILE1/2), monde->getIle(0)->getOrdonnee()-(TAILLE_ILE1/2),TAILLE_ILE1, TAILLE_ILE1};
-        SDL_RenderCopy(ecran, textureIle, NULL, &DestR);
+        SDL_RenderCopy(jeu->getEcran(), textureIle, NULL, &DestR);
         moveShips(monde);
-        std::cout << "Pat 0 angle : " << monde->getFlotte(0)->getPatrouilleur(0)->getAngle()<< "\n";
-        std::cout << "Pat 0" + monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->toString()<< "\n";
+        //std::cout << "Pat 0 angle : " << monde->getFlotte(0)->getPatrouilleur(0)->getAngle()<< "\n";
+        //std::cout << "Pat 0" + monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->toString()<< "\n";
         /*std::cout << "Pat 0 dest : " + monde->getFlotte(0)->getPatrouilleur(0)->getDestination()->toString()<< "\n";
         std::cout << "Pat 1" + monde->getFlotte(0)->getPatrouilleur(1)->getCentre()->toString()<< "\n";
         std::cout << "Pat 1 dest : " + monde->getFlotte(0)->getPatrouilleur(1)->getDestination()->toString()<< "\n";*/
-        gestion_evenements(&evenements, monde, &terminer);
-        SDL_RenderPresent(ecran);
+        gestion_evenements(jeu);
+        SDL_RenderPresent(jeu->getEcran());
         SDL_Delay(50);
     }
 
 
-    save("Save.txt", monde);
-    monde->~Monde();
+    save("Save.txt", jeu->getMonde());
+    delete jeu;
 
 
     return 0;

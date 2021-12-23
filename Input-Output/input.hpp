@@ -9,13 +9,15 @@
 #define INPUT_HPP
 
 #include <SDL2/SDL.h>
+#include "../Game.hpp"
 #include "../Logique/logique.hpp"
 #include "../Logique/Class/Monde.hpp"
+#include "Mouse.hpp"
 
 /**
  * \brief La fonction gère les saisis clavier/souris
  * \param event evenement
 */
-void gestion_evenements(SDL_Event* event, Monde* monde, bool *terminer);
+void gestion_evenements(Game* jeu);
 
 #endif

@@ -14,6 +14,7 @@ Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int p
     this->id = id;
     this->centre = new Point(pos);
     this->destination = new Point(dest);
+    this->wayPoint = new Point(dest);
     //this->setChemin();
     this->angle = 0;
     this->pvMax = pvMax;
@@ -87,7 +88,7 @@ int Navire::getVitesseVerticale(){
     return this->vitesseVerticale;
 }
 
-Point* Navire::getNextWayPoint(){
+Point* Navire::getWayPoint(){
     return this->wayPoint;
 }
 
@@ -201,7 +202,7 @@ void Navire::setVitesseVerticale(int vv){
 void Navire::calculerVitesseHorVert(){
     int vh, vv;
     int angle = this->getAngle();
-    float a = angle * (3.1415/180);
+    float a = angle * (PI/180);
     switch (angle/(90)) {
         case 0:
         case 4: 
@@ -232,6 +233,11 @@ void Navire::calculerVitesseHorVert(){
 
 void Navire::setDestination(Point* point){
     this->getDestination()->copierPoint(point);
+    this->setWayPoint(this->getDestination());
+}
+
+void Navire::setWayPoint(Point* point){
+    this->getWayPoint()->copierPoint(point);
     this->setMove(!(this->estEnCollisionAvec(-this->getTaille()/2, this->getDestination())));
     setAngle(this->getCentre()->trouverAngle(this->destination));
 }
@@ -269,13 +275,19 @@ bool Navire::estEnCollisionAvec(int taille, Point* ctr){
     return (this->getCentre()->distance(ctr) < (this->getTaille() + taille)/2);
 }
 
-void Navire::avancer(){
+void Navire::avancer(int deltaAngle){
+    this->modifierAngle(deltaAngle);
+    if ( this->estEnCollisionAvec(-this->getTaille()/2, this->getWayPoint()) && !this->getWayPoint()->isEqual(this->getDestination()) ){
+        this->setWayPoint(this->getDestination());
+    }
+    setAngle(this->getCentre()->trouverAngle(this->getWayPoint()));
     this->getCentre()->deplacer(this->getVitesseHorizontale(), this->getVitesseVerticale());
     if (this->getAbscisse() < 0) { this->setAbscisse(0);}
     if (this->getAbscisse() > LARGEUR_ECRAN) {this->setAbscisse(LARGEUR_ECRAN);}
     if (this->getOrdonnee() < 0){ this->setOrdonnee(0);}
     if (this->getOrdonnee() > HAUTEUR_ECRAN) { this->setOrdonnee(HAUTEUR_ECRAN);}
-    setAngle(this->getCentre()->trouverAngle(this->getDestination()));
+    //Si le navire a atteint le point de passage, alors le point de passage devient la destination
+    
     this->setMove(!(this->estEnCollisionAvec(-this->getTaille()/2, this->getDestination() )));
 }
 

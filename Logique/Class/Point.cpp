@@ -65,7 +65,7 @@ bool Point::isEqual(Point* pt)
 
 
 int Point::trouverAngle(Point* p2){
-   if (this->getOrdonnee() == p2->getOrdonnee()){ // les points ont à la même hauteur
+   if ((double)(p2->getOrdonnee() - this->getOrdonnee() == 0)){ // les points ont à la même hauteur
         if (this->getAbscisse() <= p2->getAbscisse()){
             return 90;
         }else {
@@ -84,7 +84,7 @@ int Point::trouverAngle(Point* p2){
         param = -param;
     }
     double angle = std::atan( param  );
-    angle *= (180/3.14159);
+    angle *= (180/PI);
     if (p2->getAbscisse() >= this->getAbscisse() && p2->getOrdonnee() > this->getOrdonnee() ){ //p2 est en bas à droite de p1
         angle = 180-angle;
     }

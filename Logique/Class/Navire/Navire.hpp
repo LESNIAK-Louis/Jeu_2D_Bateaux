@@ -35,7 +35,6 @@ class Navire
         int degatArme;
         int cdArme; //cool down pour le tir
         int portee;
-        bool isSelected;
         
 
     public : 
@@ -63,7 +62,6 @@ class Navire
         int getCdArme();
         int getPortee();
         Navire* getCible();
-        bool getIsSelected();
 
         void setIdFlotte(int idFlotte);
         void setId(int i);
@@ -89,7 +87,6 @@ class Navire
         void setCdArme(int cd);
         void setPortee(int p);
         void setCible(Navire* navire);
-        void setIsSelected(bool isSelected);
         void ajouterPV();
 
         bool estEnCollisionAvec(int taille, Point* ctr);

@@ -14,9 +14,26 @@
 #include <vector>
 #include "Point.hpp"
 #include "../../definitions.hpp"
-
+#include "Navire/Navire.hpp"
 #include "Navire/Patrouilleur.hpp"
 
+
+// Liste requis pour la notation
+typedef struct selectedNavire selectedNavire;
+struct selectedNavire
+{
+    Navire* nav;
+    selectedNavire* suivant;
+};
+
+selectedNavire* consVide();
+selectedNavire* consListe(Navire* nav, selectedNavire* liste);
+Navire* prem(selectedNavire* liste);
+selectedNavire* rest(selectedNavire* liste);
+bool estVide(selectedNavire* liste);
+void freeListe(selectedNavire* liste);
+
+// class Flotte
 class Flotte 
 {
     private : 
@@ -28,6 +45,8 @@ class Flotte
         int pvBase;
         int caracPatrouilleur[NB_CARAC_PATROUILLEUR]; //index : 0: vitesse; 1: pvMax; 2: degatArme; 3: cooldown; 4: portée;
         std::vector<Patrouilleur*>* patrouilleurs;
+
+        selectedNavire* listeSelected;
 
     public : 
         Flotte(int numero, Point* coord, Point* spawn, int ressource, int gain, int pv);
@@ -44,6 +63,11 @@ class Flotte
         int getCaracPatrouilleur(int i);
         int getNbPatrouilleurs();
         Patrouilleur* getPatrouilleur(int i);
+
+        selectedNavire* getListeSelected();
+        void viderListeSelected();
+        void addElemListeSelected(Navire* nav);
+        void deplacerSelected(Point* destination);
 
         void setNumero(int i);
         void setCoordBase(Point* p);

@@ -13,8 +13,8 @@ void moveShips(Monde* monde){
             if (monde->getFlotte(f)->getPatrouilleur(p)->isMoving()){
                 //Permet d'éviter la collision avec une ile
                 int deltaAngle = 0;
+                int theta = 0;
                 for (int i = 0; i < monde->getNbIles(); i++) {
-                    
                     if (monde->getFlotte(f)->getPatrouilleur(p)->estEnCollisionAvec(TAILLE_ILE1+50, monde->getIle(i)->getCentre()) /*&& !monde->getFlotte(f)->getPatrouilleur(p)->estEnCollisionAvec(50-TAILLE_PATROUILLEUR, monde->getFlotte(f)->getPatrouilleur(p)->getDestination())*/ ) {
                         int anglePatIle = monde->getFlotte(f)->getPatrouilleur(p)->getCentre()->trouverAngle(monde->getIle(i)->getCentre());
                         int anglePatrouilleur = monde->getFlotte(f)->getPatrouilleur(p)->getAngle();
@@ -23,15 +23,15 @@ void moveShips(Monde* monde){
                         double tailleIle = TAILLE_ILE1; 
                         double distancePatIle = monde->getFlotte(f)->getPatrouilleur(p)->getCentre()->distance(monde->getIle(i)->getCentre());
                         double param = tailleIle/(2*distancePatIle);
-                        double angleTemp = std::atan((double)param) ;
+                        double angleTemp = std::asin((double)param) ;
                         angleTemp *= (180/PI);
                         int angleIncidenceMin = (int)ceil(angleTemp);
                         int angleIncidence = anglePatIle - anglePatrouilleur;
-                        angleIncidence += 360;
-                        angleIncidence %= 360;
+                        angleIncidenceMin += 360;
+                        angleIncidenceMin %= 360;
                         
                         float hypo = sqrt(tailleIle * tailleIle + distancePatIle * distancePatIle);
-                        int theta = anglePatIle;
+                        theta = anglePatIle;
                         int absPat = monde->getFlotte(f)->getPatrouilleur(p)->getAbscisse();
                         int ordPat = monde->getFlotte(f)->getPatrouilleur(p)->getOrdonnee();
                         bool col = false;
@@ -46,9 +46,9 @@ void moveShips(Monde* monde){
                             col = true;
                         }  
                         if (col){
-                            printf("COLLISION INC !!!!!!\n");
-                            theta += 360;
-                            theta %= 360;
+                            printf("\n#########COLLLISION INC !!!!!!!#######################\n");
+                            if (theta < 0) {theta += 360;}
+                            /*theta %= 360;
                             printf("Coordonnees patrouilleur = < %i , %i >\n", absPat, ordPat);
                             printf("Hypo = %f\n", hypo);
                             printf("\n angleIncidenceMin = %i\n", angleIncidenceMin);
@@ -60,12 +60,14 @@ void moveShips(Monde* monde){
                             int absWayPoint = round(hypo * sin(theta) + absPat);
                             int ordWayPoint = round(ordPat - hypo * cos(theta));
                             printf("Coordonnees wayPoint = < %i , %i >\n", absWayPoint, ordWayPoint);
-                            monde->getFlotte(f)->getPatrouilleur(p)->setWayPoint(new Point(absWayPoint, ordWayPoint));
+                            monde->getFlotte(f)->getPatrouilleur(p)->setWayPoint(new Point(absWayPoint, ordWayPoint));*/
 
                         }
                     }   
                 }
+                monde->getFlotte(f)->getPatrouilleur(p)->setAngle(monde->getFlotte(f)->getPatrouilleur(p)->getAngle() + theta);
                 monde->getFlotte(f)->getPatrouilleur(p)->avancer(0);
+                monde->getFlotte(f)->getPatrouilleur(p)->setAngle(monde->getFlotte(f)->getPatrouilleur(p)->getAngle() + theta);
                 
             }
         }

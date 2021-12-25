@@ -25,8 +25,11 @@ void moveShips(Monde* monde){
                         double param = tailleIle/(2*distancePatIle);
                         double angleTemp = std::atan((double)param) ;
                         angleTemp *= (180/PI);
-                        int angleIncidence = anglePatIle - anglePatrouilleur;
                         int angleIncidenceMin = (int)ceil(angleTemp);
+                        int angleIncidence = anglePatIle - anglePatrouilleur;
+                        angleIncidence += 360;
+                        angleIncidence %= 360;
+                        
                         float hypo = sqrt(tailleIle * tailleIle + distancePatIle * distancePatIle);
                         int theta = anglePatIle;
                         int absPat = monde->getFlotte(f)->getPatrouilleur(p)->getAbscisse();
@@ -43,10 +46,9 @@ void moveShips(Monde* monde){
                             col = true;
                         }  
                         if (col){
-                            
-                            if (theta < 0){
-                                theta += 360;
-                            }
+                            printf("COLLISION INC !!!!!!\n");
+                            theta += 360;
+                            theta %= 360;
                             printf("Coordonnees patrouilleur = < %i , %i >\n", absPat, ordPat);
                             printf("Hypo = %f\n", hypo);
                             printf("\n angleIncidenceMin = %i\n", angleIncidenceMin);

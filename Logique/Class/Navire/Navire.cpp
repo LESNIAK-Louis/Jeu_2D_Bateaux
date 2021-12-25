@@ -270,8 +270,8 @@ void Navire::avancer(int deltaAngle){
     if ( this->estEnCollisionAvec(-this->getTaille()/2, this->getWayPoint()) && !this->getWayPoint()->isEqual(this->getDestination()) ){
         this->setWayPoint(this->getDestination());
     }
-    setAngle(this->getCentre()->trouverAngle(this->getWayPoint()));
     this->getCentre()->deplacer(this->getVitesseHorizontale(), this->getVitesseVerticale());
+    setAngle(this->getCentre()->trouverAngle(this->getWayPoint()));
     if (this->getAbscisse() < 0) { this->setAbscisse(0);}
     if (this->getAbscisse() > LARGEUR_ECRAN) {this->setAbscisse(LARGEUR_ECRAN);}
     if (this->getOrdonnee() < 0){ this->setOrdonnee(0);}

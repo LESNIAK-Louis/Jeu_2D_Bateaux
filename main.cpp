@@ -90,8 +90,8 @@ int main()
     monde->getFlotte(0)->newPatrouilleur();
     //monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(1)->newPatrouilleur();
-    /*monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->newPatrouilleur();
+    /*monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->newPatrouilleur();
@@ -117,7 +117,7 @@ int main()
     monde->getFlotte(0)->getPatrouilleur(7)->setAngle(90);*/
 
     monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(400,420));
-    //monde->getFlotte(0)->getPatrouilleur(1)->setDestination(new Point(222,222));
+    monde->getFlotte(0)->getPatrouilleur(1)->setDestination(new Point(222,222));
     /*monde->getFlotte(0)->getPatrouilleur(1)->setDestination(new Point(250, 150));
     monde->getFlotte(0)->getPatrouilleur(2)->setDestination(new Point(150, 150));
     monde->getFlotte(0)->getPatrouilleur(3)->setDestination(new Point(150, 250));
@@ -127,6 +127,7 @@ int main()
     SDL_Texture* fond = charger_image("Ressources/fond.bmp", jeu->getEcran());
     SDL_Texture* textureIle = charger_image("Ressources/ile.bmp", jeu->getEcran());
     SDL_Texture* texturePatrouilleur = charger_image("Ressources/test_bateau.bmp", jeu->getEcran());
+    SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", jeu->getEcran());
 
     while(!jeu->getTerminer()){
         SDL_RenderClear(jeu->getEcran());

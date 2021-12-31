@@ -53,6 +53,14 @@ Rectangle* Mouse::getRectangleSelection()
     return new Rectangle(this->getStartPosMouse(), this->getEndPosMouse());
 }
 
+int Mouse::getAbscisse(){
+    return getCurrentPosMouse()->getAbscisse();
+}
+
+int Mouse::getOrdonnee(){
+    return getCurrentPosMouse()->getOrdonnee();
+}
+
 void Mouse::setStartPosMouse(Point* point)
 {
     if(point == NULL) error("Point NULL en param | setStartPosMouse - Mouse");

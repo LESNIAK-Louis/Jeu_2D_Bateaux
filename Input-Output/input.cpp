@@ -47,8 +47,11 @@ void gestion_evenements(Game* jeu)
                     }
                     else if(jeu->getEvent()->button.button == SDL_BUTTON_RIGHT) 
                     {
-                        if(!isPointingIle(jeu))
+                        if(!isPointingIle(jeu) && jeu->getMouse()->getOrdonnee()>= HAUTEUR_INTERFACE) 
+                        {
+                            //si le joueur ne clique pas sur une ile ou dans l'interface, le clic est pris en compte
                             jeu->getMonde()->getFlotte(0)->deplacerSelected(jeu->getMouse()->getCurrentPosMouse());
+                        }
                     }
                 break;
                 case SDL_MOUSEMOTION: // Si la souris subit un mouvement

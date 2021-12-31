@@ -53,14 +53,34 @@ SDL_Texture* charger_image_transparente(const char* nomfichier, SDL_Renderer* re
     return texture;
 }
 
+/*
 void afficherMonde(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIle, SDL_Texture* texturePatrouilleur, SDL_Texture* textureContourPV, SDL_Texture* textureRemplissagePV){ 
     afficherIles(ecran, monde, textureIle);
-    afficherNavires(ecran, monde ,texturePatrouilleur, textureContourPV, textureRemplissagePV);    
+    //afficherNavires(ecran, monde ,texturePatrouilleur, textureContourPV, textureRemplissagePV);    
+}*/
+
+void afficherInterface(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureInterface, TTF_Font* policeInterface){
+    SDL_Rect DstR = {0, 0, LARGEUR_ECRAN, HAUTEUR_INTERFACE};
+    SDL_RenderCopy(ecran, textureInterface, NULL, &DstR);
+    afficherInformations(ecran, monde->getFlotte(0), policeInterface);
+}
+
+void afficherInformations(SDL_Renderer* ecran, Flotte* flotte, TTF_Font* policeInterface){
+    std::string string = "Or : ";
+    int ressource = flotte->getQteRessource();
+    string = string + std::to_string(ressource);
+    const char* quantiteOr = string.c_str();
+    SDL_Color couleurTexteInterface = { 231, 76, 60, 255};
+    SDL_Texture* qteOr = charger_texte(quantiteOr, ecran, policeInterface, couleurTexteInterface);
+    int w, h;
+    SDL_QueryTexture(qteOr, NULL, NULL, &w, &h);
+    SDL_Rect DestR = {10,10, w, h};
+    SDL_RenderCopy(ecran, qteOr, NULL, &DestR);
 }
 
 void afficherIles(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIle){
-    for (int i = 0; i < monde->getNbIles()-1; i++) {
-        SDL_Rect DestR = {monde->getIle(i)->getAbscisse()-TAILLE_ILE1/2, monde->getIle(i)->getOrdonnee()-TAILLE_ILE1/2,TAILLE_ILE1, TAILLE_ILE1};
+    for (int i = 0; i < monde->getNbIles(); i++) {
+        SDL_Rect DestR = {monde->getIle(i)->getAbscisse()-(TAILLE_ILE1/2), monde->getIle(i)->getOrdonnee()-(TAILLE_ILE1/2),TAILLE_ILE1, TAILLE_ILE1};
         SDL_RenderCopy(ecran, textureIle, NULL, &DestR);
     }
 
@@ -109,7 +129,7 @@ TTF_Font* charger_police(const char *path, int font_size)
 
 SDL_Texture* charger_texte(const char* message, SDL_Renderer* renderer, TTF_Font* font, SDL_Color color)
 {
-    if(message == NULL) error("message NULL en param | charger_texte - fonctions_sdl");
+    if(message == NULL) error("message NULL en param | charger_texte - fonctions_sdl!!!!!!");
     if(renderer == NULL) error("renderer NULL en param | charger_texte - fonctions_sdl");
     if(font == NULL) error("font NULL en param | charger_texte - fonctions_sdl");
 

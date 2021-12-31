@@ -17,8 +17,9 @@
 
 #define PI 3.14159
 
-#define HAUTEUR_ECRAN 600
-#define LARGEUR_ECRAN 600
+#define HAUTEUR_INTERFACE 80
+#define HAUTEUR_ECRAN 800
+#define LARGEUR_ECRAN 800
 #define TAILLE_ILE1 64
 
 #define PV_CONT_WIDTH 32
@@ -26,6 +27,13 @@
 #define PV_REMP_WIDTH 30
 #define PV_REMP_HEIGHT 4
 
+//Flotte
+#define OR_INITIAL 200
+#define GAIN_INITIAL 10
+#define OR_MAX 9999
+#define PV_MAX_FLOTTE 5000
+
+//Bateau
 #define NB_CARAC_PATROUILLEUR 5 
 #define TAILLE_PATROUILLEUR 24
 #define PV_MAX_PATROUILLEUR 20

@@ -57,6 +57,23 @@ SDL_Texture* charger_image_transparente(const char* nomfichier, SDL_Renderer* re
 void afficherMonde(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIle, SDL_Texture* texturePatrouilleur, SDL_Texture* textureContourPV, SDL_Texture* textureRemplissagePV);
 
 /**
+ * @brief affiche l'interface au sommet de l'écran
+ * 
+ * @param ecran 
+ * @param monde 
+ * @param textureInterface 
+ */
+void afficherInterface(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureInterface, TTF_Font* policeInterface);
+
+/**
+ * @brief affiche les informations relatives à la flotte du joueur : or, nombre de bateau, pv de la base...
+ * 
+ * @param ecran 
+ * @param flotte 
+ */
+void afficherInformations(SDL_Renderer* ecran, Flotte* flotte, TTF_Font* policeInterface);
+
+/**
  * @brief La fonction qui affiche les iles
  * @param ecran l'écran
  * @param monde le monde

@@ -272,7 +272,7 @@ void Navire::avancer(int deltaAngle){
     }
     this->getCentre()->deplacer(this->getVitesseHorizontale(), this->getVitesseVerticale());
     setAngle(this->getCentre()->trouverAngle(this->getWayPoint()));
-    if (this->getAbscisse() < 0) { this->setAbscisse(0);}
+    if (this->getAbscisse() < HAUTEUR_INTERFACE) { this->setAbscisse(HAUTEUR_INTERFACE);}
     if (this->getAbscisse() > LARGEUR_ECRAN) {this->setAbscisse(LARGEUR_ECRAN);}
     if (this->getOrdonnee() < 0){ this->setOrdonnee(0);}
     if (this->getOrdonnee() > HAUTEUR_ECRAN) { this->setOrdonnee(HAUTEUR_ECRAN);}

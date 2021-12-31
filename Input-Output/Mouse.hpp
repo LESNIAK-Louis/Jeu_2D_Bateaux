@@ -28,6 +28,8 @@ class Mouse
         Point* getEndPosMouse();
         Point* getCurrentPosMouse();
         Rectangle* getRectangleSelection();
+        int getAbscisse();
+        int getOrdonnee();
         bool isSelecting();
         bool isSimpleClick();
 

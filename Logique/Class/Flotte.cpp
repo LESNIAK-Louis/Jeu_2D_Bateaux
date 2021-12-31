@@ -158,11 +158,14 @@ void Flotte::deplacerSelected(Point* destination)
 }
 
 void Flotte::addRessource(){
-    this->qteRessource += this->getGainRessource();
+    addRessource(this->getGainRessource());
 }
 
 void Flotte::addRessource(int i){
 	this->qteRessource += i;
+    if (getQteRessource() > OR_MAX){
+        this->setQteRessource(OR_MAX);
+    }
 }
 
 void Flotte::augmenterGainRessource(int a){

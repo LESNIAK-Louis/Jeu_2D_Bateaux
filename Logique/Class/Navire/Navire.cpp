@@ -9,7 +9,7 @@
 
 #include "Navire.hpp"
 
-Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int pvMax, int degatArme, int cdArme, int portee){
+Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int pvMax, int degatArme, int cadence, int portee){
     this->idFlotte = idFlotte;
     this->id = id;
     this->centre = new Point(pos);
@@ -21,7 +21,7 @@ Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int p
     this->setPv(pvMax);
     this->vitesse = vitesse;
     this->degatArme = degatArme;
-    this->cdArme = cdArme;
+    this->cadenceTir = cadence;
     this->portee = portee;    
     this->calculerVitesseHorVert();
     this->chemin = new std::vector<Point*>();
@@ -107,8 +107,8 @@ int Navire::getDegatArme(){
     return this->degatArme;
 }
 
-int Navire::getCdArme(){
-    return this->cdArme;
+int Navire::getCandenceTir(){
+    return this->cadenceTir;
 }
 
 int Navire::getPortee(){
@@ -245,8 +245,8 @@ void Navire::setDegatArme(int degat){
     this->degatArme = degat;
 }
 
-void Navire::setCdArme(int cd){
-    this->cdArme = cd;
+void Navire::setCandenceTir(int cd){
+    this->cadenceTir = cd;
 }
 
 void Navire::setPortee(int por){
@@ -288,7 +288,7 @@ std::string Navire::formattedInfo()
     std::to_string(this->getVitesse()) + ";" + 
     std::to_string(this->getPvMax()) + ";" + 
     std::to_string(this->getDegatArme()) + ";" + 
-    std::to_string(this->getCdArme()) + ";" + 
+    std::to_string(this->getCandenceTir()) + ";" + 
     std::to_string(this->getPortee()) + ";" + 
     std::to_string(this->getPv());
     return info;

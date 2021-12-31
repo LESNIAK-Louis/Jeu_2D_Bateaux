@@ -50,7 +50,7 @@ Flotte::Flotte(int numero, Point* coord, Point* spawn, int ressource, int gain, 
     this->qteRessource = ressource;
     this->gainRessource = gain;
     this->pvBase = pv;
-    this->setCaracPatrouilleur(2,10,10,2, 100);
+    this->setCaracPatrouilleur(VITESSE_PATROUILLEUR,PV_MAX_PATROUILLEUR,DEGAT_PATROUILLEUR, CADENCE_TIR_PATROUILLEUR, PORTEE_PATROUILLEUR);
     this->patrouilleurs = new std::vector<Patrouilleur*>();
     this->listeSelected = consVide();
 }
@@ -122,11 +122,11 @@ void Flotte::setPvBase(int p){
     this->pvBase = p;
 }
 
-void Flotte::setCaracPatrouilleur(int v, int pMax, int degat, int cd, int p){
+void Flotte::setCaracPatrouilleur(int v, int pMax, int degat, int cadence, int p){
     this->caracPatrouilleur[0] = v;
     this->caracPatrouilleur[1] = pMax;
     this->caracPatrouilleur[2] = degat;
-    this->caracPatrouilleur[3] = cd;
+    this->caracPatrouilleur[3] = cadence;
     this->caracPatrouilleur[4] = p;
 }
 
@@ -205,8 +205,8 @@ void Flotte::updatePatrouilleur(){
         this->patrouilleurs->at(i)->setVitesse(this->getCaracPatrouilleur(0));
         this->patrouilleurs->at(i)->setPvMax(this->getCaracPatrouilleur(1));
         this->patrouilleurs->at(i)->setDegatArme(this->getCaracPatrouilleur(2));
-        this->patrouilleurs->at(i)->setCdArme(this->getCaracPatrouilleur(3));
-        this->patrouilleurs->at(i)->setCdArme(this->getCaracPatrouilleur(4));
+        this->patrouilleurs->at(i)->setCandenceTir(this->getCaracPatrouilleur(3));
+        this->patrouilleurs->at(i)->setPortee(this->getCaracPatrouilleur(4));
     }
 }
 

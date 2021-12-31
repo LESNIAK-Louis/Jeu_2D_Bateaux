@@ -54,7 +54,7 @@ SDL_Texture* charger_image_transparente(const char* nomfichier, SDL_Renderer* re
  * @param textureIles la texture correspondant aux iles
  * @param texturePatrouilleur la texture correspondant aux patrouilleurs
  */
-void afficherMonde(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIle, SDL_Texture* texturePatrouilleur);
+void afficherMonde(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIle, SDL_Texture* texturePatrouilleur, SDL_Texture* textureContourPV, SDL_Texture* textureRemplissagePV);
 
 /**
  * @brief La fonction qui affiche les iles
@@ -70,7 +70,7 @@ void afficherIles(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIle);
  * @param monde le monde
  * @param texturePatrouilleur la texture correspondant aux patrouilleurs
  */
-void afficherNavires(SDL_Renderer* ecran, Monde* monde, SDL_Texture* texturePatrouilleur);
+void afficherNavires(SDL_Renderer* ecran, Monde* monde, SDL_Texture* texturePatrouilleur, SDL_Texture* textureContourPV, SDL_Texture* textureRemplissagePV);
 
 /**
  * @brief affiche les patrouilleurs
@@ -78,8 +78,15 @@ void afficherNavires(SDL_Renderer* ecran, Monde* monde, SDL_Texture* texturePatr
  * @param monde 
  * @param texturePatrouilleur la texture correspondant aux patrouilleurs
  */
-void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, SDL_Texture* texturePatrouilleur);
+void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, SDL_Texture* texturePatrouilleur, SDL_Texture* textureContourPV, SDL_Texture* textureRemplissagePV);
 
+/**
+ * @brief affiche les barres de vie au dessus des bateaux selectionnés par l'utilisateur
+ * 
+ * @param ecran 
+ * @param monde 
+ */
+void afficherBarreDeVie(Navire* navire, SDL_Renderer* ecran, SDL_Texture* textureContourPV, SDL_Texture* textureRemplissagePV);
 
 /**
  * \brief La fonction charge une police

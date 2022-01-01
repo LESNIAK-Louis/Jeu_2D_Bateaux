@@ -22,7 +22,7 @@ int main()
     Monde* monde;
     //monde = readSave("Save.txt");
     monde = new Monde(1,0,1,1);
-    monde->addFlotte(new Flotte(0, new Point(50,50), new Point(200,200), OR_INITIAL,GAIN_INITIAL,PV_MAX_FLOTTE));
+    monde->addFlotte(new Flotte(0, new Point(50,50), new Point(200,200), OR_INITIAL, GAIN_INITIAL,PV_MAX_FLOTTE));
     monde->addFlotte(new Flotte(1, new Point(400,400), new Point(400,400), 0,10,500));
     monde->setIle(0, new Ile(new Point(300, 300), TAILLE_ILE1 , 1));
     monde->getFlotte(0)->newPatrouilleur();
@@ -63,21 +63,20 @@ int main()
     monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(300,300));*/
 
     Game* jeu = new Game(monde);
-    SDL_Texture* fond = charger_image("Ressources/fond.bmp", jeu->getEcran());
-    SDL_Texture* textureIle = charger_image("Ressources/ile.bmp", jeu->getEcran());
-    SDL_Texture* texturePatrouilleur = charger_image("Ressources/test_bateau.bmp", jeu->getEcran());
-    SDL_Texture* textureContourPV = charger_image("Ressources/contourBarrePV.bmp", jeu->getEcran());
-    SDL_Texture* textureRemplissagePV = charger_image("Ressources/remplissageBarrePV.bmp", jeu->getEcran());
-    SDL_Texture* textureInterface = charger_image("Ressources/interface.bmp", jeu->getEcran());
-    TTF_Font* policeInterface = charger_police("Ressources/arial.ttf", 16);
+    printf("OK1\n");
+    textures_s textures;
+    printf("OK2");
+    init_textures(jeu->getEcran(), &textures);
+    printf("OK2");
+   
 
     while(!jeu->getTerminer()){
         SDL_RenderClear(jeu->getEcran());
 
-        SDL_RenderCopy(jeu->getEcran(), fond, NULL, NULL);
-        afficherIles(jeu->getEcran(), monde, textureIle);
-        afficherNavires(jeu->getEcran(), monde, texturePatrouilleur, textureContourPV, textureRemplissagePV);
-        afficherInterface(jeu->getEcran(), monde, textureInterface, policeInterface);
+        SDL_RenderCopy(jeu->getEcran(), (&textures)->fond, NULL, NULL);
+        afficherIles(jeu->getEcran(), monde, &textures);
+        afficherNavires(jeu->getEcran(), monde, &textures);
+        afficherInterface(jeu->getEcran(), monde, &textures);
         moveShips(monde);
 
         //std::cout << "Pat 0 angle : " << monde->getFlotte(0)->getPatrouilleur(0)->getAngle()<< "\n";

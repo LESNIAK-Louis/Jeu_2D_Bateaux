@@ -7,6 +7,18 @@
 
 #include "fonctions_SDL.hpp"
 
+
+void  init_textures(SDL_Renderer *renderer, textures_s* textures){
+    textures->fond = charger_image("Ressources/fond.bmp", renderer);
+    textures->ile = charger_image("Ressources/ile.bmp", renderer);
+    textures->contourPV = charger_image("Ressources/contourBarrePV.bmp", renderer);
+    textures->remplissagePV = charger_image("Ressources/remplissageBarrePV.bmp", renderer);
+    textures->patrouilleur = charger_image("Ressources/patrouilleur.bmp", renderer);
+    textures->interface = charger_image("Ressources/interface.bmp", renderer);
+    textures->bouton = charger_image("Ressources/bouton.bmp", renderer);
+    textures->police = charger_police("Ressources/arial.ttf", 16);
+}
+
 void initSDL(SDL_Window** window, SDL_Renderer** renderer, int width, int height)
 {
     if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) != 0)
@@ -54,49 +66,54 @@ SDL_Texture* charger_image_transparente(const char* nomfichier, SDL_Renderer* re
 }
 
 /*
-void afficherMonde(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIle, SDL_Texture* texturePatrouilleur, SDL_Texture* textureContourPV, SDL_Texture* textureRemplissagePV){ 
+void afficherMonde(SDL_Renderer* ecran, Monde* monde, textures_s* textures){ 
     afficherIles(ecran, monde, textureIle);
     //afficherNavires(ecran, monde ,texturePatrouilleur, textureContourPV, textureRemplissagePV);    
 }*/
 
-void afficherInterface(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureInterface, TTF_Font* policeInterface){
+void afficherInterface(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
     SDL_Rect DstR = {0, 0, LARGEUR_ECRAN, HAUTEUR_INTERFACE};
-    SDL_RenderCopy(ecran, textureInterface, NULL, &DstR);
-    afficherInformations(ecran, monde->getFlotte(0), policeInterface);
+    SDL_RenderCopy(ecran, textures->interface, NULL, &DstR);
+    afficherInformations(ecran, monde->getFlotte(0), textures);
+    afficherBoutons(ecran, textures);
 }
 
-void afficherInformations(SDL_Renderer* ecran, Flotte* flotte, TTF_Font* policeInterface){
+void afficherInformations(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures){
     std::string string = "Or : ";
     int ressource = flotte->getQteRessource();
     string = string + std::to_string(ressource);
     const char* quantiteOr = string.c_str();
     SDL_Color couleurTexteInterface = { 231, 76, 60, 255};
-    SDL_Texture* qteOr = charger_texte(quantiteOr, ecran, policeInterface, couleurTexteInterface);
+    SDL_Texture* qteOr = charger_texte(quantiteOr, ecran, textures->police, couleurTexteInterface);
     int w, h;
     SDL_QueryTexture(qteOr, NULL, NULL, &w, &h);
     SDL_Rect DestR = {10,10, w, h};
     SDL_RenderCopy(ecran, qteOr, NULL, &DestR);
 }
 
-void afficherIles(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIle){
+void afficherBoutons(SDL_Renderer* ecran, textures_s* textures){
+
+}
+
+void afficherIles(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
     for (int i = 0; i < monde->getNbIles(); i++) {
         SDL_Rect DestR = {monde->getIle(i)->getAbscisse()-(TAILLE_ILE1/2), monde->getIle(i)->getOrdonnee()-(TAILLE_ILE1/2),TAILLE_ILE1, TAILLE_ILE1};
-        SDL_RenderCopy(ecran, textureIle, NULL, &DestR);
+        SDL_RenderCopy(ecran, textures->ile, NULL, &DestR);
     }
 
 }
 
-void afficherNavires(SDL_Renderer* ecran, Monde* monde, SDL_Texture* texturePatrouilleur, SDL_Texture* textureContourPV, SDL_Texture* textureRemplissagePV){
+void afficherNavires(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
     for (int f = 0; f < monde->getNbFlottes(); f++){
-        afficherPatrouilleurs(ecran, monde->getFlotte(f), texturePatrouilleur, textureContourPV, textureRemplissagePV);
+        afficherPatrouilleurs(ecran, monde->getFlotte(f), textures);
     }
 }
 
-void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, SDL_Texture* texturePatrouilleur, SDL_Texture* textureContourPV, SDL_Texture* textureRemplissagePV){
+void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures){
     for (int p = 0; p < flotte->getNbPatrouilleurs(); p++) {
         SDL_Rect DestR = {flotte->getPatrouilleur(p)->getAbscisse()-TAILLE_PATROUILLEUR/2, flotte->getPatrouilleur(p)->getOrdonnee()-TAILLE_PATROUILLEUR/2,TAILLE_PATROUILLEUR, TAILLE_PATROUILLEUR};
-        SDL_RenderCopyEx(ecran, texturePatrouilleur, NULL, &DestR, flotte->getPatrouilleur(p)->getAngle(), NULL, SDL_FLIP_NONE);
-        afficherBarreDeVie(flotte->getPatrouilleur(p), ecran, textureContourPV, textureRemplissagePV);
+        SDL_RenderCopyEx(ecran, textures->patrouilleur, NULL, &DestR, flotte->getPatrouilleur(p)->getAngle(), NULL, SDL_FLIP_NONE);
+        afficherBarreDeVie(flotte->getPatrouilleur(p), ecran, textures);
 
         //Permet d'afficher un point sur le wayPoint du patrouilleur. A utiliser pour le debuggage
         SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", ecran);
@@ -106,14 +123,14 @@ void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, SDL_Texture* tex
 }
 
 
-void afficherBarreDeVie(Navire* navire, SDL_Renderer* ecran, SDL_Texture* textureContourPV, SDL_Texture* textureRemplissagePV){
+void afficherBarreDeVie(Navire* navire, SDL_Renderer* ecran, textures_s* textures){
 
     double ratio = (double)navire->getPv() / (double)navire->getPvMax();
     SDL_Rect DestRExt = {navire->getAbscisse()-navire->getTaille()/2, navire->getOrdonnee()-navire->getTaille()/2 - 8, PV_CONT_WIDTH, PV_CONT_HEIGHT};
     SDL_Rect DestRInt = {navire->getAbscisse()-navire->getTaille()/2 +1, navire->getOrdonnee()-navire->getTaille()/2 - 7, (int)round(PV_REMP_WIDTH * ratio), PV_REMP_HEIGHT};
 
-    SDL_RenderCopy(ecran, textureContourPV, NULL, &DestRExt);
-    SDL_RenderCopy(ecran, textureRemplissagePV, NULL, &DestRInt);
+    SDL_RenderCopy(ecran, textures->contourPV, NULL, &DestRExt);
+    SDL_RenderCopy(ecran, textures->remplissagePV, NULL, &DestRInt);
 }
 
 

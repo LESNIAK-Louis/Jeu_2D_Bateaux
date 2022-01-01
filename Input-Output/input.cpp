@@ -33,7 +33,11 @@ void gestion_evenements(Game* jeu)
                             break;
                         case SDLK_DOWN :
                             break;
+                        case SDLK_BACKSPACE:
+                            jeu->getMonde()->getFlotte(0)->stopSelected();
+                            break;
                         case SDLK_ESCAPE : 
+                            jeu->setTerminer(true);
                             break;
                         default:
                         break;
@@ -42,8 +46,29 @@ void gestion_evenements(Game* jeu)
                 case SDL_MOUSEBUTTONDOWN: // Si une touche souris est enfoncée
                     if(jeu->getEvent()->button.button == SDL_BUTTON_LEFT)
                     {
-                        jeu->getMonde()->getFlotte(0)->viderListeSelected();
-                        jeu->getMouse()->startSelection();
+                        if (jeu->getMouse()->getOrdonnee() > HAUTEUR_INTERFACE) {
+                            // On clique sur le terrain
+                            jeu->getMonde()->getFlotte(0)->viderListeSelected();
+                            jeu->getMouse()->startSelection();
+                        } else {
+                            //On clique dans l'interface
+                            int j = 0, i = 0;
+                            bool appuieSurBouton = 0;
+                            while (j < 2 && !appuieSurBouton) {
+                                while (i < NB_CLASSE_NAVIRE && !appuieSurBouton){
+                                    SDL_Rect bouton = {ABSCISSE_INITIALE + i*(10 + TAILLE_BOUTON), 10 + j*(TAILLE_BOUTON + 10), TAILLE_BOUTON, TAILLE_BOUTON};
+                                    if (jeu->getMouse()->estEnCollisionAvec(bouton)) {
+                                        appuieSurBouton = 1;
+                                        appliquerEffetBouton(jeu->getMonde()->getFlotte(0), i, j);
+                                    } else {
+                                        i++;
+                                    }
+                                }
+                                i = 0;
+                                j++;
+                            }
+                        }
+                       
                     }
                     else if(jeu->getEvent()->button.button == SDL_BUTTON_RIGHT) 
                     {
@@ -99,4 +124,48 @@ void addNavToSelection(Flotte* flotte, Mouse* mouse)
         }
     }
     delete rect;
+}
+
+
+void appliquerEffetBouton(Flotte* flotte, int i, int j){
+    switch (j){
+        case 0:
+            switch (i){
+                case 0:
+                    if (flotte->getQteRessource() < COUT_PATROUILLEUR) {
+
+                    } else {
+                        flotte->newPatrouilleur();
+                        flotte->addRessource(-COUT_PATROUILLEUR);
+                    }
+                    
+                break;
+                case 1:
+
+                break;
+                case 2:
+                
+                break;
+
+            }
+        break;
+
+        case 1:
+            switch (i){
+                case 0:
+                    if (flotte->getCaracPatrouilleur(5) < NB_AMELIO_MAX && flotte->getQteRessource() > COUT_AMELIORATION_PATROUILLEUR ) { //on vérifie si les navires ont déjà été améliorés au maximum et que la flotte a suffsiament de ressources
+                        flotte->ameliorerPatrouilleurs();
+                        flotte->addRessource(-COUT_AMELIORATION_PATROUILLEUR);
+                    }
+                break;
+                case 1:
+
+                break;
+                case 2:
+                    
+                break;
+            }
+                
+        break;
+    }
 }

@@ -71,9 +71,9 @@ int main()
         SDL_RenderClear(jeu->getEcran());
 
         SDL_RenderCopy(jeu->getEcran(), (&textures)->fond, NULL, NULL);
-        afficherMonde(jeu->getEcran(), monde, &textures)
+        afficherMonde(jeu->getEcran(), monde, &textures);
         moveShips(monde);
-
+        monde->getFlotte(0)->addRessource();
         //std::cout << "Pat 0 angle : " << monde->getFlotte(0)->getPatrouilleur(0)->getAngle()<< "\n";
         //std::cout << "Pat 0" + monde->getFlotte(0)->getPatrouilleur(0)->getCentre()->toString()<< "\n";
         /*std::cout << "Pat 0 dest : " + monde->getFlotte(0)->getPatrouilleur(0)->getDestination()->toString()<< "\n";
@@ -84,7 +84,6 @@ int main()
         SDL_RenderPresent(jeu->getEcran());
         SDL_Delay(50);
     }
-
 
     save("Save.txt", jeu->getMonde());
     delete jeu;

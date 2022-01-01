@@ -26,8 +26,10 @@ struct textures_s{
     SDL_Texture* contourPV;
     SDL_Texture* remplissagePV;
     SDL_Texture* patrouilleur; /*Texture liée à l'image représentant un patrouilleur*/
+    SDL_Texture* porteAvion;
     SDL_Texture* interface; /*Texture liée à l'image représentant l'interface*/
     SDL_Texture* bouton; /*Texture liée à l'image représentant un bouton*/
+    SDL_Texture* plus; /*texture liée au signe plus */
 };
 
 /**
@@ -110,7 +112,7 @@ void afficherTousLesBoutons(SDL_Renderer* ecran, textures_s* textures);
  * @param abscisse abscisse du coin superieur gauche
  * @param ordonnee ordonnee du coin superieur gauche
  */
-void afficherBouton(SDL_Renderer* ecran, textures_s* textures, int abscisse, int ordonnee, int i);
+void afficherBouton(SDL_Renderer* ecran, textures_s* textures, int abscisse, int ordonnee, int i, int j);
 
 /**
  * @brief La fonction qui affiche les iles

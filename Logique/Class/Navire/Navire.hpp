@@ -84,12 +84,18 @@ class Navire
         void avancer(int deltaAngle);
         void setPvMax(int pvMax);
         void setDegatArme(int degat);
-        void setCandenceTir(int cd);
+        void setCadenceTir(int cd);
         void setPortee(int p);
         void setCible(Navire* navire);
         void ajouterPV();
 
         bool estEnCollisionAvec(int taille, Point* ctr);
+
+        /**
+         * @brief annule tous les ordres donnée au navire
+         * 
+         */
+        void stop();
 
         std::string formattedInfo();
 };

@@ -40,6 +40,13 @@ class Mouse
         void startSelection();
         void updateSelection();
         void endSelection();
+
+        /**
+         * @brief Determine si la souris est dans un rectangle
+         * 
+         * @param rect 
+         */
+        bool estEnCollisionAvec(SDL_Rect rect);
 };
 
 

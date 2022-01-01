@@ -14,8 +14,10 @@ void  init_textures(SDL_Renderer *renderer, textures_s* textures){
     textures->contourPV = charger_image("Ressources/contourBarrePV.bmp", renderer);
     textures->remplissagePV = charger_image("Ressources/remplissageBarrePV.bmp", renderer);
     textures->patrouilleur = charger_image("Ressources/patrouilleur.bmp", renderer);
+    textures->porteAvion = charger_image("Ressources/porteAvion.bmp", renderer);
     textures->interface = charger_image("Ressources/interface.bmp", renderer);
     textures->bouton = charger_image("Ressources/bouton.bmp", renderer);
+    textures->plus = charger_image("Ressources/plus.bmp", renderer);
     textures->police = charger_police("Ressources/arial.ttf", 16);
 }
 
@@ -93,25 +95,34 @@ void afficherInformations(SDL_Renderer* ecran, Flotte* flotte, textures_s* textu
 }
 
 void afficherTousLesBoutons(SDL_Renderer* ecran, textures_s* textures){
-    int x_init = 100;
-    //Affichage des boutons de contructions de bateau
-    for (int i = 0; i < NB_BOUTON; i++){
-        afficherBouton(ecran, textures, x_init + i*(10 + TAILLE_BOUTON), 10, i);
+    //Affichage des boutons de contruction et d'amélioration des bateaux
+    for (int j = 0; j < 2; j++) {
+        for (int i = 0; i < NB_CLASSE_NAVIRE; i++){
+            afficherBouton(ecran, textures, ABSCISSE_INITIALE + i*(10 + TAILLE_BOUTON), 10 + j*(TAILLE_BOUTON + 10), i, j);
+        }
     }
+    
 }
 
-void afficherBouton(SDL_Renderer* ecran, textures_s* textures, int abscisse, int ordonnee, int i){
+void afficherBouton(SDL_Renderer* ecran, textures_s* textures, int abscisse, int ordonnee, int i, int j){
     SDL_Rect DestR = {abscisse, ordonnee, TAILLE_BOUTON, TAILLE_BOUTON};
     SDL_RenderCopy(ecran, textures->bouton, NULL, &DestR);
     DestR.x = abscisse + 5;
     DestR.y = ordonnee + 5;
     DestR.w = TAILLE_BOUTON - 10;
     DestR.h = TAILLE_BOUTON - 10;
+    if (j==2) {
+        SDL_RenderCopy(ecran, textures->plus, NULL, &DestR);
+    }
     switch (i) {
         case 0:
             SDL_RenderCopy(ecran, textures->patrouilleur, NULL, &DestR);
-        break;
+            break;
+        case 1:
+            SDL_RenderCopy(ecran, textures->porteAvion, NULL, &DestR);
+            break;
     }
+   
 }
 
 void afficherIles(SDL_Renderer* ecran, Monde* monde, textures_s* textures){

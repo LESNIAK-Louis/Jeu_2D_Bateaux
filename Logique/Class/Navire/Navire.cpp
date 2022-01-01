@@ -5,7 +5,6 @@
  * \date 10 Nov. 2021
 */
 
-//TODO : Pathfinding à faire
 
 #include "Navire.hpp"
 
@@ -238,14 +237,17 @@ void Navire::setWayPoint(Point* point){
 
 
 void Navire::setPvMax(int pvMax){
+    int diff = pvMax - this->getPvMax();
     this->pvMax = pvMax;
+    ajouterPV(diff);
+
 }
 
 void Navire::setDegatArme(int degat){
     this->degatArme = degat;
 }
 
-void Navire::setCandenceTir(int cd){
+void Navire::setCadenceTir(int cd){
     this->cadenceTir = cd;
 }
 
@@ -279,6 +281,11 @@ void Navire::avancer(int deltaAngle){
     //Si le navire a atteint le point de passage, alors le point de passage devient la destination
     
     this->setMove(!(this->estEnCollisionAvec(-this->getTaille()/2, this->getDestination() )));
+}
+
+void Navire::stop() {
+    this->setDestination(getCentre());
+    delete this->cible;
 }
 
 std::string Navire::formattedInfo()

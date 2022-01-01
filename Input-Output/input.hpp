@@ -21,5 +21,6 @@
 void gestion_evenements(Game* jeu);
 bool isPointingIle(Game* jeu);
 void addNavToSelection(Flotte* flotte, Mouse* mouse);
+void appliquerEffetBouton(Flotte* flotte, int i, int j);
 
 #endif

@@ -45,7 +45,7 @@ bool Mouse::isSelecting()
 
 bool Mouse::isSimpleClick()
 {
-    return this->getStartPosMouse()->distance(this->getEndPosMouse()) == 0;
+    return this->getStartPosMouse()->distance(this->getEndPosMouse()) < 4;
 }
 
 Rectangle* Mouse::getRectangleSelection()
@@ -102,4 +102,8 @@ void Mouse::endSelection()
         this->setEndPosMouse(getCurrentPosMouse());
         this->setIsSelecting(false);
     }
+}
+
+bool Mouse::estEnCollisionAvec(SDL_Rect rect){
+    return (getAbscisse() >= rect.x && getAbscisse() <= rect.x + rect.w && getOrdonnee() >= rect.y && getOrdonnee() <= rect.y + rect.h ) ;
 }

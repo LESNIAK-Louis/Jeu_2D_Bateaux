@@ -63,20 +63,15 @@ int main()
     monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(300,300));*/
 
     Game* jeu = new Game(monde);
-    printf("OK1\n");
+
     textures_s textures;
-    printf("OK2");
     init_textures(jeu->getEcran(), &textures);
-    printf("OK2");
-   
 
     while(!jeu->getTerminer()){
         SDL_RenderClear(jeu->getEcran());
 
         SDL_RenderCopy(jeu->getEcran(), (&textures)->fond, NULL, NULL);
-        afficherIles(jeu->getEcran(), monde, &textures);
-        afficherNavires(jeu->getEcran(), monde, &textures);
-        afficherInterface(jeu->getEcran(), monde, &textures);
+        afficherMonde(jeu->getEcran(), monde, &textures)
         moveShips(monde);
 
         //std::cout << "Pat 0 angle : " << monde->getFlotte(0)->getPatrouilleur(0)->getAngle()<< "\n";

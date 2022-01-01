@@ -23,6 +23,8 @@
 
 #define HAUTEUR_INTERFACE 90
 #define TAILLE_BOUTON 30
+#define NB_BOUTON 1
+
 #define TAILLE_ILE1 64
 
 #define PV_CONT_WIDTH 32

@@ -100,7 +100,17 @@ void afficherInformations(SDL_Renderer* ecran, Flotte* flotte, textures_s* textu
  * @param ecran 
  * @param textures les textures du jeu
  */
-void afficherBoutons(SDL_Renderer* ecran, textures_s* textures);
+void afficherTousLesBoutons(SDL_Renderer* ecran, textures_s* textures);
+
+/**
+ * @brief affiche un bouton à une position
+ * 
+ * @param ecran 
+ * @param textures 
+ * @param abscisse abscisse du coin superieur gauche
+ * @param ordonnee ordonnee du coin superieur gauche
+ */
+void afficherBouton(SDL_Renderer* ecran, textures_s* textures, int abscisse, int ordonnee, int i);
 
 /**
  * @brief La fonction qui affiche les iles

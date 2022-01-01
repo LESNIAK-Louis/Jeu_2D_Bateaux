@@ -65,17 +65,18 @@ SDL_Texture* charger_image_transparente(const char* nomfichier, SDL_Renderer* re
     return texture;
 }
 
-/*
+
 void afficherMonde(SDL_Renderer* ecran, Monde* monde, textures_s* textures){ 
-    afficherIles(ecran, monde, textureIle);
-    //afficherNavires(ecran, monde ,texturePatrouilleur, textureContourPV, textureRemplissagePV);    
-}*/
+    afficherIles(ecran, monde, textures);
+    afficherNavires(ecran, monde, textures);
+    afficherInterface(ecran, monde, textures);
+}
 
 void afficherInterface(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
     SDL_Rect DstR = {0, 0, LARGEUR_ECRAN, HAUTEUR_INTERFACE};
     SDL_RenderCopy(ecran, textures->interface, NULL, &DstR);
     afficherInformations(ecran, monde->getFlotte(0), textures);
-    afficherBoutons(ecran, textures);
+    afficherTousLesBoutons(ecran, textures);
 }
 
 void afficherInformations(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures){
@@ -91,8 +92,26 @@ void afficherInformations(SDL_Renderer* ecran, Flotte* flotte, textures_s* textu
     SDL_RenderCopy(ecran, qteOr, NULL, &DestR);
 }
 
-void afficherBoutons(SDL_Renderer* ecran, textures_s* textures){
+void afficherTousLesBoutons(SDL_Renderer* ecran, textures_s* textures){
+    int x_init = 100;
+    //Affichage des boutons de contructions de bateau
+    for (int i = 0; i < NB_BOUTON; i++){
+        afficherBouton(ecran, textures, x_init + i*(10 + TAILLE_BOUTON), 10, i);
+    }
+}
 
+void afficherBouton(SDL_Renderer* ecran, textures_s* textures, int abscisse, int ordonnee, int i){
+    SDL_Rect DestR = {abscisse, ordonnee, TAILLE_BOUTON, TAILLE_BOUTON};
+    SDL_RenderCopy(ecran, textures->bouton, NULL, &DestR);
+    DestR.x = abscisse + 5;
+    DestR.y = ordonnee + 5;
+    DestR.w = TAILLE_BOUTON - 10;
+    DestR.h = TAILLE_BOUTON - 10;
+    switch (i) {
+        case 0:
+            SDL_RenderCopy(ecran, textures->patrouilleur, NULL, &DestR);
+        break;
+    }
 }
 
 void afficherIles(SDL_Renderer* ecran, Monde* monde, textures_s* textures){

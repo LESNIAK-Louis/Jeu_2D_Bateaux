@@ -30,8 +30,9 @@ void gestion_evenements(Game* jeu)
                         case SDLK_LEFT :
                             break;
                         case SDLK_UP :
+                            std::cout << "Patrouilleurs : " << jeu->getMonde()->getFlotte(0)->getNbPatrouilleurs() << " Navires : " << jeu->getMonde()->getFlotte(0)->getNbNavires() << std::endl;
                             for (int i = 0; i < jeu->getMonde()->getFlotte(0)->getNbNavires(); i++){
-                               std::cout << "Patrouilleur : " << jeu->getMonde()->getFlotte(0)->getPatrouilleur(i)->getId() << " Flotte :  " << jeu->getMonde()->getFlotte(0)->getPatrouilleur(i)->getIdFlotte() << std::endl;
+                               std::cout << "ID Patrouilleur : " << jeu->getMonde()->getFlotte(0)->getPatrouilleur(i)->getId() << std::endl;
                             }
                             printf("\n");
                             break;
@@ -39,6 +40,7 @@ void gestion_evenements(Game* jeu)
                             break;
                         case SDLK_DELETE :
                             jeu->getMonde()->getFlotte(0)->deleteSelected();
+                            
                             break;
                         case SDLK_BACKSPACE:
                             jeu->getMonde()->getFlotte(0)->stopSelected();
@@ -116,22 +118,25 @@ bool isPointingIle(Game* jeu)
 
 void addNavToSelection(Flotte* flotte, Mouse* mouse)
 {
-    for(int j = 0; j < flotte->getNbNavires(); j++)
-    {
-        if(mouse->isSimpleClick())
+    if (mouse->getOrdonnee() > HAUTEUR_INTERFACE) { 
+        for(int j = 0; j < flotte->getNbNavires(); j++)
         {
-            if(flotte->getNavire(j)->estEnCollisionAvec(1, mouse->getCurrentPosMouse()))
+            if(mouse->isSimpleClick())
             {
-                flotte->addElemListeSelected(flotte->getNavire(j));
-                break;
+                if(flotte->getNavire(j)->estEnCollisionAvec(1, mouse->getCurrentPosMouse()))
+                {
+                    flotte->addElemListeSelected(flotte->getNavire(j));
+                    break;
+                }
             }
-        }
-        else
-        {
-            if(mouse->collisionAvecSelection(flotte->getNavire(j)->getCentre(), flotte->getNavire(j)->getTaille()))
-                flotte->addElemListeSelected(flotte->getNavire(j));
+            else
+            {
+                if(mouse->collisionAvecSelection(flotte->getNavire(j)->getCentre(), flotte->getNavire(j)->getTaille()))
+                    flotte->addElemListeSelected(flotte->getNavire(j));
         }
     }
+    }
+    
 }
 
 void appliquerEffetBouton(Flotte* flotte, int i, int j){
@@ -139,16 +144,17 @@ void appliquerEffetBouton(Flotte* flotte, int i, int j){
         case 0:
             switch (i){
                 case 0:
-                    if (flotte->getQteRessource() < COUT_PATROUILLEUR) {
-
-                    } else {
+                    if (!(flotte->getQteRessource() < COUT_PATROUILLEUR) ) {
                         flotte->newPatrouilleur();
                         flotte->addRessource(-COUT_PATROUILLEUR);
                     }
                     
                 break;
                 case 1:
-
+                    if (!(flotte->getQteRessource() < COUT_CROISEUR)) {
+                        flotte->newCroiseur();
+                        flotte->addRessource(-COUT_CROISEUR);
+                    }
                 break;
                 case 2:
                 
@@ -160,13 +166,16 @@ void appliquerEffetBouton(Flotte* flotte, int i, int j){
         case 1:
             switch (i){
                 case 0:
-                    if (flotte->getCaracPatrouilleur(5) < NB_AMELIO_MAX && flotte->getQteRessource() > COUT_AMELIORATION_PATROUILLEUR ) { //on vérifie si les navires ont déjà été améliorés au maximum et que la flotte a suffsiament de ressources
+                    if (flotte->getCaracPatrouilleur(5) < NB_AMELIO_MAX && flotte->getQteRessource() >= COUT_AMELIORATION_PATROUILLEUR ) { //on vérifie si les navires ont déjà été améliorés au maximum et que la flotte a suffsiament de ressources
                         flotte->ameliorerPatrouilleurs();
                         flotte->addRessource(-COUT_AMELIORATION_PATROUILLEUR);
                     }
                 break;
                 case 1:
-
+                    if (flotte->getCaracCroiseur(5) < NB_AMELIO_MAX && flotte->getQteRessource() >= COUT_AMELIORATION_CROISEUR ) { //on vérifie si les navires ont déjà été améliorés au maximum et que la flotte a suffsiament de ressources
+                        flotte->ameliorerCroiseurs();
+                        flotte->addRessource(-COUT_AMELIORATION_CROISEUR);
+                    }
                 break;
                 case 2:
                     

@@ -5,7 +5,6 @@
  * \date 10 Nov. 2021
 */
 
-#include "../../../definitions.hpp"
 #include "Croiseur.hpp"
 
 
@@ -14,5 +13,5 @@ Croiseur::Croiseur(int idFlotte, int id, Point* pos, Point* dest, int vitesse,  
 
 }
 
-std::string returnType(){ return "croiseur";}
+//std::string returnType(){ return "croiseur";}
 

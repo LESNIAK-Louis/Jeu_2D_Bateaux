@@ -18,7 +18,7 @@ int main()
     
     monde->getFlotte(1)->newPatrouilleur();
    
-   monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(300,300));
+    //monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(300,300));
 
     Game* jeu = new Game(monde);
 

@@ -66,15 +66,15 @@ void pathFinding(Navire* navire, Ile* ile){
 }
 void moveShips(Monde* monde){
     for (int f = 0; f < monde->getNbFlottes(); f++){
-        for (int p = 0; p < monde->getFlotte(f)->getNbPatrouilleurs(); p++) {  
-            if (monde->getFlotte(f)->getPatrouilleur(p)->isMoving()){
+        for (int p = 0; p < monde->getFlotte(f)->getNbNavires(); p++) {  
+            if (monde->getFlotte(f)->getNavire(p)->isMoving()){
                 //Permet d'éviter la collision avec une ile
                 for (int i = 0; i < monde->getNbIles(); i++) {
-                    if (monde->getFlotte(f)->getPatrouilleur(p)->estEnCollisionAvec(TAILLE_ILE1+80, monde->getIle(i)->getCentre()) /*&& !monde->getFlotte(f)->getPatrouilleur(p)->estEnCollisionAvec(50-TAILLE_PATROUILLEUR, monde->getFlotte(f)->getPatrouilleur(p)->getDestination())*/ ) {
-                        pathFinding(monde->getFlotte(f)->getPatrouilleur(p), monde->getIle(i));
+                    if (monde->getFlotte(f)->getNavire(p)->estEnCollisionAvec(TAILLE_ILE1+80, monde->getIle(i)->getCentre()) /*&& !monde->getFlotte(f)->getPatrouilleur(p)->estEnCollisionAvec(50-TAILLE_PATROUILLEUR, monde->getFlotte(f)->getPatrouilleur(p)->getDestination())*/ ) {
+                        pathFinding(monde->getFlotte(f)->getNavire(p), monde->getIle(i));
                     }   
                 }
-                monde->getFlotte(f)->getPatrouilleur(p)->avancer(0);
+                monde->getFlotte(f)->getNavire(p)->avancer(0);
                 
             }
         }

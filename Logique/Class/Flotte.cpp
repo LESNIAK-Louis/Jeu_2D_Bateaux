@@ -248,8 +248,10 @@ void Flotte::removeNavire(Navire* navire){
         if (navire->getType() == "Patrouilleur")
             this->setNbPatrouilleurs(this->getNbPatrouilleurs()-1);
         else if (navire->getType() == "Croiseur")
+        {
             this->setNbCroiseurs(this->getNbCroiseurs()-1);
             this->reduireNumeroCroiseurs(index - this->getDebutIndiceCroiseur());
+        }
         else
             error("Type de bateau invalide| removeNavire - Flotte");
         delete this->navires->at(index);

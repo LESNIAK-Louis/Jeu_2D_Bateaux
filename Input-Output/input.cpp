@@ -116,17 +116,19 @@ bool isPointingIle(Game* jeu)
 
 void addNavToSelection(Flotte* flotte, Mouse* mouse)
 {
-    Rectangle* rect = mouse->getRectangleSelection();
     for(int j = 0; j < flotte->getNbNavires(); j++)
     {
         if(mouse->isSimpleClick())
         {
-            if(flotte->getNavire(j)->estEnCollisionAvec(5, mouse->getCurrentPosMouse()))
+            if(flotte->getNavire(j)->estEnCollisionAvec(1, mouse->getCurrentPosMouse()))
+            {
                 flotte->addElemListeSelected(flotte->getNavire(j));
+                break;
+            }
         }
         else
         {
-            if(collisionCercleRectangle(flotte->getNavire(j)->getCentre(), flotte->getNavire(j)->getTaille(), rect))
+            if(mouse->collisionAvecSelection(flotte->getNavire(j)->getCentre(), flotte->getNavire(j)->getTaille()))
                 flotte->addElemListeSelected(flotte->getNavire(j));
         }
     }

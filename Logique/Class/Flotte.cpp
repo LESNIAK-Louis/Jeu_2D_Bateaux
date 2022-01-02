@@ -52,15 +52,17 @@ Flotte::Flotte(int numero, Point* coord, Point* spawn, int ressource, int gain, 
     this->pvBase = pv;
     this->setCaracPatrouilleur(VITESSE_PATROUILLEUR,PV_MAX_PATROUILLEUR, DEGATS_PATROUILLEUR, CADENCE_TIR_PATROUILLEUR, PORTEE_PATROUILLEUR);
     this->caracPatrouilleur[5] = 0;
-    this->patrouilleurs = new std::vector<Patrouilleur*>();
+    this->navires = new std::vector<Navire*>();
     this->listeSelected = consVide();
+    nbPatrouilleurs = 0;
+    nbCroiseurs = 0;
 }
 
 Flotte::~Flotte(){
     delete this->coordBase;
     delete this->spawnPoint;
-    this->removeAllPatrouilleurs();
-    delete this->patrouilleurs;
+    this->removeAllNavires();
+    delete this->navires;
     freeListe(this->listeSelected);
 }
 
@@ -91,12 +93,25 @@ int Flotte::getCaracPatrouilleur(int i){
     return this->caracPatrouilleur[i];
 }
 
-int Flotte::getNbPatrouilleurs(){
-    return this->patrouilleurs->size();
+
+int Flotte::getNbNavires(){
+    return this->navires->size();
 }
 
-Patrouilleur* Flotte::getPatrouilleur(int i){
-	return this->patrouilleurs->at(i);
+int Flotte::getNbPatrouilleurs(){
+    return this->nbPatrouilleurs;
+}
+
+Navire* Flotte::getNavire(int i){
+    return this->navires->at(i);
+}
+
+Navire* Flotte::getPatrouilleur(int i){
+	return this->navires->at(i);
+}
+
+Navire* Flotte::getCroiseur(int i){
+	return this->navires->at(getNbPatrouilleurs() + i);
 }
 
 void Flotte::setNumero(int i){
@@ -109,6 +124,14 @@ void Flotte::setCoordBase(Point* p){
 
 void Flotte::setSpawnPoint(Point* p){
     this->spawnPoint = new Point(*p);
+}
+
+void Flotte::setNbPatrouilleurs(int i){
+    nbPatrouilleurs = i;
+}
+
+void Flotte::setNbCroiseurs(int i){
+    nbCroiseurs = i;
 }
 
 void Flotte::setQteRessource(int q){
@@ -173,7 +196,54 @@ void Flotte::augmenterGainRessource(int a){
     this->gainRessource += a;
 }
 
+/* GESTION DES NAVIRES */
+void Flotte::removeAllNavires(){
+    while(this->getNbNavires() != 0)
+    {
+        this->navires->back()->~Navire();
+        this->navires->pop_back();
+    }
+}
 
+void Flotte::removeNavire(int i){
+    std::string s = "p";
+    switch ( s[0] ) {
+        case 'p':
+            removePatrouilleur(i);
+        break;
+        case 'c':
+            //removeCroiseur(i+1 - getNbPatrouilleurs());
+        break;
+
+    }
+}
+
+void Flotte::stopSelected(){
+    stopSelectedAux(listeSelected);
+}
+
+void Flotte::stopSelectedAux(selectedNavire* liste){
+    if (!estVide(liste)){
+        liste->nav->stop();
+        stopSelectedAux(liste->suivant);
+    }
+}
+
+void Flotte::deleteSelected(){
+    deleteSelectedAux(listeSelected);
+}
+
+void Flotte::deleteSelectedAux(selectedNavire* liste){
+    if (!estVide(liste)){
+        printf("OK1");
+        deleteSelectedAux(liste->suivant);
+        printf("OK3");
+        removePatrouilleur(liste->nav->getId());
+        printf("OK3");
+    }
+}
+
+/* GESTION DES PATROUILLEURS */
 void Flotte::newPatrouilleur(){
     Patrouilleur* p = new Patrouilleur(this->getNumero(), this->getNbPatrouilleurs(), this->getSpawnPoint(), this->getSpawnPoint(), this->getCaracPatrouilleur(0), this->getCaracPatrouilleur(1), this->getCaracPatrouilleur(2), this->getCaracPatrouilleur(3), this->getCaracPatrouilleur(4));
     this->addPatrouilleur(p);
@@ -181,26 +251,32 @@ void Flotte::newPatrouilleur(){
 
 void Flotte::addPatrouilleur(Patrouilleur* p){
     if(p == NULL) error("Patrouilleur NULL en param | ajouterPatrouilleur");
-    this->patrouilleurs->push_back(p);
+    this->navires->insert(navires->begin() + getNbPatrouilleurs(), p);
+    setNbPatrouilleurs(getNbPatrouilleurs() + 1);
 }
 
 void Flotte::removeAllPatrouilleurs(){
     while(this->getNbPatrouilleurs() != 0)
     {
-        this->patrouilleurs->back()->~Patrouilleur();
-        this->patrouilleurs->pop_back();
+        this->navires->back()->~Navire();
+        this->navires->pop_back();
+        setNbPatrouilleurs(getNbPatrouilleurs() - 1);
     }
 }
 
 void Flotte::removePatrouilleur(int i){
-    //this->patrouilleurs->at(i)->~Patrouilleur();
-    this->patrouilleurs->erase(patrouilleurs->begin() + i);
-    this->reduireNumeroPatrouilleurs(i);
+    if (i < getNbPatrouilleurs() ) {
+        this->navires->at(i)->~Navire() ;
+        this->navires->erase(navires->begin() + i);
+        setNbPatrouilleurs(getNbPatrouilleurs() - 1);
+        this->reduireNumeroPatrouilleurs(i);
+    }
+    
 }
 
 void Flotte::reduireNumeroPatrouilleurs(int indice){
     for (int i = indice; i < this->getNbPatrouilleurs(); i++){
-        this->patrouilleurs->at(i)->reduireId();
+        this->navires->at(i)->reduireId();
     }
 }
 
@@ -210,7 +286,7 @@ void Flotte::ameliorerPatrouilleurs(){
     ameliorerDegatsPatrouilleurs();
     ameliorerCadencePatrouilleurs();
     ameliorerPorteePatrouilleurs();
-    updatePatrouilleur();
+    updatePatrouilleurs();
     caracPatrouilleur[5]++;
 }
 
@@ -234,26 +310,95 @@ void Flotte::ameliorerPorteePatrouilleurs(){
     caracPatrouilleur[4] += AMELIO_PORTEE_PATROUILLEUR;
 }
 
-void Flotte::updatePatrouilleur(){
+void Flotte::updatePatrouilleurs(){
     for (int i = 0; i < this->getNbPatrouilleurs(); i++){
-        this->patrouilleurs->at(i)->setVitesse(this->getCaracPatrouilleur(0));
-        this->patrouilleurs->at(i)->setPvMax(this->getCaracPatrouilleur(1));
-        this->patrouilleurs->at(i)->setDegatArme(this->getCaracPatrouilleur(2));
-        this->patrouilleurs->at(i)->setCadenceTir(this->getCaracPatrouilleur(3));
-        this->patrouilleurs->at(i)->setPortee(this->getCaracPatrouilleur(4));
+        this->navires->at(i)->setVitesse(this->getCaracPatrouilleur(0));
+        this->navires->at(i)->setPvMax(this->getCaracPatrouilleur(1));
+        this->navires->at(i)->setDegatArme(this->getCaracPatrouilleur(2));
+        this->navires->at(i)->setCadenceTir(this->getCaracPatrouilleur(3));
+        this->navires->at(i)->setPortee(this->getCaracPatrouilleur(4));
     }
 }
 
-void Flotte::stopSelected(){
-    stopSelectedAux(listeSelected);
+
+/* GESTION DES CROISEURS */
+/*
+void Flotte::newCroiseur(){
+    Croiseur* c = new Croiseur(this->getNumero(), this->getNbCroiseurs(), this->getSpawnPoint(), this->getSpawnPoint(), this->getCaracCroiseur(0), this->getCaracCroiseur(1), this->getCaracCroiseur(2), this->getCaracCroiseur(3), this->getCaracCroiseur(4));
+    this->addCroiseur(c);
 }
 
-void Flotte::stopSelectedAux(selectedNavire* liste){
-    if (!estVide(liste)){
-        liste->nav->stop();
-        stopSelectedAux(liste->suivant);
+void Flotte::addCroiseur(Croiseur* c){
+    if(c == NULL) error("Croiseur NULL en param | ajouterCroiseur");
+    this->navires->insert(navires->begin() + getNbPatrouilleurs() + getNbCroiseurs(), c);
+    setNbCroiseurs(getNbCroiseurs() + 1);
+}
+
+void Flotte::removeAllCroiseurs(){
+    while(this->getNbCroiseurs() != 0)
+    {
+        this->navires->back()->~Navire();
+        this->navires->pop_back();
+        setNbPatrouilleurs(getNbCroiseurs() - 1);
     }
 }
+
+void Flotte::removeCroiseur(int i){
+    if (i < getNbCroiseurs() ) {
+        this->navires->erase(navires->begin() + i);
+        setNbPatrouilleurs(getNbPatrouilleurs() - 1);
+        this->reduireNumeroPatrouilleurs(i);
+    }
+    
+}
+
+void Flotte::reduireNumeroPatrouilleurs(int indice){
+    for (int i = indice; i < this->getNbPatrouilleurs(); i++){
+        this->navires->at(i)->reduireId();
+    }
+}
+
+void Flotte::ameliorerPatrouilleurs(){
+    ameliorerPVMaxPatrouilleurs();
+    ameliorerVitessePatrouilleurs();
+    ameliorerDegatsPatrouilleurs();
+    ameliorerCadencePatrouilleurs();
+    ameliorerPorteePatrouilleurs();
+    updatePatrouilleurs();
+    caracPatrouilleur[5]++;
+}
+
+void Flotte::ameliorerPVMaxPatrouilleurs(){
+    caracPatrouilleur[0] += AMELIO_VITESSE_PATROUILLEUR;
+}
+
+void Flotte::ameliorerVitessePatrouilleurs(){
+    caracPatrouilleur[1] += AMELIO_PV_MAX_PATROUILLEUR;
+}
+
+void Flotte::ameliorerDegatsPatrouilleurs(){
+    caracPatrouilleur[2] += AMELIO_DEGATS_PATROUILLEUR;
+}
+
+void Flotte::ameliorerCadencePatrouilleurs(){
+    caracPatrouilleur[3] += AMELIO_CADENCE_PATROUILLEUR;
+}
+
+void Flotte::ameliorerPorteePatrouilleurs(){
+    caracPatrouilleur[4] += AMELIO_PORTEE_PATROUILLEUR;
+}
+
+void Flotte::updatePatrouilleurs(){
+    for (int i = 0; i < this->getNbPatrouilleurs(); i++){
+        this->navires->at(i)->setVitesse(this->getCaracPatrouilleur(0));
+        this->navires->at(i)->setPvMax(this->getCaracPatrouilleur(1));
+        this->navires->at(i)->setDegatArme(this->getCaracPatrouilleur(2));
+        this->navires->at(i)->setCadenceTir(this->getCaracPatrouilleur(3));
+        this->navires->at(i)->setPortee(this->getCaracPatrouilleur(4));
+    }
+}
+*/
+
 
 std::string Flotte::formattedInfo()
 {

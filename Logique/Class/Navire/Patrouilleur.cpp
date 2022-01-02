@@ -14,3 +14,5 @@ Patrouilleur::Patrouilleur(int idFlotte, int id, Point* pos, Point* dest, int vi
 
 }
 
+//std::string returnType(){ return "patrouilleur";}
+

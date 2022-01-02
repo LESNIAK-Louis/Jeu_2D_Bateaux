@@ -128,7 +128,7 @@ void Navire::setIdFlotte(int idFlotte){
 }
 
 void Navire::setId(int id){
-    this->idFlotte = id;
+    this->id = id;
 }
 
 void Navire::reduireId(){
@@ -274,9 +274,9 @@ void Navire::avancer(int deltaAngle){
     }
     this->getCentre()->deplacer(this->getVitesseHorizontale(), this->getVitesseVerticale());
     setAngle(this->getCentre()->trouverAngle(this->getWayPoint()));
-    if (this->getAbscisse() < HAUTEUR_INTERFACE) { this->setAbscisse(HAUTEUR_INTERFACE);}
+    if (this->getAbscisse() < 0) { this->setAbscisse(0);}
     if (this->getAbscisse() > LARGEUR_ECRAN) {this->setAbscisse(LARGEUR_ECRAN);}
-    if (this->getOrdonnee() < 0){ this->setOrdonnee(0);}
+    if (this->getOrdonnee() < HAUTEUR_INTERFACE){ this->setOrdonnee(HAUTEUR_INTERFACE);}
     if (this->getOrdonnee() > HAUTEUR_ECRAN) { this->setOrdonnee(HAUTEUR_ECRAN);}
     //Si le navire a atteint le point de passage, alors le point de passage devient la destination
     

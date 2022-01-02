@@ -89,6 +89,7 @@ class Navire
         void setCible(Navire* navire);
         void ajouterPV();
 
+
         bool estEnCollisionAvec(int taille, Point* ctr);
 
         /**
@@ -96,6 +97,8 @@ class Navire
          * 
          */
         void stop();
+
+        //virtual std::string returnType() = 0;
 
         std::string formattedInfo();
 };

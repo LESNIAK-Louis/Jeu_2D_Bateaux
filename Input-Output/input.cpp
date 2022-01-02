@@ -30,8 +30,15 @@ void gestion_evenements(Game* jeu)
                         case SDLK_LEFT :
                             break;
                         case SDLK_UP :
+                            for (int i = 0; i < jeu->getMonde()->getFlotte(0)->getNbNavires(); i++){
+                               std::cout << "Patrouilleur : " << jeu->getMonde()->getFlotte(0)->getPatrouilleur(i)->getId() << " Flotte :  " << jeu->getMonde()->getFlotte(0)->getPatrouilleur(i)->getIdFlotte() << std::endl;
+                            }
+                            printf("\n");
                             break;
                         case SDLK_DOWN :
+                            break;
+                        case SDLK_DELETE :
+                            jeu->getMonde()->getFlotte(0)->deleteSelected();
                             break;
                         case SDLK_BACKSPACE:
                             jeu->getMonde()->getFlotte(0)->stopSelected();
@@ -110,17 +117,17 @@ bool isPointingIle(Game* jeu)
 void addNavToSelection(Flotte* flotte, Mouse* mouse)
 {
     Rectangle* rect = mouse->getRectangleSelection();
-    for(int j = 0; j < flotte->getNbPatrouilleurs(); j++)
+    for(int j = 0; j < flotte->getNbNavires(); j++)
     {
         if(mouse->isSimpleClick())
         {
-            if(flotte->getPatrouilleur(j)->estEnCollisionAvec(5, mouse->getCurrentPosMouse()))
-                flotte->addElemListeSelected(flotte->getPatrouilleur(j));
+            if(flotte->getNavire(j)->estEnCollisionAvec(5, mouse->getCurrentPosMouse()))
+                flotte->addElemListeSelected(flotte->getNavire(j));
         }
         else
         {
-            if(collisionCercleRectangle(flotte->getPatrouilleur(j)->getCentre(), flotte->getPatrouilleur(j)->getTaille(), rect))
-                flotte->addElemListeSelected(flotte->getPatrouilleur(j));
+            if(collisionCercleRectangle(flotte->getNavire(j)->getCentre(), flotte->getNavire(j)->getTaille(), rect))
+                flotte->addElemListeSelected(flotte->getNavire(j));
         }
     }
     delete rect;

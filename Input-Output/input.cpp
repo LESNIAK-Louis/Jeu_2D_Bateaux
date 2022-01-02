@@ -86,8 +86,11 @@ void addNavToSelection(Flotte* flotte, Mouse* mouse)
     {
         if(mouse->isSimpleClick())
         {
-            if(flotte->getPatrouilleur(j)->estEnCollisionAvec(5, mouse->getCurrentPosMouse()))
+            if(flotte->getPatrouilleur(j)->estEnCollisionAvec(1, mouse->getCurrentPosMouse()))
+            {
                 flotte->addElemListeSelected(flotte->getPatrouilleur(j));
+                break;
+            }
         }
         else
         {

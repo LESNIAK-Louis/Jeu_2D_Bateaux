@@ -127,7 +127,7 @@ int main()
     SDL_Texture* fond = charger_image("Ressources/fond.bmp", jeu->getEcran());
     SDL_Texture* textureIle = charger_image("Ressources/ile.bmp", jeu->getEcran());
     SDL_Texture* texturePatrouilleur = charger_image("Ressources/test_bateau.bmp", jeu->getEcran());
-    SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", jeu->getEcran());
+    //SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", jeu->getEcran());
 
     while(!jeu->getTerminer()){
         SDL_RenderClear(jeu->getEcran());

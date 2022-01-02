@@ -27,14 +27,14 @@ int main()
     monde->getFlotte(1)->newPatrouilleur();*/
 
     monde->setIleBonus(0, new IleBonus(new Point(500, 500), TAILLE_ILE2 , 1, 80, -1, 0 ,50));
-    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,0,new Point(500, 500), new Point(500, 500), 50,50,50,50,50));
-    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,1,new Point(500, 500), new Point(500, 500), 50,50,50,50,50));
-    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,2,new Point(300, 150), new Point(300, 150), 50,50,50,50,50));
-    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,3,new Point(300, 150), new Point(300, 150), 50,50,50,50,50));
-    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,4,new Point(300, 150), new Point(300, 150), 50,50,50,50,50));
-    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,5,new Point(300, 150), new Point(300, 150), 50,50,50,50,50));
-    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,4,new Point(300, 150), new Point(300, 150), 50,50,50,50,50));
-    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,5,new Point(300, 150), new Point(300, 150), 50,50,50,50,50));
+    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,0,new Point(500, 500), new Point(500, 500), 50,50,50,2,50));
+    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,1,new Point(500, 500), new Point(500, 500), 50,50,50,2,50));
+    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,2,new Point(300, 150), new Point(300, 150), 50,50,50,2,50));
+    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,3,new Point(300, 150), new Point(300, 150), 50,50,50,2,50));
+    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,4,new Point(300, 150), new Point(300, 150), 50,50,50,2,50));
+    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,5,new Point(300, 150), new Point(300, 150), 50,50,50,2,50));
+    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,4,new Point(300, 150), new Point(300, 150), 50,50,50,2,50));
+    monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,5,new Point(300, 150), new Point(300, 150), 50,50,50,2,50));
     monde->getIleBonus(0)->placerDefenseur();
 
     //monde->getFlotte(1)->getPatrouilleur(0)->setCentre(new Point(150, 250));

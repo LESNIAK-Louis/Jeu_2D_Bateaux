@@ -126,7 +126,7 @@ void afficherBouton(SDL_Renderer* ecran, textures_s* textures, int abscisse, int
             SDL_RenderCopy(ecran, textures->porteAvion, NULL, &DestR);
             break;
     }
-    if (j==2) {
+    if (j==1) {
         SDL_RenderCopy(ecran, textures->plus, NULL, &DestR);
     }
    
@@ -155,6 +155,7 @@ void afficherIlesBonus(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
 void afficherNavires(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
     for (int f = 0; f < monde->getNbFlottes(); f++){
         afficherPatrouilleurs(ecran, monde->getFlotte(f), textures);
+        afficherCroiseurs(ecran, monde->getFlotte(f), textures);
     }
 }
 
@@ -167,6 +168,19 @@ void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* text
         //Permet d'afficher un point sur le wayPoint du patrouilleur. A utiliser pour le debuggage
         SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", ecran);
         DestR = {flotte->getPatrouilleur(p)->getWayPoint()->getAbscisse(), flotte->getPatrouilleur(p)->getWayPoint()->getOrdonnee(),5, 5};
+        SDL_RenderCopy(ecran, texturePoint, NULL, &DestR);
+    }
+}
+
+void afficherCroiseurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures){
+    for (int c = 0; c < flotte->getNbCroiseurs(); c++) {
+        SDL_Rect DestR = {flotte->getCroiseur(c)->getAbscisse()-TAILLE_PATROUILLEUR/2, flotte->getCroiseur(c)->getOrdonnee()-TAILLE_CROISEUR/2,TAILLE_CROISEUR, TAILLE_CROISEUR};
+        SDL_RenderCopyEx(ecran, textures->croiseur, NULL, &DestR, flotte->getCroiseur(c)->getAngle(), NULL, SDL_FLIP_NONE);
+        afficherBarreDeVie(flotte->getCroiseur(c), ecran, textures);
+
+        //Permet d'afficher un point sur le wayPoint du croiseur. A utiliser pour le debuggage
+        SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", ecran);
+        DestR = {flotte->getCroiseur(c)->getWayPoint()->getAbscisse(), flotte->getCroiseur(c)->getWayPoint()->getOrdonnee(),5, 5};
         SDL_RenderCopy(ecran, texturePoint, NULL, &DestR);
     }
 }

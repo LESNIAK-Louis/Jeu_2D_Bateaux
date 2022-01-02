@@ -7,7 +7,7 @@
 #ifndef FLOTTE_HPP
 #define FLOTTE_HPP
 
-
+#include <iostream>
 #include <stdio.h>
 #include <stdbool.h>
 #include <string>
@@ -64,12 +64,16 @@ class Flotte
         int getGainRessource();
         int getPvBase();
         int getCaracPatrouilleur(int i);
+        int getCaracCroiseur(int i);
         int getNbNavires();
         int getNbPatrouilleurs();
         int getNbCroiseurs();
         Navire* getNavire(int i);
         Navire* getPatrouilleur(int i);
         Navire* getCroiseur(int i);
+
+        int getDebutIndicePatrouilleurs();
+        int getDebutIndiceCroiseur();
 
         selectedNavire* getListeSelected();
         void viderListeSelected();
@@ -86,6 +90,7 @@ class Flotte
 
         void setPvBase(int p);
         void setCaracPatrouilleur(int v, int pMax, int degat, int cd, int p);
+        void setCaracCroiseur(int v, int pMax, int degat, int cd, int p);
 
         void addRessource();
         void addRessource(int i);

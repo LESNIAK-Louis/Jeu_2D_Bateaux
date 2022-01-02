@@ -149,6 +149,15 @@ void afficherNavires(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
 void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures);
 
 /**
+ * @brief affiche les croiseurs
+ * 
+ * @param ecran 
+ * @param flotte 
+ * @param textures 
+ */
+void afficherCroiseurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures);
+
+/**
  * @brief affiche les barres de vie au dessus des bateaux selectionnés par l'utilisateur
  * 
  * @param ecran 

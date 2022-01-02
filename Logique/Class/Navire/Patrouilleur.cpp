@@ -5,7 +5,6 @@
  * \date 10 Nov. 2021
 */
 
-#include "../../../definitions.hpp"
 #include "Patrouilleur.hpp"
 
 
@@ -13,6 +12,3 @@ Patrouilleur::Patrouilleur(int idFlotte, int id, Point* pos, Point* dest, int vi
     this->taille = TAILLE_PATROUILLEUR;
     this->type = "Patrouilleur";
 }
-
-//std::string returnType(){ return "patrouilleur";}
-

@@ -5,7 +5,6 @@
  * \date 10 Nov. 2021
 */
 
-#include "../../../definitions.hpp"
 #include "Croiseur.hpp"
 
 

@@ -4,16 +4,6 @@
 #include "Logique/logique.hpp"
 #include "Input-Output/fichier.hpp"
 #include "Game.hpp"
-/*
-#define objW 640
-#define objH 192
-
-#define chatW 285/3
-#define chatH 250/2
-
-#define texteW 300
-#define texteH 35
-*/
 
 #include <iostream>
 
@@ -63,16 +53,9 @@ int main()
     monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(300,300));*/
 
     Game* jeu = new Game(monde);
-<<<<<<< HEAD
-    SDL_Texture* fond = charger_image("Ressources/fond.bmp", jeu->getEcran());
-    SDL_Texture* textureIle = charger_image("Ressources/ile.bmp", jeu->getEcran());
-    SDL_Texture* texturePatrouilleur = charger_image("Ressources/test_bateau.bmp", jeu->getEcran());
-    //SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", jeu->getEcran());
-=======
 
     textures_s textures;
     init_textures(jeu->getEcran(), &textures);
->>>>>>> 2b4ed57ce1d0327e80984981ccfc4f256f4ee07d
 
     while(!jeu->getTerminer()){
         SDL_RenderClear(jeu->getEcran());

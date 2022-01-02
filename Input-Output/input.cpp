@@ -13,7 +13,7 @@ void gestion_evenements(Game* jeu)
     {
         if(jeu->getEtatJeu() == 0) // dans le menu
         {
-
+            
         }
         else // en jeu
         {
@@ -101,7 +101,7 @@ bool isPointingIle(Game* jeu)
 {
     for(int j = 0; j < jeu->getMonde()->getNbIles(); j++)
     {
-        if(collisionCercles(jeu->getMonde()->getIle(j)->getCentre(), jeu->getMonde()->getIle(j)->getTaille(), jeu->getMouse()->getCurrentPosMouse(), 5))
+        if(collisionCercles(jeu->getMonde()->getIle(j)->getCentre(), jeu->getMonde()->getIle(j)->getTaille(), jeu->getMouse()->getCurrentPosMouse(), TAILLE_POINTEUR_SOURIS))
             return true;
     }
     return false;
@@ -109,7 +109,6 @@ bool isPointingIle(Game* jeu)
 
 void addNavToSelection(Flotte* flotte, Mouse* mouse)
 {
-    Rectangle* rect = mouse->getRectangleSelection();
     for(int j = 0; j < flotte->getNbPatrouilleurs(); j++)
     {
         if(mouse->isSimpleClick())
@@ -122,13 +121,11 @@ void addNavToSelection(Flotte* flotte, Mouse* mouse)
         }
         else
         {
-            if(collisionCercleRectangle(flotte->getPatrouilleur(j)->getCentre(), flotte->getPatrouilleur(j)->getTaille(), rect))
+            if(mouse->collisionAvecSelection(flotte->getPatrouilleur(j)->getCentre(), flotte->getPatrouilleur(j)->getTaille()))
                 flotte->addElemListeSelected(flotte->getPatrouilleur(j));
         }
     }
-    delete rect;
 }
-
 
 void appliquerEffetBouton(Flotte* flotte, int i, int j){
     switch (j){

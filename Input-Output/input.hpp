@@ -21,6 +21,7 @@
 void gestion_evenements(Game* jeu);
 bool isPointingIle(Game* jeu);
 void addNavToSelection(Flotte* flotte, Mouse* mouse);
+bool collisionCercleRectangle(Point* centre, int rayon, SDL_Rect* rect);
 void appliquerEffetBouton(Flotte* flotte, int i, int j);
 
 #endif

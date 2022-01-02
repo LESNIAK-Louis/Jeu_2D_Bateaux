@@ -82,41 +82,6 @@ void moveShips(Monde* monde){
 }
 
 
-void unSelectAll(Monde* monde)
-{
-    /*for(int i = 0; i < monde->getNbFlottes(); i++)
-    {
-        for(int j = 0; j < monde->getFlotte(i)->getNbPatrouilleurs(); j++)
-        {
-            if(monde->getFlotte(i)->getPatrouilleur(j)->getIsSelected())
-                monde->getFlotte(i)->getPatrouilleur(j)->setIsSelected(false);
-        }
-    }*/
-}
-
-bool collisionCercleRectangle(Point* centre, int rayon, Rectangle* rect)
-{
-
-    Point* temp = new Point(centre->getAbscisse(),centre->getOrdonnee());
-    // On regarde de quel côté du rectangle est le cercle : 
-    if (centre->getAbscisse() < rect->getTopLeft()->getAbscisse()) temp->setAbscisse(rect->getTopLeft()->getAbscisse()); // gauche
-    else if (centre->getAbscisse() > rect->getTopRight()->getAbscisse()) temp->setAbscisse(rect->getTopLeft()->getAbscisse()); // droite
-    if (centre->getOrdonnee() < rect->getTopLeft()->getOrdonnee()) temp->setAbscisse(rect->getTopLeft()->getOrdonnee()); // haut
-    else if (centre->getOrdonnee() > rect->getBotLeft()->getOrdonnee()) temp->setAbscisse(rect->getBotLeft()->getOrdonnee()); // bas
-
-    int distance = temp->distance(centre);
-    delete temp;
-    if(distance <= rayon)
-        return true;
-    return false;
-}
-
-bool collisionRectangles(Rectangle* r1, Rectangle* r2)
-{
-    return std::abs(r1->getCentre()->getAbscisse() - r2->getCentre()->getAbscisse()) <= (r1->getWeight()+r2->getWeight())/2
-    && std::abs(r1->getCentre()->getOrdonnee() - r2->getCentre()->getOrdonnee()) <= (r1->getHeight()+r2->getHeight())/2;
-}
-
 bool collisionCercles(Point* ctr1, int taille1, Point* ctr2, int taille2)
 {
     return (ctr1->distance(ctr2) <= (taille1 + taille2)/2);

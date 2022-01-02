@@ -45,20 +45,29 @@ bool Mouse::isSelecting()
 
 bool Mouse::isSimpleClick()
 {
-    return this->getStartPosMouse()->distance(this->getEndPosMouse()) < 4;
+    return this->getStartPosMouse()->distance(this->getEndPosMouse()) < TAILLE_POINTEUR_SOURIS;
 }
 
-Rectangle* Mouse::getRectangleSelection()
+SDL_Rect* Mouse::getRectangleSelection()
 {
-    return new Rectangle(this->getStartPosMouse(), this->getEndPosMouse());
+    int height = std::abs(this->getStartPosMouse()->getOrdonnee() - this->getEndPosMouse()->getOrdonnee());
+    int weight = std::abs(this->getStartPosMouse()->getAbscisse() - this->getEndPosMouse()->getAbscisse());
+    
+    //Top Left :
+    int x = (this->getStartPosMouse()->getAbscisse() < this->getEndPosMouse()->getAbscisse())?(this->getStartPosMouse()->getAbscisse()):(this->getEndPosMouse()->getAbscisse());
+    int y = (this->getStartPosMouse()->getOrdonnee() < this->getEndPosMouse()->getOrdonnee())?(this->getStartPosMouse()->getOrdonnee()):(this->getEndPosMouse()->getOrdonnee());
+    
+    SDL_Rect* rect = (SDL_Rect*)malloc(sizeof(SDL_Rect));
+    *rect = {x,y,weight,height};
+    return rect;
 }
 
 int Mouse::getAbscisse(){
-    return getCurrentPosMouse()->getAbscisse();
+    return this->getCurrentPosMouse()->getAbscisse();
 }
 
 int Mouse::getOrdonnee(){
-    return getCurrentPosMouse()->getOrdonnee();
+    return this->getCurrentPosMouse()->getOrdonnee();
 }
 
 void Mouse::setStartPosMouse(Point* point)
@@ -84,7 +93,7 @@ void Mouse::startSelection()
 {
     if(!this->isSelecting())
     {
-        this->setStartPosMouse(getCurrentPosMouse());
+        this->setStartPosMouse(this->getCurrentPosMouse());
         this->setIsSelecting(true);
     }
 }
@@ -92,18 +101,36 @@ void Mouse::startSelection()
 void Mouse::updateSelection()
 {
     if(this->isSelecting())
-        this->setEndPosMouse(getCurrentPosMouse());
+        this->setEndPosMouse(this->getCurrentPosMouse());
 }
 
 void Mouse::endSelection()
 {
     if(this->isSelecting())
     {
-        this->setEndPosMouse(getCurrentPosMouse());
+        this->setEndPosMouse(this->getCurrentPosMouse());
         this->setIsSelecting(false);
     }
 }
 
 bool Mouse::estEnCollisionAvec(SDL_Rect rect){
-    return (getAbscisse() >= rect.x && getAbscisse() <= rect.x + rect.w && getOrdonnee() >= rect.y && getOrdonnee() <= rect.y + rect.h ) ;
+    return (this->getAbscisse() >= rect.x && this->getAbscisse() <= rect.x + rect.w && this->getOrdonnee() >= rect.y && this->getOrdonnee() <= rect.y + rect.h ) ;
+}
+
+bool Mouse::collisionAvecSelection(Point* centre, int rayon)
+{
+    SDL_Rect* rect = this->getRectangleSelection();
+    Point* temp = new Point(centre->getAbscisse(),centre->getOrdonnee());
+    // On regarde de quel côté du rectangle est le cercle : 
+    if (centre->getAbscisse() < rect->x) temp->setAbscisse(rect->x); // gauche
+    else if (centre->getAbscisse() > rect->x + rect->w) temp->setAbscisse(rect->x); // droite
+    if (centre->getOrdonnee() < rect->y) temp->setAbscisse(rect->y); // haut
+    else if (centre->getOrdonnee() > rect->y + rect->h) temp->setAbscisse(rect->y + rect->h); // bas
+
+    int distance = temp->distance(centre);
+    delete temp;
+    free(rect);
+    if(distance <= rayon)
+        return true;
+    return false;
 }

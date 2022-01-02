@@ -13,7 +13,7 @@ void gestion_evenements(Game* jeu)
     {
         if(jeu->getEtatJeu() == 0) // dans le menu
         {
-
+            
         }
         else // en jeu
         {
@@ -108,7 +108,7 @@ bool isPointingIle(Game* jeu)
 {
     for(int j = 0; j < jeu->getMonde()->getNbIles(); j++)
     {
-        if(collisionCercles(jeu->getMonde()->getIle(j)->getCentre(), jeu->getMonde()->getIle(j)->getTaille(), jeu->getMouse()->getCurrentPosMouse(), 5))
+        if(collisionCercles(jeu->getMonde()->getIle(j)->getCentre(), jeu->getMonde()->getIle(j)->getTaille(), jeu->getMouse()->getCurrentPosMouse(), TAILLE_POINTEUR_SOURIS))
             return true;
     }
     return false;
@@ -130,9 +130,7 @@ void addNavToSelection(Flotte* flotte, Mouse* mouse)
                 flotte->addElemListeSelected(flotte->getNavire(j));
         }
     }
-    delete rect;
 }
-
 
 void appliquerEffetBouton(Flotte* flotte, int i, int j){
     switch (j){

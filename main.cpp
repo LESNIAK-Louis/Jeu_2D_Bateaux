@@ -4,16 +4,6 @@
 #include "Logique/logique.hpp"
 #include "Input-Output/fichier.hpp"
 #include "Game.hpp"
-/*
-#define objW 640
-#define objH 192
-
-#define chatW 285/3
-#define chatH 250/2
-
-#define texteW 300
-#define texteH 35
-*/
 
 #include <iostream>
 

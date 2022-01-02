@@ -9,6 +9,8 @@
 #define INPUT_HPP
 
 #include <SDL2/SDL.h>
+#include <stdio.h>
+#include <iostream>
 #include "../Game.hpp"
 #include "../Logique/logique.hpp"
 #include "../Logique/Class/Monde.hpp"
@@ -21,6 +23,7 @@
 void gestion_evenements(Game* jeu);
 bool isPointingIle(Game* jeu);
 void addNavToSelection(Flotte* flotte, Mouse* mouse);
+bool collisionCercleRectangle(Point* centre, int rayon, SDL_Rect* rect);
 void appliquerEffetBouton(Flotte* flotte, int i, int j);
 
 #endif

@@ -13,7 +13,9 @@ void  init_textures(SDL_Renderer *renderer, textures_s* textures){
     textures->ile = charger_image("Ressources/ile.bmp", renderer);
     textures->contourPV = charger_image("Ressources/contourBarrePV.bmp", renderer);
     textures->remplissagePV = charger_image("Ressources/remplissageBarrePV.bmp", renderer);
+    textures->remplissagePVEnnemis = charger_image("Ressources/remplissageBarrePVEnnemis.bmp", renderer);
     textures->patrouilleur = charger_image("Ressources/patrouilleur.bmp", renderer);
+    textures->croiseur = charger_image("Ressources/croiseur.bmp", renderer);
     textures->porteAvion = charger_image("Ressources/porteAvion.bmp", renderer);
     textures->interface = charger_image("Ressources/interface.bmp", renderer);
     textures->bouton = charger_image("Ressources/bouton.bmp", renderer);
@@ -69,7 +71,9 @@ SDL_Texture* charger_image_transparente(const char* nomfichier, SDL_Renderer* re
 
 
 void afficherMonde(SDL_Renderer* ecran, Monde* monde, textures_s* textures){ 
+    
     afficherIles(ecran, monde, textures);
+    afficherIlesBonus(ecran, monde,textures);
     afficherNavires(ecran, monde, textures);
     afficherInterface(ecran, monde, textures);
 }
@@ -111,16 +115,19 @@ void afficherBouton(SDL_Renderer* ecran, textures_s* textures, int abscisse, int
     DestR.y = ordonnee + 5;
     DestR.w = TAILLE_BOUTON - 10;
     DestR.h = TAILLE_BOUTON - 10;
-    if (j==2) {
-        SDL_RenderCopy(ecran, textures->plus, NULL, &DestR);
-    }
     switch (i) {
         case 0:
             SDL_RenderCopy(ecran, textures->patrouilleur, NULL, &DestR);
             break;
         case 1:
+            SDL_RenderCopy(ecran, textures->croiseur, NULL, &DestR);
+            break;
+        case 2:
             SDL_RenderCopy(ecran, textures->porteAvion, NULL, &DestR);
             break;
+    }
+    if (j==2) {
+        SDL_RenderCopy(ecran, textures->plus, NULL, &DestR);
     }
    
 }
@@ -131,6 +138,18 @@ void afficherIles(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
         SDL_RenderCopy(ecran, textures->ile, NULL, &DestR);
     }
 
+}
+
+void afficherIlesBonus(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
+    for (int i = 0; i < monde->getNbIlesBonus(); i++) {
+        SDL_Rect DestR = {monde->getIleBonus(i)->getCentre()->getAbscisse()-(TAILLE_ILE2/2), monde->getIleBonus(i)->getCentre()->getOrdonnee()-(TAILLE_ILE2/2),TAILLE_ILE2, TAILLE_ILE2};
+        SDL_RenderCopy(ecran, textures->ile, NULL, &DestR);
+        for (int p = 0; p < monde->getIleBonus(i)->getNbDefenseur(); p++) {
+            SDL_Rect DestR = {monde->getIleBonus(i)->getDefenseur(p)->getAbscisse()-TAILLE_PATROUILLEUR/2, monde->getIleBonus(i)->getDefenseur(p)->getOrdonnee()-TAILLE_PATROUILLEUR/2,TAILLE_PATROUILLEUR, TAILLE_PATROUILLEUR};
+            SDL_RenderCopyEx(ecran, textures->patrouilleur, NULL, &DestR, monde->getIleBonus(i)->getDefenseur(p)->getAngle(), NULL, SDL_FLIP_NONE);
+            afficherBarreDeVie(monde->getIleBonus(i)->getDefenseur(p), ecran, textures);      
+        }
+    }
 }
 
 void afficherNavires(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
@@ -160,7 +179,12 @@ void afficherBarreDeVie(Navire* navire, SDL_Renderer* ecran, textures_s* texture
     SDL_Rect DestRInt = {navire->getAbscisse()-navire->getTaille()/2 +1, navire->getOrdonnee()-navire->getTaille()/2 - 7, (int)round(PV_REMP_WIDTH * ratio), PV_REMP_HEIGHT};
 
     SDL_RenderCopy(ecran, textures->contourPV, NULL, &DestRExt);
-    SDL_RenderCopy(ecran, textures->remplissagePV, NULL, &DestRInt);
+    if (navire->getIdFlotte() == 0) {
+        SDL_RenderCopy(ecran, textures->remplissagePV, NULL, &DestRInt);
+    } else {
+        SDL_RenderCopy(ecran, textures->remplissagePVEnnemis, NULL, &DestRInt);
+    }
+    
 }
 
 

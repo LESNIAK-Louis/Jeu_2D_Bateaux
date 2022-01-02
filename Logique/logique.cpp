@@ -8,43 +8,47 @@
 #include "logique.hpp"
 
 
-void pathFinding(Navire* navire, Ile* ile){
+void pathFinding(Navire* navire, Point* centreIle, int tailleIle){
     int theta = 0;
-    int anglePatIle = navire->getCentre()->trouverAngle(ile->getCentre());
-    int anglePatrouilleur = navire->getAngle();
-    double rayonIle = (TAILLE_ILE1)/2; 
-    double distancePatIle = navire->getCentre()->distance(ile->getCentre());
-    double param = rayonIle/distancePatIle;
+    int angleNavIle = navire->getCentre()->trouverAngle(centreIle);
+    int angleNavire = navire->getAngle();
+    double rayonIle = (tailleIle)/2; 
+    double distanceNavIle = navire->getCentre()->distance(centreIle);
+    double param = rayonIle/distanceNavIle;
     double angleTemp = std::asin(param) ;
     angleTemp *= (180/PI);
     int angleIncidenceMin = (int)ceil(angleTemp);
     angleIncidenceMin += 365;
     angleIncidenceMin %= 360;
-    int angleIncidence = anglePatIle - anglePatrouilleur;
-    float distTangente = sqrt(distancePatIle * distancePatIle - rayonIle * rayonIle);
-    int absPat = navire->getAbscisse();
-    int ordPat = navire->getOrdonnee();
+    int angleIncidence = angleNavIle - angleNavire;
+    float distTangente = sqrt(distanceNavIle * distanceNavIle - rayonIle * rayonIle);
+    int absNav = navire->getAbscisse();
+    int ordNav = navire->getOrdonnee();
     bool col = false;
     if (angleIncidence < angleIncidenceMin && angleIncidence >= 0) {
-        //esquive en passant à gauche de l'ile (du point de vue du patrouilleur)
-        theta = anglePatIle - angleIncidenceMin;
+        //esquive en passant à gauche de l'ile (du point de vue du navire)
+        theta = angleNavIle - angleIncidenceMin;
         theta += 360;
         theta %= 360;
         theta *= (PI/180);
-        int absWayPoint = round(distTangente * sin(theta) + absPat);
-        int ordWayPoint = round(ordPat - distTangente * cos(theta));
-        navire->setWayPoint(new Point(absWayPoint, ordWayPoint));
+        int absWayPoint = round(distTangente * sin(theta) + absNav);
+        int ordWayPoint = round(ordNav - distTangente * cos(theta));
+        Point* waypoint = new Point(absWayPoint, ordWayPoint);
+        navire->setWayPoint(waypoint);
+        delete waypoint;
         col = true;
     }
     if (angleIncidence > -angleIncidenceMin && angleIncidence < 0) {
-        //esquive en passant à droite de l'ile (du point de vue du patrouilleur)
-        theta = 180 - anglePatIle - angleIncidenceMin;
+        //esquive en passant à droite de l'ile (du point de vue du navire)
+        theta = 180 - angleNavIle - angleIncidenceMin;
         theta += 360;
         theta %= 360;
         theta *= (PI/180);
-        int absWayPoint = round(distTangente * sin(theta) + absPat);
-        int ordWayPoint = round(ordPat + distTangente * cos(theta));
-        navire->setWayPoint(new Point(absWayPoint, ordWayPoint));
+        int absWayPoint = round(distTangente * sin(theta) + absNav);
+        int ordWayPoint = round(ordNav + distTangente * cos(theta));
+        Point* waypoint = new Point(absWayPoint, ordWayPoint);
+        navire->setWayPoint(waypoint);
+        delete waypoint;
         col = true;
     }  
     //Cette partie est pour le debuggage
@@ -53,11 +57,11 @@ void pathFinding(Navire* navire, Ile* ile){
         //if (theta < 0) {theta += 360;}
         theta += 360;
         theta %= 360;
-        printf("Coordonnees patrouilleur = < %i , %i >\n", ile->getAbscisse(), ile->getOrdonnee());
-        printf("Coordonnees ile = < %i , %i >\n", absPat, ordPat);
+        printf("Coordonnees navire = < %i , %i >\n", centreIle->getAbscisse(), centreIle->getOrdonnee());
+        printf("Coordonnees ile = < %i , %i >\n", absNav, ordNav);
         printf("distTangente = %f\n", distTangente);
-        printf("anglePatrouilleur = %i\n ", anglePatrouilleur);
-        printf("anglePatIle = %i\n", anglePatIle);
+        printf("angleNavire = %i\n ", angleNavire);
+        printf("angleNavIle = %i\n", angleNavIle);
         printf("\n angleIncidenceMin = %i\n", angleIncidenceMin);
         printf("\n angleIncidence = %i\n", angleIncidence);
         printf("theta = %i\n",theta);
@@ -66,56 +70,120 @@ void pathFinding(Navire* navire, Ile* ile){
 }
 void moveShips(Monde* monde){
     for (int f = 0; f < monde->getNbFlottes(); f++){
-        for (int p = 0; p < monde->getFlotte(f)->getNbPatrouilleurs(); p++) {  
-            if (monde->getFlotte(f)->getPatrouilleur(p)->isMoving()){
+        for (int p = 0; p < monde->getFlotte(f)->getNbNavires(); p++) {  
+            if (monde->getFlotte(f)->getNavire(p)->isMoving()){
                 //Permet d'éviter la collision avec une ile
                 for (int i = 0; i < monde->getNbIles(); i++) {
-                    if (monde->getFlotte(f)->getPatrouilleur(p)->estEnCollisionAvec(TAILLE_ILE1+80, monde->getIle(i)->getCentre()) /*&& !monde->getFlotte(f)->getPatrouilleur(p)->estEnCollisionAvec(50-TAILLE_PATROUILLEUR, monde->getFlotte(f)->getPatrouilleur(p)->getDestination())*/ ) {
-                        pathFinding(monde->getFlotte(f)->getPatrouilleur(p), monde->getIle(i));
+                    if (monde->getFlotte(f)->getNavire(p)->estEnCollisionAvec(monde->getIle(i)->getTaille()+80, monde->getIle(i)->getCentre()) /*&& !monde->getFlotte(f)->getNavire(p)->estEnCollisionAvec(50-TAILLE_Navire, monde->getFlotte(f)->getNavire(p)->getDestination())*/ ) {
+                        pathFinding(monde->getFlotte(f)->getNavire(p), monde->getIle(i)->getCentre(), monde->getIle(i)->getTaille());
                     }   
                 }
-                monde->getFlotte(f)->getPatrouilleur(p)->avancer(0);
+                for (int i = 0; i < monde->getNbIlesBonus(); i++) {
+                    if (monde->getFlotte(f)->getNavire(p)->estEnCollisionAvec(monde->getIleBonus(i)->getTaille()+80, monde->getIleBonus(i)->getCentre()) /*&& !monde->getFlotte(f)->getNavire(p)->estEnCollisionAvec(50-TAILLE_Navire, monde->getFlotte(f)->getNavire(p)->getDestination())*/ ) {
+                        pathFinding(monde->getFlotte(f)->getNavire(p), monde->getIleBonus(i)->getCentre(), monde->getIleBonus(i)->getTaille());
+                    }   
+                }
+                monde->getFlotte(f)->getNavire(p)->avancer(0);
                 
             }
         }
     }
 }
 
-
-void unSelectAll(Monde* monde)
+void tirsBateaux(Monde* monde, unsigned int currentTime)
 {
-    /*for(int i = 0; i < monde->getNbFlottes(); i++)
+    for(int i = 0; i < monde->getNbFlottes(); i++) // Le tir depuis les flottes
     {
-        for(int j = 0; j < monde->getFlotte(i)->getNbPatrouilleurs(); j++)
+        for(int j = 0; j < monde->getFlotte(i)->getNbNavires(); j++)
         {
-            if(monde->getFlotte(i)->getPatrouilleur(j)->getIsSelected())
-                monde->getFlotte(i)->getPatrouilleur(j)->setIsSelected(false);
+            bool shot = false;
+            // Tir sur flotte adverse 
+            for(int k = 0; k < monde->getNbFlottes(); k++)
+            {
+                if(k != i)
+                {
+                    for(int l = 0; l < monde->getFlotte(k)->getNbNavires(); l++)
+                    {
+                        if(monde->getFlotte(i)->getNavire(j)->peutTirer(currentTime))
+                        {
+                            if(monde->getFlotte(i)->getNavire(j)->estEnCollisionAvec(monde->getFlotte(i)->getNavire(j)->getPortee(), monde->getFlotte(k)->getNavire(l)->getCentre()))
+                            {
+                                monde->getFlotte(k)->getNavire(l)->ajouterPV(-monde->getFlotte(i)->getNavire(j)->getDegatArme());
+                                if(monde->getFlotte(k)->getNavire(l)->getPv() <= 0)
+                                    monde->getFlotte(k)->removeNavire(monde->getFlotte(k)->getNavire(l));
+                                shot = true;
+                                break;
+                            }
+                        }
+                    }
+                    if(shot)
+                    { 
+                        monde->getFlotte(i)->getNavire(j)->setDernierTir(currentTime);
+                        break;
+                    }
+                }
+            }
+            if(!shot)
+            {
+                // Tir sur IleBonus
+                for(int k = 0; k < monde->getNbIlesBonus(); k++)
+                {
+                    for(int l = 0; l < monde->getIleBonus(k)->getNbDefenseur(); l++)
+                    {
+                        if(monde->getFlotte(i)->getNavire(j)->peutTirer(currentTime))
+                        {
+                            if(monde->getFlotte(i)->getNavire(j)->estEnCollisionAvec(monde->getFlotte(i)->getNavire(j)->getPortee(), monde->getIleBonus(k)->getDefenseur(l)->getCentre()))
+                            {
+                                monde->getIleBonus(k)->getDefenseur(l)->ajouterPV(-monde->getIleBonus(i)->getDefenseur(j)->getDegatArme());
+                                if(monde->getIleBonus(k)->getDefenseur(l)->getPv() <= 0)
+                                    monde->getIleBonus(k)->removeDefenseur(monde->getIleBonus(k)->getDefenseur(l));
+                                shot = true;
+                                break;
+                            }
+                        }
+                    }
+                    if(shot)
+                    {
+                        monde->getFlotte(i)->getNavire(j)->setDernierTir(currentTime);
+                        break;
+                    }
+                }
+            }
         }
-    }*/
+    }
+   
+    for(int i = 0; i < monde->getNbIlesBonus(); i++) // Le tir depuis les iles bonus
+    {
+        for(int j = 0; j < monde->getIleBonus(i)->getNbDefenseur(); j++)
+        {
+            if(monde->getIleBonus(i)->getDefenseur(j)->peutTirer(currentTime))
+            {
+                
+                bool shot = false;
+                for(int k = 0; k < monde->getNbFlottes(); k++)
+                {
+                    for(int l = 0; l < monde->getFlotte(k)->getNbNavires(); l++)
+                    {
+                        if(monde->getIleBonus(i)->getDefenseur(j)->estEnCollisionAvec(monde->getIleBonus(i)->getDefenseur(j)->getPortee(), monde->getFlotte(k)->getNavire(l)->getCentre()))
+                        {
+                            monde->getFlotte(k)->getNavire(l)->ajouterPV(-monde->getIleBonus(i)->getDefenseur(j)->getDegatArme());
+                            if(monde->getFlotte(k)->getNavire(l)->getPv() <= 0)
+                                monde->getFlotte(k)->removeNavire(monde->getFlotte(k)->getNavire(l));
+                            shot = true;
+                            break;
+                        }
+                    }
+                    if(shot)
+                    {
+                        monde->getIleBonus(i)->getDefenseur(j)->setDernierTir(currentTime);
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }
 
-bool collisionCercleRectangle(Point* centre, int rayon, Rectangle* rect)
-{
-
-    Point* temp = new Point(centre->getAbscisse(),centre->getOrdonnee());
-    // On regarde de quel côté du rectangle est le cercle : 
-    if (centre->getAbscisse() < rect->getTopLeft()->getAbscisse()) temp->setAbscisse(rect->getTopLeft()->getAbscisse()); // gauche
-    else if (centre->getAbscisse() > rect->getTopRight()->getAbscisse()) temp->setAbscisse(rect->getTopLeft()->getAbscisse()); // droite
-    if (centre->getOrdonnee() < rect->getTopLeft()->getOrdonnee()) temp->setAbscisse(rect->getTopLeft()->getOrdonnee()); // haut
-    else if (centre->getOrdonnee() > rect->getBotLeft()->getOrdonnee()) temp->setAbscisse(rect->getBotLeft()->getOrdonnee()); // bas
-
-    int distance = temp->distance(centre);
-    delete temp;
-    if(distance <= rayon)
-        return true;
-    return false;
-}
-
-bool collisionRectangles(Rectangle* r1, Rectangle* r2)
-{
-    return std::abs(r1->getCentre()->getAbscisse() - r2->getCentre()->getAbscisse()) <= (r1->getWeight()+r2->getWeight())/2
-    && std::abs(r1->getCentre()->getOrdonnee() - r2->getCentre()->getOrdonnee()) <= (r1->getHeight()+r2->getHeight())/2;
-}
 
 bool collisionCercles(Point* ctr1, int taille1, Point* ctr2, int taille2)
 {

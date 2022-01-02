@@ -24,6 +24,7 @@ Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int p
     this->portee = portee;    
     this->calculerVitesseHorVert();
     this->chemin = new std::vector<Point*>();
+    this->setDernierTir(0);
 }
 
 Navire::Navire(){
@@ -110,6 +111,10 @@ int Navire::getCandenceTir(){
     return this->cadenceTir;
 }
 
+unsigned int Navire::getDernierTir(){
+    return this->dernierTir;
+}
+
 int Navire::getPortee(){
     return this->portee;
 }
@@ -119,6 +124,10 @@ Navire* Navire::getCible(){
     return this->cible;
 }
 
+ std::string Navire::getType()
+{
+    return this->type;
+}
 
 
 //Setter
@@ -128,7 +137,7 @@ void Navire::setIdFlotte(int idFlotte){
 }
 
 void Navire::setId(int id){
-    this->idFlotte = id;
+    this->id = id;
 }
 
 void Navire::reduireId(){
@@ -251,6 +260,10 @@ void Navire::setCadenceTir(int cd){
     this->cadenceTir = cd;
 }
 
+void Navire::setDernierTir(unsigned int dernierTir){
+    this->dernierTir = dernierTir;
+}
+
 void Navire::setPortee(int por){
     this->portee = por;
 }
@@ -260,6 +273,11 @@ void Navire::setCible(Navire* navire){
     this->cible = navire;
 }
 
+
+bool Navire::peutTirer(unsigned int currentTime)
+{
+    return (int)(currentTime - this->getDernierTir()) > 500*this->getCandenceTir();
+}
 
 //Pathfinding
 
@@ -274,9 +292,9 @@ void Navire::avancer(int deltaAngle){
     }
     this->getCentre()->deplacer(this->getVitesseHorizontale(), this->getVitesseVerticale());
     setAngle(this->getCentre()->trouverAngle(this->getWayPoint()));
-    if (this->getAbscisse() < HAUTEUR_INTERFACE) { this->setAbscisse(HAUTEUR_INTERFACE);}
+    if (this->getAbscisse() < 0) { this->setAbscisse(0);}
     if (this->getAbscisse() > LARGEUR_ECRAN) {this->setAbscisse(LARGEUR_ECRAN);}
-    if (this->getOrdonnee() < 0){ this->setOrdonnee(0);}
+    if (this->getOrdonnee() < HAUTEUR_INTERFACE){ this->setOrdonnee(HAUTEUR_INTERFACE);}
     if (this->getOrdonnee() > HAUTEUR_ECRAN) { this->setOrdonnee(HAUTEUR_ECRAN);}
     //Si le navire a atteint le point de passage, alors le point de passage devient la destination
     

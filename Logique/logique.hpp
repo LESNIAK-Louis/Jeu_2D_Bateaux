@@ -6,7 +6,6 @@
 */
 
 #include "Class/Monde.hpp"
-#include "Class/Rectangle.hpp"
 #include "Class/Point.hpp"
 #include <stdio.h>
 #include <cmath>
@@ -15,20 +14,20 @@
 #define LOGIQUE_HPP
 
 /**
- * @brief permet à un navire de naviguer autour d'une ile
+ * @brief permet à un navire de naviguer autour d'une ile/ilebonus
  * 
  * @param navire 
- * @param ile 
+ * @param centreIle 
+ * @param tailleIle 
  */
-void pathFinding(Navire* navire, Ile* ile);
+void pathFinding(Navire* navire, Point* centreIle, int tailleIle);
 
 void moveSelectedShips(Monde* monde, int x, int y);
-void unSelectAll(Monde* monde);
 
 void moveShips(Monde* monde);
 
-bool collisionCercleRectangle(Point* centre, int rayon, Rectangle* rect);
-bool collisionRectangles(Rectangle* r1, Rectangle* r2);
+void tirsBateaux(Monde* monde, unsigned int currentTime);
+
 bool collisionCercles(Point* ctr1, int taille1, Point* ctr2, int taille2);
 
 #endif

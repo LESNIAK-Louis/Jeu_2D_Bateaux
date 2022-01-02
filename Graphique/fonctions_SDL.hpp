@@ -23,9 +23,11 @@ struct textures_s{
     TTF_Font* police; /*textures liée a l'image représentant l'affichage du texte*/
     SDL_Texture* fond; /*!< Texture liée à l'image du fond de l'écran. */
     SDL_Texture* ile; /*Texture liée aux iles*/
-    SDL_Texture* contourPV;
-    SDL_Texture* remplissagePV;
+    SDL_Texture* contourPV; /*Texture liée à l'image représentant le contour des barres de point de vie */
+    SDL_Texture* remplissagePV; /*Texture liée à l'image représentant le remplissage des barres de point de vie du joueur*/
+    SDL_Texture* remplissagePVEnnemis; /*Texture liée à l'image représentant le remplissage des barres de point de vie des ennemis*/
     SDL_Texture* patrouilleur; /*Texture liée à l'image représentant un patrouilleur*/
+    SDL_Texture* croiseur; /*Texture liée à l'image représentant un croiseur*/
     SDL_Texture* porteAvion;
     SDL_Texture* interface; /*Texture liée à l'image représentant l'interface*/
     SDL_Texture* bouton; /*Texture liée à l'image représentant un bouton*/
@@ -121,6 +123,14 @@ void afficherBouton(SDL_Renderer* ecran, textures_s* textures, int abscisse, int
  * @param textures les textures du jeu
  */
 void afficherIles(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
+
+/**
+ * @brief La fonction qui affiche les iles bonus
+ * @param ecran l'écran
+ * @param monde le monde
+ * @param textures les textures du jeu
+ */
+void afficherIlesBonus(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
 
 /**
  * @brief  La fonction affiche les navire du monde

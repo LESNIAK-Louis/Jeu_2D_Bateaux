@@ -6,39 +6,6 @@
 */
 
 #include "fichier.hpp"
-
-unsigned int getNombreLignesFichier(char* path) {
-    unsigned int nombreDeLigne = 0;
-    FILE *fichier = fopen(path, "r");
-    int c;
-    if(fichier == NULL)  error("Erreur dans l'ouverture du fichier | getNombreLignesFichier - fichier");
-    while ((c=getc(fichier)) != EOF)
-        if ('\n' == c)
-             ++nombreDeLigne;
-    return nombreDeLigne;
-}
-
-unsigned int getLongueurMaxColonne(char* path) {
-    unsigned int nombreMaxColonne = 0;
-    unsigned int nombreMaxTemp = 0;
-    FILE *fichier = fopen(path, "r");
-    int c;
-    if(fichier == NULL)  error("Erreur dans l'ouverture du fichier | getLongueurMaxColonne - fichier");
-    while ((c=getc(fichier)) != EOF)
-    {
-        if ('\n' != c)
-            ++nombreMaxTemp;
-        else
-        {
-            if(nombreMaxTemp > nombreMaxColonne)
-                nombreMaxColonne = nombreMaxTemp;
-            nombreMaxTemp = 0;
-        }
-    }
-    fclose(fichier);
-    return nombreMaxColonne;
-}
-
 Point* readPoint(std::string *line)
 {
     try{
@@ -48,7 +15,7 @@ Point* readPoint(std::string *line)
             *line = line->substr(line->find_first_of(">")+2);
 
         return new Point(x, y);
-    }catch(std::invalid_argument &e){error("Format incorrect du fichier de sauvegarde | readSave - fichier ");}
+    }catch(std::exception &e){error("Format incorrect du fichier de sauvegarde | readPoint - fichier ");}
 }
 
 
@@ -60,18 +27,31 @@ int readNextNumber(std::string *line)
             *line = line->substr(line->find_first_of(";")+1);
 
         return number;
-    }catch(std::invalid_argument &e){error("Format incorrect du fichier de sauvegarde | readSave - fichier ");}
+    }catch(std::exception &e){error("Format incorrect du fichier de sauvegarde | readNextNumber - fichier ");}
 }
 
 void addPatrouilleurs(std::string *line, Flotte* flotte, int nbPatrouilleurs)
 {
-    line->substr(1);
-    for(int i = 0; i < nbPatrouilleurs; i++)
+    if(nbPatrouilleurs > 0)
     {
-        flotte->addPatrouilleur(new Patrouilleur(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
-        flotte->getPatrouilleur(i)->setPv(readNextNumber(line));
+        line->substr(1);
+        checkNbParam(*line, 9*nbPatrouilleurs + nbPatrouilleurs-1);
+        for(int i = 0; i < nbPatrouilleurs; i++)
+        {
+            flotte->addPatrouilleur(new Patrouilleur(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+            flotte->getPatrouilleur(i)->setPv(readNextNumber(line));
+        }
+        line->substr(2);
     }
-    line->substr(2);
+}
+
+void checkNbParam(std::string line, long unsigned int requestedParamNumber)
+{
+    size_t n;
+    try{
+        n = std::count(line.begin(), line.end(), ';');
+    }catch(std::exception &e){error("Format incorrect du fichier de sauvegarde | checkNbParam - fichier ");}
+    if(requestedParamNumber != n) error("Format incorrect du fichier de sauvegarde | checkNbParam - fichier ");
 }
 
 Monde* readSave(std::string path)
@@ -82,6 +62,7 @@ Monde* readSave(std::string path)
     std::string line;
     getline(fileSave, line);
 
+    checkNbParam(line, 3);
     int nbIles = readNextNumber(&line);
     int nbIlesBonus = readNextNumber(&line);
     int time = readNextNumber(&line);
@@ -95,7 +76,10 @@ Monde* readSave(std::string path)
         {
             case 'F':
             {
-                int numero = std::stoi(line.substr(1, line.find_first_of("{")-1));
+                int numero;
+                try{
+                    numero = std::stoi(line.substr(1, line.find_first_of("{")-1));
+                } catch(std::exception &s){error("Format incorrect du fichier de sauvegarde | readSave - fichier ");}
                 Point* Coord = readPoint(&line);
                 Point* Spawn = readPoint(&line);
                 int ressource = readNextNumber(&line);
@@ -109,7 +93,10 @@ Monde* readSave(std::string path)
             break;
             case 'I':
             {
-                line.substr(line.find_first_of("{")+1);
+                try{
+                    line.substr(line.find_first_of("{")+1);
+                } catch(std::exception &s){error("Format incorrect du fichier de sauvegarde | readSave - fichier ");}
+                checkNbParam(line, 3);
                 Point* Pos = readPoint(&line);
                 int taille = readNextNumber(&line);
                 int forme = readNextNumber(&line);
@@ -131,39 +118,6 @@ Monde* readSave(std::string path)
     }
     fileSave.close();
     return monde;
-}
-
-char** allouerTab2D(int n, int m)
-{
-    char** tab = (char**)malloc(n*sizeof(char*));
-    for(int i =0; i< n; i++)
-    {
-        tab[i] = (char*)malloc(m*sizeof(char));
-        for(int j=0; j < m; j++)
-            tab[i][j] = ' ';
-    }
-    return tab;
-}
-
-void desallouerTab2D(char** tab, int n)
-{
-    for(int i = 0; i < n; i++)
-        free(tab[i]);
-    free(tab);
-}
-
-void afficherTab2D(char** tab, int n, int m)
-{
-    for(int i = 0; i < n; i++) 
-    {
-       for(int j = 0; j < m; j++) 
-       {
-            if(j == (m-1)) 
-                std::cout << " " << (*(*(tab+i)+j)) << " \n";             
-            else
-                std::cout << " " << (*(*(tab+i)+j)) << " \n"; 
-          }
-     } 
 }
 
 void writeMonde(std::string path, Monde* monde)

@@ -10,7 +10,7 @@
 
 Croiseur::Croiseur(int idFlotte, int id, Point* pos, Point* dest, int vitesse,  int pvMax, int degatArme, int cdArme, int portee) : Navire{ idFlotte, id, pos, dest, vitesse, pvMax, degatArme, cdArme, portee} {
     this->taille = TAILLE_CROISEUR;
-    this->type = "Patrouilleur";
+    this->type = "Croiseur";
 }
 
 

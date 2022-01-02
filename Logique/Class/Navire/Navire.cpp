@@ -14,6 +14,7 @@ Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int p
     this->centre = new Point(pos);
     this->destination = new Point(dest);
     this->wayPoint = new Point(dest);
+    this->cible = NULL;
     //this->setChemin();
     this->angle = 0;
     this->pvMax = pvMax;
@@ -25,6 +26,7 @@ Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int p
     this->calculerVitesseHorVert();
     this->chemin = new std::vector<Point*>();
     this->setDernierTir(0);
+    this->move = false;
 }
 
 Navire::Navire(){
@@ -37,7 +39,7 @@ Navire::~Navire()
     delete this->centre;
     delete this->destination;
     delete this->wayPoint;
-    delete this->cible;
+    if(this->cible != NULL) delete this->cible;
 }
 
 

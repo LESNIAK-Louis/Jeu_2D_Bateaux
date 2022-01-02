@@ -220,7 +220,7 @@ void Monde::updateControleIleBonus()
                 if(this->getIleBonus(k)->getControle() == i) break;
                 for(int j = 0; j < this->getFlotte(i)->getNbNavires(); j++)
                 {
-                    if(this->getFlotte(i)->getNavire(j)->estEnCollisionAvec(this->getIleBonus(k)->getRayonCapture(), this->getIleBonus(k)->getCentre()))
+                    if(this->getFlotte(i)->getNavire(j)->estEnCollisionAvec(this->getIleBonus(k)->getRayonCapture() + this->getIleBonus(k)->getTaille()/2, this->getIleBonus(k)->getCentre()))
                     {
                         if(capture == -1) // Si n'a pas été capturée ou si est en cours de capture
                             capture = i;

@@ -88,7 +88,7 @@ void gestion_evenements(Game* jeu)
                     }
                 break;
                 case SDL_MOUSEMOTION: // Si la souris subit un mouvement
-                    if(jeu->getEvent()->button.button == SDL_BUTTON_LEFT)
+                    if(jeu->getEvent()->button.button == SDL_BUTTON_LEFT){}
                         jeu->getMouse()->updateSelection(); // si on veut ajouter un affichage lors de la selection (rectangle dessiné)
                 break;
                 case SDL_MOUSEBUTTONUP: // Si une touche souris est relachée

@@ -17,7 +17,9 @@ int main()
     monde->setIle(0, new Ile(new Point(300, 300), TAILLE_ILE1 , 1));
     
     monde->getFlotte(0)->newPatrouilleur();
+    monde->getFlotte(0)->setNbPatrouilleurs(1);
     monde->getFlotte(1)->newPatrouilleur();
+    monde->getFlotte(1)->setNbPatrouilleurs(1);
     /*monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->newPatrouilleur();
     monde->getFlotte(0)->newPatrouilleur();

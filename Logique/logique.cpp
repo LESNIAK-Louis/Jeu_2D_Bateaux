@@ -92,6 +92,7 @@ void moveShips(Monde* monde){
 
 void tirsBateaux(Monde* monde, unsigned int currentTime)
 {
+    
     for(int i = 0; i < monde->getNbFlottes(); i++) // Le tir depuis les flottes
     {
         for(int j = 0; j < monde->getFlotte(i)->getNbNavires(); j++)
@@ -166,11 +167,12 @@ void tirsBateaux(Monde* monde, unsigned int currentTime)
                     {
                         if(monde->getIleBonus(i)->getDefenseur(j)->estEnCollisionAvec(monde->getIleBonus(i)->getDefenseur(j)->getPortee(), monde->getFlotte(k)->getNavire(l)->getCentre()))
                         {
+                            
                             monde->getFlotte(k)->getNavire(l)->ajouterPV(-monde->getIleBonus(i)->getDefenseur(j)->getDegatArme());
                             if(monde->getFlotte(k)->getNavire(l)->getPv() <= 0)
                                 monde->getFlotte(k)->removeNavire(monde->getFlotte(k)->getNavire(l));
                             shot = true;
-                            break;
+                            
                         }
                     }
                     if(shot)

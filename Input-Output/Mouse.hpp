@@ -28,6 +28,8 @@ class Mouse
         Point* getEndPosMouse();
         Point* getCurrentPosMouse();
         Rectangle* getRectangleSelection();
+        int getAbscisse();
+        int getOrdonnee();
         bool isSelecting();
         bool isSimpleClick();
 
@@ -38,6 +40,13 @@ class Mouse
         void startSelection();
         void updateSelection();
         void endSelection();
+
+        /**
+         * @brief Determine si la souris est dans un rectangle
+         * 
+         * @param rect 
+         */
+        bool estEnCollisionAvec(SDL_Rect rect);
 };
 
 

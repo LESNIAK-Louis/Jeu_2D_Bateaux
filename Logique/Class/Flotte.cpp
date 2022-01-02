@@ -50,7 +50,8 @@ Flotte::Flotte(int numero, Point* coord, Point* spawn, int ressource, int gain, 
     this->qteRessource = ressource;
     this->gainRessource = gain;
     this->pvBase = pv;
-    this->setCaracPatrouilleur(2,10,10,2, 100);
+    this->setCaracPatrouilleur(VITESSE_PATROUILLEUR,PV_MAX_PATROUILLEUR, DEGATS_PATROUILLEUR, CADENCE_TIR_PATROUILLEUR, PORTEE_PATROUILLEUR);
+    this->caracPatrouilleur[5] = 0;
     this->patrouilleurs = new std::vector<Patrouilleur*>();
     this->listeSelected = consVide();
 }
@@ -122,11 +123,11 @@ void Flotte::setPvBase(int p){
     this->pvBase = p;
 }
 
-void Flotte::setCaracPatrouilleur(int v, int pMax, int degat, int cd, int p){
+void Flotte::setCaracPatrouilleur(int v, int pMax, int degat, int cadence, int p){
     this->caracPatrouilleur[0] = v;
     this->caracPatrouilleur[1] = pMax;
     this->caracPatrouilleur[2] = degat;
-    this->caracPatrouilleur[3] = cd;
+    this->caracPatrouilleur[3] = cadence;
     this->caracPatrouilleur[4] = p;
 }
 
@@ -158,11 +159,14 @@ void Flotte::deplacerSelected(Point* destination)
 }
 
 void Flotte::addRessource(){
-    this->qteRessource += this->getGainRessource();
+    addRessource(this->getGainRessource());
 }
 
 void Flotte::addRessource(int i){
 	this->qteRessource += i;
+    if (getQteRessource() > OR_MAX){
+        this->setQteRessource(OR_MAX);
+    }
 }
 
 void Flotte::augmenterGainRessource(int a){
@@ -191,22 +195,63 @@ void Flotte::removeAllPatrouilleurs(){
 void Flotte::removePatrouilleur(int i){
     //this->patrouilleurs->at(i)->~Patrouilleur();
     this->patrouilleurs->erase(patrouilleurs->begin() + i);
-    this->reduireNumeroPatrouilleur(i);
+    this->reduireNumeroPatrouilleurs(i);
 }
 
-void Flotte::reduireNumeroPatrouilleur(int indice){
+void Flotte::reduireNumeroPatrouilleurs(int indice){
     for (int i = indice; i < this->getNbPatrouilleurs(); i++){
         this->patrouilleurs->at(i)->reduireId();
     }
 }
 
+void Flotte::ameliorerPatrouilleurs(){
+    ameliorerPVMaxPatrouilleurs();
+    ameliorerVitessePatrouilleurs();
+    ameliorerDegatsPatrouilleurs();
+    ameliorerCadencePatrouilleurs();
+    ameliorerPorteePatrouilleurs();
+    updatePatrouilleur();
+    caracPatrouilleur[5]++;
+}
+
+void Flotte::ameliorerPVMaxPatrouilleurs(){
+    caracPatrouilleur[0] += AMELIO_VITESSE_PATROUILLEUR;
+}
+
+void Flotte::ameliorerVitessePatrouilleurs(){
+    caracPatrouilleur[1] += AMELIO_PV_MAX_PATROUILLEUR;
+}
+
+void Flotte::ameliorerDegatsPatrouilleurs(){
+    caracPatrouilleur[2] += AMELIO_DEGATS_PATROUILLEUR;
+}
+
+void Flotte::ameliorerCadencePatrouilleurs(){
+    caracPatrouilleur[3] += AMELIO_CADENCE_PATROUILLEUR;
+}
+
+void Flotte::ameliorerPorteePatrouilleurs(){
+    caracPatrouilleur[4] += AMELIO_PORTEE_PATROUILLEUR;
+}
+
 void Flotte::updatePatrouilleur(){
-    for (int i = 0; i < this->getNbPatrouilleurs() + 1; i++){
+    for (int i = 0; i < this->getNbPatrouilleurs(); i++){
         this->patrouilleurs->at(i)->setVitesse(this->getCaracPatrouilleur(0));
         this->patrouilleurs->at(i)->setPvMax(this->getCaracPatrouilleur(1));
         this->patrouilleurs->at(i)->setDegatArme(this->getCaracPatrouilleur(2));
-        this->patrouilleurs->at(i)->setCdArme(this->getCaracPatrouilleur(3));
-        this->patrouilleurs->at(i)->setCdArme(this->getCaracPatrouilleur(4));
+        this->patrouilleurs->at(i)->setCadenceTir(this->getCaracPatrouilleur(3));
+        this->patrouilleurs->at(i)->setPortee(this->getCaracPatrouilleur(4));
+    }
+}
+
+void Flotte::stopSelected(){
+    stopSelectedAux(listeSelected);
+}
+
+void Flotte::stopSelectedAux(selectedNavire* liste){
+    if (!estVide(liste)){
+        liste->nav->stop();
+        stopSelectedAux(liste->suivant);
     }
 }
 

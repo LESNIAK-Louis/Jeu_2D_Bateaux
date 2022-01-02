@@ -33,13 +33,13 @@ class Navire
         int vitesseHorizontale;
         int pvMax;
         int degatArme;
-        int cdArme; //cool down pour le tir
+        int cadenceTir; //nombre de tir par unité de temps
         int portee;
         
 
     public : 
         Navire();
-        Navire(int idFlotte, int id, Point* pos, Point* dest, int pvMax, int vitesse, int degatArme, int cdArme, int portee);
+        Navire(int idFlotte, int id, Point* pos, Point* dest, int pvMax, int vitesse, int degatArme, int cadenceTir, int portee);
 
         ~Navire();
 
@@ -59,7 +59,7 @@ class Navire
         int getVitesseVerticale();
         int getPvMax();
         int getDegatArme();
-        int getCdArme();
+        int getCandenceTir();
         int getPortee();
         Navire* getCible();
 
@@ -84,12 +84,18 @@ class Navire
         void avancer(int deltaAngle);
         void setPvMax(int pvMax);
         void setDegatArme(int degat);
-        void setCdArme(int cd);
+        void setCadenceTir(int cd);
         void setPortee(int p);
         void setCible(Navire* navire);
         void ajouterPV();
 
         bool estEnCollisionAvec(int taille, Point* ctr);
+
+        /**
+         * @brief annule tous les ordres donnée au navire
+         * 
+         */
+        void stop();
 
         std::string formattedInfo();
 };

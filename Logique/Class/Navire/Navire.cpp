@@ -5,11 +5,10 @@
  * \date 10 Nov. 2021
 */
 
-//TODO : Pathfinding à faire
 
 #include "Navire.hpp"
 
-Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int pvMax, int degatArme, int cdArme, int portee){
+Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int pvMax, int degatArme, int cadence, int portee){
     this->idFlotte = idFlotte;
     this->id = id;
     this->centre = new Point(pos);
@@ -21,7 +20,7 @@ Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int p
     this->setPv(pvMax);
     this->vitesse = vitesse;
     this->degatArme = degatArme;
-    this->cdArme = cdArme;
+    this->cadenceTir = cadence;
     this->portee = portee;    
     this->calculerVitesseHorVert();
     this->chemin = new std::vector<Point*>();
@@ -107,8 +106,8 @@ int Navire::getDegatArme(){
     return this->degatArme;
 }
 
-int Navire::getCdArme(){
-    return this->cdArme;
+int Navire::getCandenceTir(){
+    return this->cadenceTir;
 }
 
 int Navire::getPortee(){
@@ -238,15 +237,18 @@ void Navire::setWayPoint(Point* point){
 
 
 void Navire::setPvMax(int pvMax){
+    int diff = pvMax - this->getPvMax();
     this->pvMax = pvMax;
+    ajouterPV(diff);
+
 }
 
 void Navire::setDegatArme(int degat){
     this->degatArme = degat;
 }
 
-void Navire::setCdArme(int cd){
-    this->cdArme = cd;
+void Navire::setCadenceTir(int cd){
+    this->cadenceTir = cd;
 }
 
 void Navire::setPortee(int por){
@@ -272,13 +274,18 @@ void Navire::avancer(int deltaAngle){
     }
     this->getCentre()->deplacer(this->getVitesseHorizontale(), this->getVitesseVerticale());
     setAngle(this->getCentre()->trouverAngle(this->getWayPoint()));
-    if (this->getAbscisse() < 0) { this->setAbscisse(0);}
+    if (this->getAbscisse() < HAUTEUR_INTERFACE) { this->setAbscisse(HAUTEUR_INTERFACE);}
     if (this->getAbscisse() > LARGEUR_ECRAN) {this->setAbscisse(LARGEUR_ECRAN);}
     if (this->getOrdonnee() < 0){ this->setOrdonnee(0);}
     if (this->getOrdonnee() > HAUTEUR_ECRAN) { this->setOrdonnee(HAUTEUR_ECRAN);}
     //Si le navire a atteint le point de passage, alors le point de passage devient la destination
     
     this->setMove(!(this->estEnCollisionAvec(-this->getTaille()/2, this->getDestination() )));
+}
+
+void Navire::stop() {
+    this->setDestination(getCentre());
+    delete this->cible;
 }
 
 std::string Navire::formattedInfo()
@@ -288,7 +295,7 @@ std::string Navire::formattedInfo()
     std::to_string(this->getVitesse()) + ";" + 
     std::to_string(this->getPvMax()) + ";" + 
     std::to_string(this->getDegatArme()) + ";" + 
-    std::to_string(this->getCdArme()) + ";" + 
+    std::to_string(this->getCandenceTir()) + ";" + 
     std::to_string(this->getPortee()) + ";" + 
     std::to_string(this->getPv());
     return info;

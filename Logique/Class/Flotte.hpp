@@ -43,7 +43,7 @@ class Flotte
         int qteRessource;
         int gainRessource;
         int pvBase;
-        int caracPatrouilleur[NB_CARAC_PATROUILLEUR]; //index : 0: vitesse; 1: pvMax; 2: degatArme; 3: cooldown; 4: portée;
+        int caracPatrouilleur[NB_CARAC_PATROUILLEUR]; //index : 0: vitesse; 1: pvMax; 2: degatArme; 3: cadence; 4: portée; 5: nombre d'améliorations
         std::vector<Patrouilleur*>* patrouilleurs;
 
         selectedNavire* listeSelected;
@@ -85,9 +85,39 @@ class Flotte
         void newPatrouilleur();
         void addPatrouilleur(Patrouilleur* p);
         void removePatrouilleur(int i);
-        //Réduit de 1 le numéro des patrouilleurs à l'indice i et au delà : 
-        void reduireNumeroPatrouilleur(int indice);
+
+        /**
+         * @brief Réduit de 1 le numéro des patrouilleurs à l'indice i et au delà : 
+         * 
+         * @param indice 
+         */
+        void reduireNumeroPatrouilleurs(int indice);
+
+        /**
+         * @brief améliore les caractéristiques des patrouilleurs
+         * 
+         */
+        void ameliorerPatrouilleurs();
+
+        void ameliorerVitessePatrouilleurs();
+        void ameliorerPVMaxPatrouilleurs();
+        void ameliorerDegatsPatrouilleurs();
+        void ameliorerCadencePatrouilleurs();
+        void ameliorerPorteePatrouilleurs();
         void updatePatrouilleur();
+
+        /**
+         * @brief Annule les ordres en cours pour les bateaux selectionnés
+         * 
+         */
+        void stopSelected();
+
+        /**
+         * @brief Fonction auxiliaire de stopSelected
+         * 
+         * @param liste la lsite des bateaux selectionnés de la flotte
+         */
+        void stopSelectedAux(selectedNavire* liste);
 
         std::string formattedInfo();
 

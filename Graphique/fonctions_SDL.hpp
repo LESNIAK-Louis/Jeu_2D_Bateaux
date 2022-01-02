@@ -18,6 +18,29 @@
 #include "../Logique/Class/Flotte.hpp"
 #include "../Logique/Class/Navire/Patrouilleur.hpp"
 
+
+struct textures_s{
+    TTF_Font* police; /*textures liée a l'image représentant l'affichage du texte*/
+    SDL_Texture* fond; /*!< Texture liée à l'image du fond de l'écran. */
+    SDL_Texture* ile; /*Texture liée aux iles*/
+    SDL_Texture* contourPV;
+    SDL_Texture* remplissagePV;
+    SDL_Texture* patrouilleur; /*Texture liée à l'image représentant un patrouilleur*/
+    SDL_Texture* porteAvion;
+    SDL_Texture* interface; /*Texture liée à l'image représentant l'interface*/
+    SDL_Texture* bouton; /*Texture liée à l'image représentant un bouton*/
+    SDL_Texture* plus; /*texture liée au signe plus */
+};
+
+/**
+ * @brief initialise les textures
+ * 
+ * @param renderer 
+ * @param textures 
+ */
+void  init_textures(SDL_Renderer *renderer, textures_s* textures);
+
+
 /**
  * \brief La fonction initialise la SDL et TTF : elle crée la fenêtre du jeu ainsi que le renderer
  * \param window la fenêtre du jeu
@@ -51,35 +74,78 @@ SDL_Texture* charger_image_transparente(const char* nomfichier, SDL_Renderer* re
  * @brief La foncion qui affiche le monde
  * @param ecran l'écran
  * @param monde le monde
- * @param textureIles la texture correspondant aux iles
- * @param texturePatrouilleur la texture correspondant aux patrouilleurs
+ * @param textures
  */
-void afficherMonde(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIle, SDL_Texture* texturePatrouilleur);
+void afficherMonde(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
+
+/**
+ * @brief affiche l'interface au sommet de l'écran
+ * 
+ * @param ecran 
+ * @param monde 
+ * @param textures
+ */
+void afficherInterface(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
+
+/**
+ * @brief affiche les informations relatives à la flotte du joueur : or, nombre de bateau, pv de la base...
+ * 
+ * @param ecran 
+ * @param flotte 
+ * @param  textures les textures du jeu
+ */
+void afficherInformations(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures);
+
+/**
+ * @brief affiche les boutons de l'interface
+ * 
+ * @param ecran 
+ * @param textures les textures du jeu
+ */
+void afficherTousLesBoutons(SDL_Renderer* ecran, textures_s* textures);
+
+/**
+ * @brief affiche un bouton à une position
+ * 
+ * @param ecran 
+ * @param textures 
+ * @param abscisse abscisse du coin superieur gauche
+ * @param ordonnee ordonnee du coin superieur gauche
+ */
+void afficherBouton(SDL_Renderer* ecran, textures_s* textures, int abscisse, int ordonnee, int i, int j);
 
 /**
  * @brief La fonction qui affiche les iles
  * @param ecran l'écran
  * @param monde le monde
- * @param textureIles la texture correspondant aux iles
+ * @param textures les textures du jeu
  */
-void afficherIles(SDL_Renderer* ecran, Monde* monde, SDL_Texture* textureIle);
+void afficherIles(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
 
 /**
  * @brief  La fonction affiche les navire du monde
  * @param ecran l'ecran
  * @param monde le monde
- * @param texturePatrouilleur la texture correspondant aux patrouilleurs
+ * @param textures les textures du jeu
  */
-void afficherNavires(SDL_Renderer* ecran, Monde* monde, SDL_Texture* texturePatrouilleur);
+void afficherNavires(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
 
 /**
  * @brief affiche les patrouilleurs
  * @param ecran l'ecran
  * @param monde 
- * @param texturePatrouilleur la texture correspondant aux patrouilleurs
+ * @param textures les textures du jeu
  */
-void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, SDL_Texture* texturePatrouilleur);
+void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures);
 
+/**
+ * @brief affiche les barres de vie au dessus des bateaux selectionnés par l'utilisateur
+ * 
+ * @param ecran 
+ * @param monde 
+ * @param textures les textures du jeu
+ */
+void afficherBarreDeVie(Navire* navire, SDL_Renderer* ecran, textures_s* textures);
 
 /**
  * \brief La fonction charge une police

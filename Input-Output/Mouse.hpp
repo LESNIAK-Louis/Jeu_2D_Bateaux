@@ -51,7 +51,7 @@ class Mouse
          * @param centre centre du cercle
          * @param rayon rayon du cercle
          */
-        bool collisionAvecSelection(Point* centre, int rayon);
+        bool collisionAvecSelection(Point* centre);
 };
 
 

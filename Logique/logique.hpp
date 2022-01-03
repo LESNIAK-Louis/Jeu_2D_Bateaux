@@ -14,18 +14,18 @@
 #define LOGIQUE_HPP
 
 /**
- * @brief permet à un navire de naviguer autour d'une ile
+ * @brief permet à un navire de naviguer autour d'une ile/ilebonus
  * 
  * @param navire 
- * @param ile 
+ * @param centreIle 
+ * @param tailleIle 
  */
-void pathFinding(Navire* navire, Ile* ile);
-
-void moveSelectedShips(Monde* monde, int x, int y);
+void pathFinding(Navire* navire, Point* centreIle, int tailleIle);
 
 void moveShips(Monde* monde);
 
-void updateMonde(Monde* monde);
+void tirsBateaux(Monde* monde, unsigned int currentTime);
+
 bool collisionCercles(Point* ctr1, int taille1, Point* ctr2, int taille2);
 
 #endif

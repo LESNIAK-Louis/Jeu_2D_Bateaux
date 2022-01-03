@@ -117,7 +117,7 @@ bool Mouse::estEnCollisionAvec(SDL_Rect rect){
     return (this->getAbscisse() >= rect.x && this->getAbscisse() <= rect.x + rect.w && this->getOrdonnee() >= rect.y && this->getOrdonnee() <= rect.y + rect.h ) ;
 }
 
-bool Mouse::collisionAvecSelection(Point* centre, int rayon)
+/*bool Mouse::collisionAvecSelection(Point* centre, int rayon)
 {
     SDL_Rect* rect = this->getRectangleSelection();
     Point* temp = new Point(centre->getAbscisse(),centre->getOrdonnee());
@@ -133,4 +133,10 @@ bool Mouse::collisionAvecSelection(Point* centre, int rayon)
     if(distance <= rayon)
         return true;
     return false;
+}*/
+
+bool Mouse::collisionAvecSelection(Point* centre)
+{
+    SDL_Rect* rect = this->getRectangleSelection();
+    return (centre->getAbscisse() >= rect->x && centre->getAbscisse() <= rect->x + rect->w && centre->getOrdonnee() >= rect->y && centre->getOrdonnee() <= rect->y + rect->h);
 }

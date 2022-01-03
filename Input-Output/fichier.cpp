@@ -6,39 +6,6 @@
 */
 
 #include "fichier.hpp"
-/*
-unsigned int getNombreLignesFichier(char* path) {
-    unsigned int nombreDeLigne = 0;
-    FILE *fichier = fopen(path, "r");
-    int c;
-    if(fichier == NULL)  error("Erreur dans l'ouverture du fichier | getNombreLignesFichier - fichier");
-    while ((c=getc(fichier)) != EOF)
-        if ('\n' == c)
-             ++nombreDeLigne;
-    return nombreDeLigne;
-}
-
-unsigned int getLongueurMaxColonne(char* path) {
-    unsigned int nombreMaxColonne = 0;
-    unsigned int nombreMaxTemp = 0;
-    FILE *fichier = fopen(path, "r");
-    int c;
-    if(fichier == NULL)  error("Erreur dans l'ouverture du fichier | getLongueurMaxColonne - fichier");
-    while ((c=getc(fichier)) != EOF)
-    {
-        if ('\n' != c)
-            ++nombreMaxTemp;
-        else
-        {
-            if(nombreMaxTemp > nombreMaxColonne)
-                nombreMaxColonne = nombreMaxTemp;
-            nombreMaxTemp = 0;
-        }
-    }
-    fclose(fichier);
-    return nombreMaxColonne;
-}
-*/
 Point* readPoint(std::string *line)
 {
     try{
@@ -63,16 +30,56 @@ int readNextNumber(std::string *line)
     }catch(std::exception &e){error("Format incorrect du fichier de sauvegarde | readNextNumber - fichier ");}
 }
 
-void addPatrouilleurs(std::string *line, Flotte* flotte, int nbPatrouilleurs)
+void addCroiseursFlotte(std::string *line, Flotte* flotte, int nbCroiseurs)
 {
-    line->substr(1);
-    checkNbParam(*line, 9*nbPatrouilleurs + nbPatrouilleurs-1);
-    for(int i = 0; i < nbPatrouilleurs; i++)
+    if(nbCroiseurs > 0)
     {
-        flotte->addPatrouilleur(new Patrouilleur(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
-        flotte->getPatrouilleur(i)->setPv(readNextNumber(line));
+        line->substr(1);
+        for(int i = 0; i < nbCroiseurs; i++)
+        {
+            flotte->addCroiseur(new Croiseur(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+            flotte->getNavire(i)->setPv(readNextNumber(line));
+        }
+        line->substr(2);
     }
-    line->substr(2);
+}
+
+void addPatrouilleursFlotte(std::string *line, Flotte* flotte, int nbPatrouilleurs)
+{
+    if(nbPatrouilleurs > 0)
+    {
+        line->substr(1);
+        for(int i = 0; i < nbPatrouilleurs; i++)
+        {
+            flotte->addPatrouilleur(new Patrouilleur(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+            flotte->getNavire(i)->setPv(readNextNumber(line));
+        }
+        line->substr(2);
+    }
+}
+
+void addDefenseurIleBonus(std::string *line, IleBonus* ileBonus, int nbPatrouilleurs, int nbCroiseurs)
+{
+    if(nbPatrouilleurs > 0)
+    {
+        line->substr(1);
+        for(int i = 0; i < nbPatrouilleurs; i++)
+        {
+            ileBonus->addDefenseur(new Patrouilleur(-1, i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+            ileBonus->getDefenseur(i)->setPv(readNextNumber(line));
+        }
+        line->substr(2);
+    }
+    if(nbCroiseurs > 0)
+    {
+        line->substr(1);
+        for(int i = 0; i < nbCroiseurs; i++)
+        {
+            ileBonus->addDefenseur(new Croiseur(-1, i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+            ileBonus->getDefenseur(i)->setPv(readNextNumber(line));
+        }
+        line->substr(2);
+    }
 }
 
 void checkNbParam(std::string line, long unsigned int requestedParamNumber)
@@ -117,7 +124,9 @@ Monde* readSave(std::string path)
                 int pv = readNextNumber(&line);
                 Flotte* flotte = new Flotte(numero, Coord, Spawn, ressource, gain, pv);
                 int nbPatrouilleurs = readNextNumber(&line);
-                addPatrouilleurs(&line, flotte, nbPatrouilleurs);
+                int nbCroiseurs = readNextNumber(&line);
+                addPatrouilleursFlotte(&line, flotte, nbPatrouilleurs);
+                addCroiseursFlotte(&line, flotte, nbCroiseurs);
                 monde->addFlotte(flotte);
             }
             break;
@@ -136,6 +145,24 @@ Monde* readSave(std::string path)
             }
             break;
             case 'B':
+            {
+                try{
+                    line.substr(line.find_first_of("{")+1);
+                } catch(std::exception &s){error("Format incorrect du fichier de sauvegarde | readSave - fichier ");}
+                Point* centre = readPoint(&line);
+                int taille = readNextNumber(&line);
+                int forme = readNextNumber(&line);
+                int rayonCapture = readNextNumber(&line);
+                int controle = readNextNumber(&line);
+                int bonustype = readNextNumber(&line);
+                int bonusGain = readNextNumber(&line);
+                int nbPatrouilleurs = readNextNumber(&line);
+                int nbCroiseurs = readNextNumber(&line);
+                IleBonus* ileBonus = new IleBonus(centre, taille, forme, rayonCapture, controle, bonustype, bonusGain);
+                addDefenseurIleBonus(&line, ileBonus, nbPatrouilleurs, nbCroiseurs);
+                monde->setIleBonus(nbIlesBonus-1, ileBonus);
+                nbIlesBonus--;
+            }
             break;
             case 'M':
             break;
@@ -149,39 +176,6 @@ Monde* readSave(std::string path)
     fileSave.close();
     return monde;
 }
-/*
-char** allouerTab2D(int n, int m)
-{
-    char** tab = (char**)malloc(n*sizeof(char*));
-    for(int i =0; i< n; i++)
-    {
-        tab[i] = (char*)malloc(m*sizeof(char));
-        for(int j=0; j < m; j++)
-            tab[i][j] = ' ';
-    }
-    return tab;
-}
-
-void desallouerTab2D(char** tab, int n)
-{
-    for(int i = 0; i < n; i++)
-        free(tab[i]);
-    free(tab);
-}
-
-void afficherTab2D(char** tab, int n, int m)
-{
-    for(int i = 0; i < n; i++) 
-    {
-       for(int j = 0; j < m; j++) 
-       {
-            if(j == (m-1)) 
-                std::cout << " " << (*(*(tab+i)+j)) << " \n";             
-            else
-                std::cout << " " << (*(*(tab+i)+j)) << " \n"; 
-          }
-     } 
-}*/
 
 void writeMonde(std::string path, Monde* monde)
 {

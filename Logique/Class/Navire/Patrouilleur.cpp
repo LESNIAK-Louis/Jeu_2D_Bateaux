@@ -10,8 +10,5 @@
 
 Patrouilleur::Patrouilleur(int idFlotte, int id, Point* pos, Point* dest, int vitesse,  int pvMax, int degatArme, int cdArme, int portee) : Navire{ idFlotte, id, pos, dest, vitesse, pvMax, degatArme, cdArme, portee} {
     this->taille = TAILLE_PATROUILLEUR;
-
+    this->type = "Patrouilleur";
 }
-
-//std::string returnType(){ return "patrouilleur";}
-

@@ -17,17 +17,13 @@
 #include "../Logique/Class/Monde.hpp"
 
 
-/*
-unsigned int getNombreLignesFichier(char* path);
-unsigned int getLongueurMaxColonne(char* path);*/
 Point* readPoint(std::string *line);
 int readNextNumber(std::string *line);
-void addPatrouilleurs(std::string *line, Flotte* flotte, int nbPatrouilleurs);
+void addPatrouilleursFlotte(std::string *line, Flotte* flotte, int nbPatrouilleurs);
+void addCroiseursFlotte(std::string *line, Flotte* flotte, int nbCroiseurs);
+void addDefenseurIleBonus(std::string *line, IleBonus* ileBonus, int nbPatrouilleurs, int nbCroiseurs);
 void checkNbParam(std::string line, long unsigned int requestedParamNumber);
-Monde* readSave(std::string path);/*
-char** allouerTab2D(int n, int m);
-void desallouerTab2D(char** tab, int n);
-void afficherTab2D(char** tab, int n, int m);*/
+Monde* readSave(std::string path);
 void writeMonde(std::string fileName, Monde* monde);
 bool isFileExist(std::string fileName);
 void save(std::string path, Monde* monde);

@@ -33,6 +33,7 @@ Navire* prem(selectedNavire* liste);
 selectedNavire* rest(selectedNavire* liste);
 bool estVide(selectedNavire* liste);
 void freeListe(selectedNavire* liste);
+selectedNavire* supprimerElement(Navire* liste, Navire* navire);
 
 // class Flotte
 class Flotte 
@@ -98,7 +99,7 @@ class Flotte
 
 
         void removeAllNavires();
-        void removeNavire(int i);
+        void removeNavire(Navire* navire);
         
 
          /**

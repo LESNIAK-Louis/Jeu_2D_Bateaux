@@ -71,7 +71,9 @@ SDL_Texture* charger_image_transparente(const char* nomfichier, SDL_Renderer* re
 
 
 void afficherMonde(SDL_Renderer* ecran, Monde* monde, textures_s* textures){ 
+    
     afficherIles(ecran, monde, textures);
+    afficherIlesBonus(ecran, monde,textures);
     afficherNavires(ecran, monde, textures);
     afficherInterface(ecran, monde, textures);
 }
@@ -94,6 +96,28 @@ void afficherInformations(SDL_Renderer* ecran, Flotte* flotte, textures_s* textu
     SDL_QueryTexture(qteOr, NULL, NULL, &w, &h);
     SDL_Rect DestR = {10,10, w, h};
     SDL_RenderCopy(ecran, qteOr, NULL, &DestR);
+    afficherSelection(ecran, flotte->getListeSelected(), textures, 0, 0);
+}
+
+void afficherSelection(SDL_Renderer* ecran, selectedNavire* liste, textures_s* textures, int decalageHorizontal, int decalageVertical){
+    if (!estVide(liste)){
+        std::string type = prem(liste)->getType();
+        if (type.compare("Patrouilleur") == 0){
+            afficherBouton(ecran, textures, ABSCISSE_INITIALE_SELECTION + decalageHorizontal*(10 + TAILLE_BOUTON), 10 + decalageVertical*(TAILLE_BOUTON + 10), 0, 0);
+        } else if (type.compare("Croiseur") == 0) {
+            afficherBouton(ecran, textures, ABSCISSE_INITIALE_SELECTION + decalageHorizontal*(10 + TAILLE_BOUTON), 10 + decalageVertical*(TAILLE_BOUTON + 10), 1, 0);
+        } else if (type.compare("Porte-Avions") == 0) {
+            afficherBouton(ecran, textures, ABSCISSE_INITIALE_SELECTION + decalageHorizontal*(10 + TAILLE_BOUTON), 10 + decalageVertical*(TAILLE_BOUTON + 10), 2, 0);
+        }
+        decalageHorizontal++;
+        if (decalageHorizontal > NB_CLASSE_NAVIRE/2) {
+            decalageHorizontal = 0;
+            decalageVertical++;
+        }
+        if ( !estVide(rest(liste)) ) {
+            afficherSelection(ecran, rest(liste), textures, decalageHorizontal, decalageVertical++);
+        }
+    }
 }
 
 void afficherTousLesBoutons(SDL_Renderer* ecran, textures_s* textures){
@@ -127,8 +151,8 @@ void afficherBouton(SDL_Renderer* ecran, textures_s* textures, int abscisse, int
     if (j==1) {
         SDL_RenderCopy(ecran, textures->plus, NULL, &DestR);
     }
-   
 }
+
 
 void afficherIles(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
     for (int i = 0; i < monde->getNbIles(); i++) {
@@ -136,6 +160,18 @@ void afficherIles(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
         SDL_RenderCopy(ecran, textures->ile, NULL, &DestR);
     }
 
+}
+
+void afficherIlesBonus(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
+    for (int i = 0; i < monde->getNbIlesBonus(); i++) {
+        SDL_Rect DestR = {monde->getIleBonus(i)->getCentre()->getAbscisse()-(TAILLE_ILE2/2), monde->getIleBonus(i)->getCentre()->getOrdonnee()-(TAILLE_ILE2/2),TAILLE_ILE2, TAILLE_ILE2};
+        SDL_RenderCopy(ecran, textures->ile, NULL, &DestR);
+        for (int p = 0; p < monde->getIleBonus(i)->getNbDefenseur(); p++) {
+            SDL_Rect DestR = {monde->getIleBonus(i)->getDefenseur(p)->getAbscisse()-TAILLE_PATROUILLEUR/2, monde->getIleBonus(i)->getDefenseur(p)->getOrdonnee()-TAILLE_PATROUILLEUR/2,TAILLE_PATROUILLEUR, TAILLE_PATROUILLEUR};
+            SDL_RenderCopyEx(ecran, textures->patrouilleur, NULL, &DestR, monde->getIleBonus(i)->getDefenseur(p)->getAngle(), NULL, SDL_FLIP_NONE);
+            afficherBarreDeVie(monde->getIleBonus(i)->getDefenseur(p), ecran, textures);      
+        }
+    }
 }
 
 void afficherNavires(SDL_Renderer* ecran, Monde* monde, textures_s* textures){

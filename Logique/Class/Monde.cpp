@@ -108,7 +108,7 @@ void Monde::setIle(int index, Ile* ile)
 
 void Monde::setIleBonus(int index, IleBonus* ilebonus)
 {
-    if(index >= this->getNbIlesBonus()) error("index out of range | setIle - Monde");
+    if(index >= this->getNbIlesBonus()) error("index out of range | setIleBonus - Monde");
     if(ilebonus == NULL) error("ilebonus a set NULL | setIleBonus - Monde");
     this->ilesBonus[index] = ilebonus;
 }
@@ -208,6 +208,40 @@ void Monde::removeAllIlesBonus()
     this->nbIlesBonus = 0;
 }
 
+void Monde::updateControleIleBonus()
+{
+    for(int k = 0; k < this->getNbIlesBonus(); k++)
+    {
+        if(this->getIleBonus(k)->getNbDefenseur() == 0)
+        {
+            int capture = -1;
+            for(int i = 0; i < this->getNbFlottes(); i++)
+            {
+                if(this->getIleBonus(k)->getControle() == i) break;
+                for(int j = 0; j < this->getFlotte(i)->getNbNavires(); j++)
+                {
+                    if(this->getFlotte(i)->getNavire(j)->estEnCollisionAvec(this->getIleBonus(k)->getRayonCapture() + this->getIleBonus(k)->getTaille()/2, this->getIleBonus(k)->getCentre()))
+                    {
+                        if(capture == -1) // Si n'a pas été capturée ou si est en cours de capture
+                            capture = i;
+                        else capture = -1; // Si deux navire de deux flottes differentes sont en conflit pour la capture
+                        break;
+                    }
+                }
+            }
+            if(capture != -1 && capture != this->getIleBonus(k)->getControle()) // L'ile n'est plus sous controle neutre
+            {
+                // On retire le bonus a la flotte qui perd le controle
+                if(this->getIleBonus(k)->getControle() != -1)
+                    this->getFlotte(this->getIleBonus(k)->getControle())->augmenterGainRessource(-this->getIleBonus(k)->getBonusGain());
+                
+                this->getIleBonus(k)->setControle(capture);
+                this->getFlotte(capture)->augmenterGainRessource(this->getIleBonus(k)->getBonusGain());
+            }
+        }
+    }
+}
+
 std::string Monde::toString()
 {
     return "Nombre Flottes : " + std::to_string(this->flottes->size()) + "\n"
@@ -229,12 +263,9 @@ std::string Monde::formattedInfo()
         info += '\n' + this->getFlotte(i)->formattedInfo();
     for(int i = 0 ; i < this->getNbIles(); i++)
         info += '\n' + this->getIle(i)->formattedInfo();
-/*
-    for(int i = 0 ; i < monde->getNbIlesBonus(); i++)
-    {
-        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
-    }
-
+    for(int i = 0 ; i < this->getNbIlesBonus(); i++)
+        info += '\n' + this->getIleBonus(i)->formattedInfo();
+    /*
     for(int i = 0 ; i < monde->getNbMines(); i++)
     {
         fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';

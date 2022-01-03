@@ -10,8 +10,9 @@
 
 #include <string>
 #include <vector>
+#include <cmath>
 #include "Point.hpp"
-#include "Navire/Patrouilleur.hpp"
+#include "Navire/Navire.hpp"
 #include "../../definitions.hpp"
 
 class IleBonus {
@@ -20,11 +21,11 @@ class IleBonus {
         int taille;
         int forme;
         int rayonCapture;
-        std::vector<Patrouilleur*>* defenseurs;
+        std::vector<Navire*>* defenseurs;
         int controle; //0 : neutre, 1...n : numéro de la flotte
         int bonusType;
         int bonusGain;
-        int tempsDebut;
+
     public : 
         IleBonus(Point* centre, int taille, int forme, int rayonCapture, int controle, int bonustype, int bonusGain);
         ~IleBonus();
@@ -34,11 +35,10 @@ class IleBonus {
         int getForme();
         int getRayonCapture();
         int getNbDefenseur();
-        Patrouilleur* getDefenseur(int index);
+        Navire* getDefenseur(int index);
         int getControle();
         int getBonusType();
         int getBonusGain();
-        int getTempsDebut();
 
         void setCentre(Point* centre);
         void setTaille(int taille);
@@ -47,14 +47,14 @@ class IleBonus {
         void setControle(int controle);
         void setBonusType(int bonusType);
         void setBonusGain(int bonusGain);
-        void setTempsDebut(int tempsDebut);
 
-        void addDefenseur(Patrouilleur* defenseur);
-        void removeDefenseur(int index);
-        void replaceDefenseur(int index, Patrouilleur* defenseur);
+        void addDefenseur(Navire* defenseur);
+        void placerDefenseur();
+        void removeDefenseur(Navire* defenseur);
+        void replaceDefenseur(int index, Navire* defenseur);
         void removeAllDefenseurs();
 
-        std::string toString();
+        std::string formattedInfo();
 };
 
 #endif

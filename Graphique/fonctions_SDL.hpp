@@ -90,13 +90,22 @@ void afficherMonde(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
 void afficherInterface(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
 
 /**
- * @brief affiche les informations relatives à la flotte du joueur : or, nombre de bateau, pv de la base...
+ * @brief affiche les informations relatives à la flotte du joueur : or, nombre de bateau, pv de la base, navires selectionnés...
  * 
  * @param ecran 
  * @param flotte 
  * @param  textures les textures du jeu
  */
 void afficherInformations(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures);
+
+/**
+ * @brief affiche les navire selectionnés
+ * 
+ * @param ecran 
+ * @param flotte 
+ * @param textures 
+ */
+void afficherSelection(SDL_Renderer* ecran, selectedNavire* liste, textures_s* textures, int decalageHorizontal, int decalageVertical);
 
 /**
  * @brief affiche les boutons de l'interface
@@ -123,6 +132,14 @@ void afficherBouton(SDL_Renderer* ecran, textures_s* textures, int abscisse, int
  * @param textures les textures du jeu
  */
 void afficherIles(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
+
+/**
+ * @brief La fonction qui affiche les iles bonus
+ * @param ecran l'écran
+ * @param monde le monde
+ * @param textures les textures du jeu
+ */
+void afficherIlesBonus(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
 
 /**
  * @brief  La fonction affiche les navire du monde

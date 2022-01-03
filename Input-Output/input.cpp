@@ -40,7 +40,6 @@ void gestion_evenements(Game* jeu)
                             break;
                         case SDLK_DELETE :
                             jeu->getMonde()->getFlotte(0)->deleteSelected();
-                            
                             break;
                         case SDLK_BACKSPACE:
                             jeu->getMonde()->getFlotte(0)->stopSelected();
@@ -89,14 +88,17 @@ void gestion_evenements(Game* jeu)
                     }
                 break;
                 case SDL_MOUSEMOTION: // Si la souris subit un mouvement
-                    if(jeu->getEvent()->button.button == SDL_BUTTON_LEFT)
+                    if(jeu->getEvent()->button.button == SDL_BUTTON_LEFT){}
                         jeu->getMouse()->updateSelection(); // si on veut ajouter un affichage lors de la selection (rectangle dessiné)
                 break;
                 case SDL_MOUSEBUTTONUP: // Si une touche souris est relachée
                     if(jeu->getEvent()->button.button == SDL_BUTTON_LEFT)
                     {
-                        jeu->getMouse()->endSelection();
-                        addNavToSelection(jeu->getMonde()->getFlotte(0), jeu->getMouse());
+                        if(jeu->getMouse()->isSelecting())
+                        {
+                            jeu->getMouse()->endSelection();
+                            addNavToSelection(jeu->getMonde()->getFlotte(0), jeu->getMouse());
+                        }
                     }
                 break;
                 default:
@@ -113,30 +115,42 @@ bool isPointingIle(Game* jeu)
         if(collisionCercles(jeu->getMonde()->getIle(j)->getCentre(), jeu->getMonde()->getIle(j)->getTaille(), jeu->getMouse()->getCurrentPosMouse(), TAILLE_POINTEUR_SOURIS))
             return true;
     }
+    for(int j = 0; j < jeu->getMonde()->getNbIlesBonus(); j++)
+    {
+        if(collisionCercles(jeu->getMonde()->getIleBonus(j)->getCentre(), jeu->getMonde()->getIleBonus(j)->getTaille(), jeu->getMouse()->getCurrentPosMouse(), TAILLE_POINTEUR_SOURIS))
+            return true;
+    }
     return false;
 }
 
 void addNavToSelection(Flotte* flotte, Mouse* mouse)
 {
     if (mouse->getOrdonnee() > HAUTEUR_INTERFACE) { 
+        int nbNavireSelectionnes = 0;
         for(int j = 0; j < flotte->getNbNavires(); j++)
         {
-            if(mouse->isSimpleClick())
-            {
-                if(flotte->getNavire(j)->estEnCollisionAvec(1, mouse->getCurrentPosMouse()))
+            if (nbNavireSelectionnes < NB_SELECTION_MAX) {
+                if(mouse->isSimpleClick())
                 {
-                    flotte->addElemListeSelected(flotte->getNavire(j));
-                    break;
+                    if(flotte->getNavire(j)->estEnCollisionAvec(1, mouse->getCurrentPosMouse()))
+                    {
+                        flotte->addElemListeSelected(flotte->getNavire(j));
+                        nbNavireSelectionnes ++;
+                        break;
+                    }
+                }
+                else
+                {
+                    if(mouse->collisionAvecSelection(flotte->getNavire(j)->getCentre()/*, flotte->getNavire(j)->getTaille())*/) )
+                    {
+                        flotte->addElemListeSelected(flotte->getNavire(j));
+                        nbNavireSelectionnes ++;
+                    }   
                 }
             }
-            else
-            {
-                if(mouse->collisionAvecSelection(flotte->getNavire(j)->getCentre(), flotte->getNavire(j)->getTaille()))
-                    flotte->addElemListeSelected(flotte->getNavire(j));
+
         }
-    }
-    }
-    
+    }    
 }
 
 void appliquerEffetBouton(Flotte* flotte, int i, int j){

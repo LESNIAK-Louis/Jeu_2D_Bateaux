@@ -34,7 +34,9 @@ class Navire
         int pvMax;
         int degatArme;
         int cadenceTir; //nombre de tir par unité de temps
+        unsigned int dernierTir; // temps du dernier tir;
         int portee;
+        std::string type;
         
 
     public : 
@@ -60,8 +62,10 @@ class Navire
         int getPvMax();
         int getDegatArme();
         int getCandenceTir();
+        unsigned int getDernierTir();
         int getPortee();
         Navire* getCible();
+        std::string getType();
 
         void setIdFlotte(int idFlotte);
         void setId(int i);
@@ -85,11 +89,12 @@ class Navire
         void setPvMax(int pvMax);
         void setDegatArme(int degat);
         void setCadenceTir(int cd);
+        void setDernierTir(unsigned int temps);
         void setPortee(int p);
         void setCible(Navire* navire);
         void ajouterPV();
 
-
+        bool peutTirer(unsigned int currentTime);
         bool estEnCollisionAvec(int taille, Point* ctr);
 
         /**
@@ -97,8 +102,6 @@ class Navire
          * 
          */
         void stop();
-
-        //virtual std::string returnType() = 0;
 
         std::string formattedInfo();
 };

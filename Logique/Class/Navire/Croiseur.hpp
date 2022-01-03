@@ -15,7 +15,6 @@ class Croiseur : public Navire
 {
    public :
    Croiseur(int idFlotte, int id, Point* pos, Point* dest, int vitesse,  int pvMax, int degatArme, int cdArme, int portee);
-   //std::string returnType();
 };
 
 

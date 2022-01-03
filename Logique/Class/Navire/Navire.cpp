@@ -14,6 +14,7 @@ Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int p
     this->centre = new Point(pos);
     this->destination = new Point(dest);
     this->wayPoint = new Point(dest);
+    this->cible = NULL;
     //this->setChemin();
     this->angle = 0;
     this->pvMax = pvMax;
@@ -24,6 +25,8 @@ Navire::Navire(int idFlotte, int id, Point* pos, Point* dest, int vitesse, int p
     this->portee = portee;    
     this->calculerVitesseHorVert();
     this->chemin = new std::vector<Point*>();
+    this->setDernierTir(0);
+    this->move = false;
 }
 
 Navire::Navire(){
@@ -36,7 +39,7 @@ Navire::~Navire()
     delete this->centre;
     delete this->destination;
     delete this->wayPoint;
-    delete this->cible;
+    if(this->cible != NULL) delete this->cible;
 }
 
 
@@ -110,6 +113,10 @@ int Navire::getCandenceTir(){
     return this->cadenceTir;
 }
 
+unsigned int Navire::getDernierTir(){
+    return this->dernierTir;
+}
+
 int Navire::getPortee(){
     return this->portee;
 }
@@ -119,6 +126,10 @@ Navire* Navire::getCible(){
     return this->cible;
 }
 
+ std::string Navire::getType()
+{
+    return this->type;
+}
 
 
 //Setter
@@ -251,6 +262,10 @@ void Navire::setCadenceTir(int cd){
     this->cadenceTir = cd;
 }
 
+void Navire::setDernierTir(unsigned int dernierTir){
+    this->dernierTir = dernierTir;
+}
+
 void Navire::setPortee(int por){
     this->portee = por;
 }
@@ -260,6 +275,11 @@ void Navire::setCible(Navire* navire){
     this->cible = navire;
 }
 
+
+bool Navire::peutTirer(unsigned int currentTime)
+{
+    return (int)(currentTime - this->getDernierTir()) > 500*this->getCandenceTir();
+}
 
 //Pathfinding
 

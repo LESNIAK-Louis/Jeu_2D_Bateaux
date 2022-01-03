@@ -24,10 +24,14 @@
 
 #define HAUTEUR_INTERFACE 90
 #define ABSCISSE_INITIALE 100
-#define TAILLE_BOUTON 30
 #define NB_CLASSE_NAVIRE 3
+#define ABSCISSE_INITIALE_SELECTION 500
+#define NB_SELECTION_MAX 8
+#define TAILLE_BOUTON 30
+
 
 #define TAILLE_ILE1 64
+#define TAILLE_ILE2 64 // Bonus
 
 #define PV_CONT_WIDTH 32
 #define PV_CONT_HEIGHT 6
@@ -36,7 +40,7 @@
 
 //Flotte
 #define OR_INITIAL 200
-#define GAIN_INITIAL 2
+#define GAIN_INITIAL 1
 #define OR_MAX 9999
 #define PV_MAX_FLOTTE 5000
 #define NB_AMELIO_MAX 3

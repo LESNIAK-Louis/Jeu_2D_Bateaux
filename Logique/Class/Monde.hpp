@@ -65,6 +65,8 @@ class Monde {
         void removeAllIles();
         void removeAllIlesBonus();
 
+        void updateControleIleBonus();
+
         std::string toString();
         std::string formattedInfo();
 };

@@ -73,9 +73,6 @@ class Flotte
         Navire* getPatrouilleur(int i);
         Navire* getCroiseur(int i);
 
-        int getDebutIndicePatrouilleurs();
-        int getDebutIndiceCroiseur();
-
         selectedNavire* getListeSelected();
         void viderListeSelected();
         void addElemListeSelected(Navire* nav);

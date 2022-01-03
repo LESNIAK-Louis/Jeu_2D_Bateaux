@@ -23,9 +23,11 @@ IleBonus::IleBonus(Point* centre, int taille, int forme, int rayonCapture, int c
 
 IleBonus::~IleBonus()
 {   
-    delete this->centre;
+    if(this->centre != NULL)
+        delete this->centre;
     this->removeAllDefenseurs();
-    delete this->defenseurs;
+    if(this->defenseurs != NULL)
+        delete this->defenseurs;
 }
 
 Point* IleBonus::getCentre()
@@ -169,7 +171,9 @@ void IleBonus::removeAllDefenseurs()
 {
     while(this->getNbDefenseur() != 0)
     {
-        this->defenseurs->back()->~Navire();
+        Navire* nav = this->defenseurs->back();
+        if(nav != NULL)
+            delete this->defenseurs->back();
         this->defenseurs->pop_back();
     }
 }

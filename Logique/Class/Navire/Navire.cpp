@@ -36,9 +36,12 @@ Navire::Navire(){
 
 Navire::~Navire()
 {
-    delete this->centre;
-    delete this->destination;
-    delete this->wayPoint;
+    if(this->centre != NULL)
+        delete this->centre;
+    if(this->destination != NULL)
+        delete this->destination;
+    if(this->wayPoint != NULL)
+        delete this->wayPoint;
     if(this->cible != NULL) delete this->cible;
 }
 
@@ -305,7 +308,8 @@ void Navire::avancer(int deltaAngle){
 
 void Navire::stop() {
     this->setDestination(getCentre());
-    delete this->cible;
+    if(this->cible != NULL)
+        delete this->cible;
 }
 
 std::string Navire::formattedInfo()

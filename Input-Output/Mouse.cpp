@@ -16,8 +16,10 @@ Mouse::Mouse()
 
 Mouse::~Mouse()
 {
-    delete this->startPosMouse;
-    delete this->endPosMouse;
+    if(this->startPosMouse != NULL)
+        delete this->startPosMouse;
+    if(this->endPosMouse != NULL)
+        delete this->endPosMouse;
 }
 
 Point* Mouse::getStartPosMouse()

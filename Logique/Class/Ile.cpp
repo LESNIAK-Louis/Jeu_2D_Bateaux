@@ -25,7 +25,8 @@ Ile::Ile(Ile* ile)
 
 Ile::~Ile()
 {
-    delete this->centre;
+    if(this->centre != NULL)
+        delete this->centre;
 }
 
 //Getteur

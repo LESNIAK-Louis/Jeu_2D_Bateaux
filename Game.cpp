@@ -21,10 +21,13 @@ Game::Game(Monde* monde)
 
 Game::~Game()
 {
-    delete this->monde;
-    delete this->mouse;
+    if(this->monde != NULL)
+        delete this->monde;
+    if(this->mouse != NULL)
+        delete this->mouse;
     destroy_textures_jeu(this->textures);
-    free(this->textures);
+    if(this->textures != NULL)
+        free(this->textures);
     cleanSDL(this->ecran, this->fenetre);
 }
 

@@ -14,8 +14,6 @@ Monde::Monde(int nbIles, int nbIlesBonus, int time, int difficulte)
     this->iles = (Ile**)malloc(sizeof(Ile*)*nbIles);
     this->nbIlesBonus = nbIlesBonus;
     this->ilesBonus = (IleBonus**)malloc(sizeof(IleBonus*)*nbIlesBonus);
-    this->mines = new std::vector<Mine*>();
-    this->torpilles = new std::vector<Torpille*>();
     this->timer = time;
     this->difficulte = difficulte;
 }
@@ -23,15 +21,14 @@ Monde::Monde(int nbIles, int nbIlesBonus, int time, int difficulte)
 Monde::~Monde()
 {
     void removeAllFlottes();
-    delete this->flottes;
-    void removeAllMines();
-    delete this->mines;
-    void removeAllTorpilles();
-    delete this->torpilles;
+    if(this->flottes != NULL)
+        delete this->flottes;
     void removeAllIles();
-    free(this->iles);
+    if(this->iles != NULL)
+        free(this->iles);
     void removeAllIlesBonus();
-    free(this->ilesBonus);
+    if(this->ilesBonus != NULL)
+        free(this->ilesBonus);
 }
 
 int Monde::getNbFlottes()
@@ -47,16 +44,6 @@ int Monde::getNbIles()
 int Monde::getNbIlesBonus()
 {
     return this->nbIlesBonus;
-}
-
-int Monde::getNbMines()
-{
-    return this->mines->size();
-}
-
-int Monde::getNbTorpilles()
-{
-    return this->torpilles->size();
 }
 
 Flotte* Monde::getFlotte(int index)
@@ -75,18 +62,6 @@ IleBonus* Monde::getIleBonus(int index)
 {
     if(index >= this->getNbIlesBonus()) error("index out of range | getIleBonus - Monde");
     return this->ilesBonus[index];
-}
-
-Mine* Monde::getMine(int index)
-{
-    if(index >= this->getNbMines()) error("index out of range | getMine - Monde");
-    return this->mines->at(index);
-}
-
-Torpille* Monde::getTorpille(int index)
-{
-    if(index >= this->getNbTorpilles()) error("index out of range | getTorpille - Monde");
-    return this->torpilles->at(index);
 }
 
 int Monde::getTimer()
@@ -130,63 +105,21 @@ void Monde::addFlotte(Flotte* flotte)
     this->flottes->push_back(flotte);
 }
 
-void Monde::addMine(Mine* mine)
-{
-    if(mine == NULL) error("mine a add NULL | addMine - Monde");
-    this->mines->push_back(mine);
-}
-
-void Monde::addTorpille(Torpille* torpille)
-{
-    if(torpille == NULL) error("mine a add NULL | addTorpille - Monde");
-    this->torpilles->push_back(torpille);
-}
-
 void Monde::removeFlotte(int index)
 {
     if(index >= this->getNbFlottes()) error("index out of range | removeFlotte - Monde");
-    this->flottes->at(index)->~Flotte();
+    if(this->flottes->at(index) != NULL)
+        delete this->flottes->at(index);
     this->flottes->erase(this->flottes->begin() + index);
-}
-
-void Monde::removeMine(int index)
-{
-    if(index >= this->getNbMines()) error("index out of range | removeMine - Monde");
-    this->mines->at(index)->~Mine();
-    this->mines->erase(this->mines->begin() + index);
-}
-
-void Monde::removeTorpille(int index)
-{
-    if(index >= this->getNbTorpilles()) error("index out of range | removeTorpille - Monde");
-    this->torpilles->at(index)->~Torpille();
-    this->torpilles->erase(this->torpilles->begin() + index);
 }
 
 void Monde::removeAllFlottes()
 {
     for(int i = 0; i < this->getNbFlottes(); i++)
     {
-        this->flottes->back()->~Flotte();
+        Flotte* flotte = this->flottes->back();
+        if(flotte!=NULL) delete flotte;
         this->flottes->pop_back();
-    }
-}
-
-void Monde::removeAllTorpilles()
-{
-    for(int i = 0; i < this->getNbTorpilles(); i++)
-    {
-        this->torpilles->back()->~Torpille();
-        this->torpilles->pop_back();
-    }
-}
-
-void Monde::removeAllMines()
-{
-    for(int i = 0; i < this->getNbMines(); i++)
-    {
-        this->mines->back()->~Mine();
-        this->mines->pop_back();
     }
 }
 
@@ -194,7 +127,8 @@ void Monde::removeAllIles()
 {
     for(int i = 0; i < this->getNbIles(); i++)
     {
-        this->iles[i]->~Ile();
+        if(this->iles[i] != NULL)
+            delete this->iles[i];
     }
     this->nbIles = 0;
 }
@@ -203,7 +137,8 @@ void Monde::removeAllIlesBonus()
 {
     for(int i = 0; i < this->getNbIlesBonus(); i++)
     {
-        this->ilesBonus[i]->~IleBonus();
+        if(this->ilesBonus[i] != NULL)
+            delete this->ilesBonus[i];
     }
     this->nbIlesBonus = 0;
 }
@@ -242,17 +177,6 @@ void Monde::updateControleIleBonus()
     }
 }
 
-std::string Monde::toString()
-{
-    return "Nombre Flottes : " + std::to_string(this->flottes->size()) + "\n"
-    + "Nombre Iles : " + std::to_string(this->getNbIles()) + "\n"
-    + "Nombre IlesBonus : " + std::to_string(this->getNbIlesBonus()) + "\n"
-    + "Nombre Mines : " + std::to_string(this->mines->size()) + "\n"
-    + "Nombre Torpilles : " + std::to_string(this->torpilles->size()) + "\n"
-    + "Timer : " + std::to_string(this->timer) + "s" + "\n"
-    + "Difficulte : " + std::to_string(this->difficulte);
-}
-
 std::string Monde::formattedInfo()
 {
     std::string info = std::to_string(this->getNbIles()) + ";" +
@@ -265,16 +189,6 @@ std::string Monde::formattedInfo()
         info += '\n' + this->getIle(i)->formattedInfo();
     for(int i = 0 ; i < this->getNbIlesBonus(); i++)
         info += '\n' + this->getIleBonus(i)->formattedInfo();
-    /*
-    for(int i = 0 ; i < monde->getNbMines(); i++)
-    {
-        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
-    }
-
-    for(int i = 0 ; i < monde->getNbTorpilles(); i++)
-    {
-        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
-    }*/
 
     return info;
         

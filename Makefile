@@ -4,13 +4,13 @@ LIBS = -L./SDL2_ttf/.libs -L./SDL2_image/.libs
 LDFLAGS = `sdl2-config --cflags --libs` -lSDL2_ttf -lSDL2_image
 INCLUDES = -I./SDL2_ttf -I./SDL2_image
 EXEC = main testPoint testIle testIleBonus testLogique testMonde testIO testSave.txt
-SRC = main.cpp Game.cpp Input-Output/fichier.cpp Input-Output/Mouse.cpp Graphique/menu.cpp  Graphique/jeu.cpp Graphique/fonctions_SDL.cpp Input-Output/input.cpp Logique/logique.cpp Logique/Class/Point.cpp Logique/Class/Ile.cpp Logique/Class/Flotte.cpp Logique/Class/IleBonus.cpp Logique/Class/Navire/Navire.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Navire/Croiseur.cpp Logique/Class/Armes_Explosives.cpp Logique/Class/Monde.cpp
+SRC = main.cpp Game.cpp Input-Output/fichier.cpp Input-Output/Mouse.cpp Graphique/menu.cpp  Graphique/jeu.cpp Graphique/fonctions_SDL.cpp Input-Output/input.cpp Logique/logique.cpp Logique/Class/Point.cpp Logique/Class/Ile.cpp Logique/Class/Flotte.cpp Logique/Class/IleBonus.cpp Logique/Class/Navire/Navire.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Navire/Croiseur.cpp Logique/Class/Monde.cpp
 OBJ = $(SRC:.cpp=.o)
 
 SRCPoint = Logique/Class/tests/testPoint.cpp Logique/Class/Point.cpp 
 OBJPoint = $(SRCPoint:.cpp=.o)
 
-SRCMonde = Logique/Class/tests/testMonde.cpp Logique/Class/Point.cpp Logique/Class/Ile.cpp Logique/Class/Flotte.cpp Logique/Class/IleBonus.cpp Logique/Class/Navire/Navire.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Armes_Explosives.cpp Logique/Class/Monde.cpp 
+SRCMonde = Logique/Class/tests/testMonde.cpp Logique/Class/Point.cpp Logique/Class/Ile.cpp Logique/Class/Flotte.cpp Logique/Class/IleBonus.cpp Logique/Class/Navire/Navire.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Monde.cpp 
 OBJMonde = $(SRCMonde:.cpp=.o)
 
 SRCIle = Logique/Class/tests/testIle.cpp Logique/Class/Point.cpp Logique/Class/Ile.cpp 
@@ -28,7 +28,7 @@ OBJFlotte = $(SRCFlotte:.cpp=.o)
 SRCLogique = Logique/Tests/testLogique.cpp Logique/fichier.cpp Logique/logique.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Navire/Croiseur.cpp
 OBJLogique = $(SRCLogique:.cpp=.o)
 
-SRCIO = Input-Output/Test/testIO.cpp Input-Output/fichier.cpp Logique/logique.cpp Logique/Class/Point.cpp Logique/Class/Ile.cpp Logique/Class/Flotte.cpp Logique/Class/IleBonus.cpp Logique/Class/Navire/Navire.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Navire/Croiseur.cpp Logique/Class/Armes_Explosives.cpp Logique/Class/Monde.cpp 
+SRCIO = Input-Output/Test/testIO.cpp Input-Output/fichier.cpp Logique/logique.cpp Logique/Class/Point.cpp Logique/Class/Ile.cpp Logique/Class/Flotte.cpp Logique/Class/IleBonus.cpp Logique/Class/Navire/Navire.cpp Logique/Class/Navire/Patrouilleur.cpp Logique/Class/Navire/Croiseur.cpp Logique/Class/Monde.cpp 
 OBJIO = $(SRCIO:.cpp=.o)
 
 

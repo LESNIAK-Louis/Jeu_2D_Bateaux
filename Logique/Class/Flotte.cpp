@@ -55,7 +55,8 @@ selectedNavire* supprimerElement(selectedNavire* liste, Navire* navire)
     if (prem(previous) == navire)
     {
         liste = rest(liste);
-        free(previous);
+        if(previous != NULL)
+            free(previous);
         return liste;
     }
     temp = rest(previous); 
@@ -64,7 +65,8 @@ selectedNavire* supprimerElement(selectedNavire* liste, Navire* navire)
         if (prem(temp) == navire)
         {
             previous->suivant = rest(temp);
-            free(temp);
+            if(temp != NULL)
+                free(temp);
             return liste;
         }
         previous = temp; 
@@ -93,11 +95,15 @@ Flotte::Flotte(int numero, Point* coord, Point* spawn, int ressource, int gain, 
 }
 
 Flotte::~Flotte(){
-    delete this->coordBase;
-    delete this->spawnPoint;
+    if(this->coordBase != NULL)
+        delete this->coordBase;
+    if(this->spawnPoint != NULL)  
+        delete this->spawnPoint;
     this->removeAllNavires();
-    delete this->navires;
-    freeListe(this->listeSelected);
+    if(this->navires != NULL)  
+        delete this->navires;
+    if(this->listeSelected != NULL)
+        freeListe(this->listeSelected);
 }
 
 int Flotte::getNumero(){
@@ -272,7 +278,9 @@ void Flotte::augmenterGainRessource(int a){
 void Flotte::removeAllNavires(){
     while(this->getNbNavires() != 0)
     {
-        this->navires->back()->~Navire();
+        Navire* nav = this->navires->back();
+        if(nav != NULL)
+            delete nav;
         this->navires->pop_back();
     }
 }

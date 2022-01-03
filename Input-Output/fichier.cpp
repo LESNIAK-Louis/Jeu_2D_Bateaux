@@ -164,10 +164,6 @@ Monde* readSave(std::string path)
                 nbIlesBonus--;
             }
             break;
-            case 'M':
-            break;
-            case 'T':
-            break;
             default:
                 error("Erreur de format | readSave - fichier ");
             break;

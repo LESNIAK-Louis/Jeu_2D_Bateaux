@@ -24,7 +24,7 @@ void pathFinding(Navire* navire, Point* centreIle, int tailleIle){
     float distTangente = sqrt(distanceNavIle * distanceNavIle - rayonIle * rayonIle);
     int absNav = navire->getAbscisse();
     int ordNav = navire->getOrdonnee();
-    bool col = false;
+    //bool col = false;
     if (angleIncidence < angleIncidenceMin && angleIncidence >= 0) {
         //esquive en passant à gauche de l'ile (du point de vue du navire)
         theta = angleNavIle - angleIncidenceMin;
@@ -35,8 +35,9 @@ void pathFinding(Navire* navire, Point* centreIle, int tailleIle){
         int ordWayPoint = round(ordNav - distTangente * cos(theta));
         Point* waypoint = new Point(absWayPoint, ordWayPoint);
         navire->setWayPoint(waypoint);
-        delete waypoint;
-        col = true;
+        if(waypoint != NULL)
+            delete waypoint;
+        //col = true;
     }
     if (angleIncidence > -angleIncidenceMin && angleIncidence < 0) {
         //esquive en passant à droite de l'ile (du point de vue du navire)
@@ -48,8 +49,9 @@ void pathFinding(Navire* navire, Point* centreIle, int tailleIle){
         int ordWayPoint = round(ordNav + distTangente * cos(theta));
         Point* waypoint = new Point(absWayPoint, ordWayPoint);
         navire->setWayPoint(waypoint);
-        delete waypoint;
-        col = true;
+        if(waypoint != NULL)
+            delete waypoint;
+        //col = true;
     }  
     //Cette partie est pour le debuggage
     /*if (col && navire->estEnCollisionAvec(TAILLE_ILE1+10, ile->getCentre())){

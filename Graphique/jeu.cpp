@@ -175,19 +175,22 @@ void afficherBarreDeVie(Navire* navire, SDL_Renderer* ecran, textures_s* texture
 }
 
 void destroy_textures_jeu(textures_s* textures){
-    if(NULL != textures->bouton) SDL_DestroyTexture(textures->bouton);
-    if(NULL != textures->contourPV) SDL_DestroyTexture(textures->contourPV);
-    if(NULL != textures->croiseur) SDL_DestroyTexture(textures->croiseur);
-    if(NULL != textures->explosion) SDL_DestroyTexture(textures->explosion);
-    if(NULL != textures->fond) SDL_DestroyTexture(textures->fond);
-    if(NULL != textures->ile) SDL_DestroyTexture(textures->ile);
-    if(NULL != textures->interface) SDL_DestroyTexture(textures->interface);
-    if(NULL != textures->patrouilleur) SDL_DestroyTexture(textures->patrouilleur);
-    if(NULL != textures->plus) SDL_DestroyTexture(textures->plus);
-    if(NULL != textures->point) SDL_DestroyTexture(textures->point);
-    if(NULL != textures->police) TTF_CloseFont(textures->police);
-    if(NULL != textures->porteAvion) SDL_DestroyTexture(textures->porteAvion);
-    if(NULL != textures->remplissagePV) SDL_DestroyTexture(textures->remplissagePV);
-    if(NULL != textures->remplissagePVEnnemis) SDL_DestroyTexture(textures->remplissagePVEnnemis);
-    if(NULL != textures->tir) SDL_DestroyTexture(textures->tir);
+    if(textures != NULL)
+    {
+        if(NULL != textures->bouton) SDL_DestroyTexture(textures->bouton);
+        if(NULL != textures->contourPV) SDL_DestroyTexture(textures->contourPV);
+        if(NULL != textures->croiseur) SDL_DestroyTexture(textures->croiseur);
+        if(NULL != textures->explosion) SDL_DestroyTexture(textures->explosion);
+        if(NULL != textures->fond) SDL_DestroyTexture(textures->fond);
+        if(NULL != textures->ile) SDL_DestroyTexture(textures->ile);
+        if(NULL != textures->interface) SDL_DestroyTexture(textures->interface);
+        if(NULL != textures->patrouilleur) SDL_DestroyTexture(textures->patrouilleur);
+        if(NULL != textures->plus) SDL_DestroyTexture(textures->plus);
+        if(NULL != textures->point) SDL_DestroyTexture(textures->point);
+        if(NULL != textures->police) TTF_CloseFont(textures->police);
+        if(NULL != textures->porteAvion) SDL_DestroyTexture(textures->porteAvion);
+        if(NULL != textures->remplissagePV) SDL_DestroyTexture(textures->remplissagePV);
+        if(NULL != textures->remplissagePVEnnemis) SDL_DestroyTexture(textures->remplissagePVEnnemis);
+        if(NULL != textures->tir) SDL_DestroyTexture(textures->tir);
+    }
 }

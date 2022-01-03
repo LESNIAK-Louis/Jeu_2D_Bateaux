@@ -30,9 +30,8 @@ void gestion_evenements(Game* jeu)
                         case SDLK_LEFT :
                             break;
                         case SDLK_UP :
-                            std::cout << "Patrouilleurs : " << jeu->getMonde()->getFlotte(0)->getNbPatrouilleurs() << " Navires : " << jeu->getMonde()->getFlotte(0)->getNbNavires() << std::endl;
                             for (int i = 0; i < jeu->getMonde()->getFlotte(0)->getNbNavires(); i++){
-                               std::cout << "ID Patrouilleur : " << jeu->getMonde()->getFlotte(0)->getPatrouilleur(i)->getId() << std::endl;
+                               std::cout << "ID " << jeu->getMonde()->getFlotte(0)->getNavire(i)->getType() <<" : " << jeu->getMonde()->getFlotte(0)->getNavire(i)->getId() << std::endl;
                             }
                             printf("\n");
                             break;

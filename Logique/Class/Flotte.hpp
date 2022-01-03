@@ -99,7 +99,14 @@ class Flotte
 
 
         void removeAllNavires();
-        void removeNavire(Navire* navire);
+        
+        /**
+         * @brief supprime le navire à l'indice i
+         * 
+         * @param i 
+         */
+        void removeNavire(int i);
+        void reduireNumeroNavires(int indice);
         
 
          /**
@@ -135,16 +142,6 @@ class Flotte
          * @param p le patrouilleur à ajouter
          */
         void addPatrouilleur(Patrouilleur* p);
-        void removeAllPatrouilleurs();
-        void removePatrouilleur(int i);
-
-        /**
-         * @brief Réduit de 1 le numéro des patrouilleurs à l'indice i et au delà : 
-         * 
-         * @param indice 
-         */
-        void reduireNumeroPatrouilleurs(int indice);
-
         /**
          * @brief améliore les caractéristiques des patrouilleurs
          * 
@@ -170,15 +167,6 @@ class Flotte
          * @param c le croiseur à ajouter
          */
         void addCroiseur(Croiseur* c);
-        void removeAllCroiseurs();
-        void removeCroiseur(int i);
-
-        /**
-         * @brief Réduit de 1 le numéro des croiseurs à l'indice i et au delà : 
-         * 
-         * @param indice 
-         */
-        void reduireNumeroCroiseurs(int indice);
 
         /**
          * @brief améliore les caractéristiques des croiseurs

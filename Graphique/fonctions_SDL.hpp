@@ -142,29 +142,37 @@ void afficherIles(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
 void afficherIlesBonus(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
 
 /**
- * @brief  La fonction affiche les navire du monde
+ * @brief  La fonction affiche les flottes du monde
  * @param ecran l'ecran
  * @param monde le monde
  * @param textures les textures du jeu
  */
-void afficherNavires(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
+void afficherFlottes(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
 
 /**
- * @brief affiche les patrouilleurs
+ * @brief afficherles navires d'une flotte
+ * 
+ * @param ecran 
+ * @param flotte la flotte dont il faut afficher les navires
+ * @param textures 
+ */
+void afficherNavires(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures);
+/**
+ * @brief affiche un patrouilleur
  * @param ecran l'ecran
  * @param monde 
  * @param textures les textures du jeu
  */
-void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures);
+void afficherPatrouilleur(SDL_Renderer* ecran, textures_s* textures, Navire* navire);
 
 /**
- * @brief affiche les croiseurs
+ * @brief affiche un croiseur
  * 
  * @param ecran 
  * @param flotte 
  * @param textures 
  */
-void afficherCroiseurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures);
+void afficherCroiseur(SDL_Renderer* ecran, textures_s* textures, Navire* navire);
 
 /**
  * @brief affiche les barres de vie au dessus des bateaux selectionnés par l'utilisateur
@@ -204,6 +212,12 @@ void cleanTextures(std::vector<SDL_Texture*>* textures);
  * \param fonts vector des polices
 */
 void cleanPolices(std::vector<TTF_Font*>* fonts);
+
+/**
+ * @brief la fonction nettoye l'écran
+ * 
+ */
+void cleanRenderer(SDL_Renderer* renderer);
 
 /**
  * \brief La fonction nettoie toute la SDL et TTF

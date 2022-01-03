@@ -54,7 +54,7 @@ class IleBonus {
         void replaceDefenseur(int index, Navire* defenseur);
         void removeAllDefenseurs();
 
-        std::string toString();
+        std::string formattedInfo();
 };
 
 #endif

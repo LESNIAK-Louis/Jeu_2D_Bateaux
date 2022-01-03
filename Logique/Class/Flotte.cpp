@@ -484,14 +484,23 @@ std::string Flotte::formattedInfo()
     std::to_string(this->getQteRessource()) + ";" +
     std::to_string(this->getGainRessource()) + ";" +
     std::to_string(this->getPvBase()) + ";" +
-    std::to_string(this->getNbPatrouilleurs());
+    std::to_string(this->getNbPatrouilleurs()) + ";" + 
+    std::to_string(this->getNbCroiseurs());
     if(this->getNbPatrouilleurs() != 0)
     {
         info += ";[";
         for(int k = 0; k <  this->getNbPatrouilleurs()-1; k++)
             info +=  this->getPatrouilleur(k)->formattedInfo() + ";";
-        info +=  this->getPatrouilleur(this->getNbPatrouilleurs()-1)->formattedInfo() + "]}";
+        info +=  this->getPatrouilleur(this->getNbPatrouilleurs()-1)->formattedInfo() + "]";
     }
+    if(this->getNbCroiseurs() != 0)
+    {
+        info += ";[";
+        for(int k = 0; k <  this->getNbCroiseurs()-1; k++)
+            info +=  this->getCroiseur(k)->formattedInfo() + ";";
+        info +=  this->getCroiseur(this->getNbCroiseurs()-1)->formattedInfo() + "]";
+    }
+    info += "}";
 
     return info;
         

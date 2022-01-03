@@ -30,16 +30,53 @@ int readNextNumber(std::string *line)
     }catch(std::exception &e){error("Format incorrect du fichier de sauvegarde | readNextNumber - fichier ");}
 }
 
-void addPatrouilleurs(std::string *line, Flotte* flotte, int nbPatrouilleurs)
+void addCroiseursFlotte(std::string *line, Flotte* flotte, int nbCroiseurs)
+{
+    if(nbCroiseurs > 0)
+    {
+        line->substr(1);
+        for(int i = 0; i < nbCroiseurs; i++)
+        {
+            flotte->addCroiseur(new Croiseur(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+            flotte->getNavire(i)->setPv(readNextNumber(line));
+        }
+        line->substr(2);
+    }
+}
+
+void addPatrouilleursFlotte(std::string *line, Flotte* flotte, int nbPatrouilleurs)
 {
     if(nbPatrouilleurs > 0)
     {
         line->substr(1);
-        checkNbParam(*line, 9*nbPatrouilleurs + nbPatrouilleurs-1);
         for(int i = 0; i < nbPatrouilleurs; i++)
         {
             flotte->addPatrouilleur(new Patrouilleur(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
-            flotte->getPatrouilleur(i)->setPv(readNextNumber(line));
+            flotte->getNavire(i)->setPv(readNextNumber(line));
+        }
+        line->substr(2);
+    }
+}
+
+void addDefenseurIleBonus(std::string *line, IleBonus* ileBonus, int nbPatrouilleurs, int nbCroiseurs)
+{
+    if(nbPatrouilleurs > 0)
+    {
+        line->substr(1);
+        for(int i = 0; i < nbPatrouilleurs; i++)
+        {
+            ileBonus->addDefenseur(new Patrouilleur(-1, i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+            ileBonus->getDefenseur(i)->setPv(readNextNumber(line));
+        }
+        line->substr(2);
+    }
+    if(nbCroiseurs > 0)
+    {
+        line->substr(1);
+        for(int i = 0; i < nbCroiseurs; i++)
+        {
+            ileBonus->addDefenseur(new Croiseur(-1, i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+            ileBonus->getDefenseur(i)->setPv(readNextNumber(line));
         }
         line->substr(2);
     }
@@ -87,7 +124,9 @@ Monde* readSave(std::string path)
                 int pv = readNextNumber(&line);
                 Flotte* flotte = new Flotte(numero, Coord, Spawn, ressource, gain, pv);
                 int nbPatrouilleurs = readNextNumber(&line);
-                addPatrouilleurs(&line, flotte, nbPatrouilleurs);
+                int nbCroiseurs = readNextNumber(&line);
+                addPatrouilleursFlotte(&line, flotte, nbPatrouilleurs);
+                addCroiseursFlotte(&line, flotte, nbCroiseurs);
                 monde->addFlotte(flotte);
             }
             break;
@@ -106,6 +145,24 @@ Monde* readSave(std::string path)
             }
             break;
             case 'B':
+            {
+                try{
+                    line.substr(line.find_first_of("{")+1);
+                } catch(std::exception &s){error("Format incorrect du fichier de sauvegarde | readSave - fichier ");}
+                Point* centre = readPoint(&line);
+                int taille = readNextNumber(&line);
+                int forme = readNextNumber(&line);
+                int rayonCapture = readNextNumber(&line);
+                int controle = readNextNumber(&line);
+                int bonustype = readNextNumber(&line);
+                int bonusGain = readNextNumber(&line);
+                int nbPatrouilleurs = readNextNumber(&line);
+                int nbCroiseurs = readNextNumber(&line);
+                IleBonus* ileBonus = new IleBonus(centre, taille, forme, rayonCapture, controle, bonustype, bonusGain);
+                addDefenseurIleBonus(&line, ileBonus, nbPatrouilleurs, nbCroiseurs);
+                monde->setIleBonus(nbIlesBonus-1, ileBonus);
+                nbIlesBonus--;
+            }
             break;
             case 'M':
             break;

@@ -263,12 +263,9 @@ std::string Monde::formattedInfo()
         info += '\n' + this->getFlotte(i)->formattedInfo();
     for(int i = 0 ; i < this->getNbIles(); i++)
         info += '\n' + this->getIle(i)->formattedInfo();
-/*
-    for(int i = 0 ; i < monde->getNbIlesBonus(); i++)
-    {
-        fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';
-    }
-
+    for(int i = 0 ; i < this->getNbIlesBonus(); i++)
+        info += '\n' + this->getIleBonus(i)->formattedInfo();
+    /*
     for(int i = 0 ; i < monde->getNbMines(); i++)
     {
         fichierSauvegarde << "Flotte" + std::to_string(i) + "{" + "" +"}" + '\n';

@@ -174,15 +174,42 @@ void IleBonus::removeAllDefenseurs()
     }
 }
 
-std::string IleBonus::toString()
+std::string IleBonus::formattedInfo()
 {
-    return "Centre : <" + std::to_string(this->getCentre()->getAbscisse()) + ", " + std::to_string(this->getCentre()->getOrdonnee()) + ">\n"
-    + "Taille : " + std::to_string(this->getTaille()) + "\n"
-    + "Forme : " + std::to_string(this->getForme()) + "\n"
-    + "RayonCapture : " + std::to_string(this->getRayonCapture()) + "\n"
-    + "Nombre de defenseurs" + std::to_string(this->getNbDefenseur()) + "\n"
-    + "Controle : " + std::to_string(this->getControle()) + "\n"
-    + "Type du bonus : " + std::to_string(this->getBonusType()) + "\n"
-    + "Gain bonus : " + std::to_string(this->getBonusGain()) + "\n"
-    /*+ "Temps debut capture : " + std::to_string(this->getTempsDebut())*/;
+     std::string info;
+    info = "B{" + this->getCentre()->formattedInfo() + ";"
+    + std::to_string(this->getTaille()) + ";"
+    + std::to_string(this->getForme()) + ";"
+    + std::to_string(this->getRayonCapture()) + ";"
+    + std::to_string(this->getControle()) + ";"
+    + std::to_string(this->getBonusType()) + ";"
+    + std::to_string(this->getBonusGain()) + ";";
+
+    std::string patrouilleur = "";
+    std::string croiseur = "";
+    int nbPatrouilleur = 0;
+    int nbCroiseur = 0;
+    for(int i = 0; i < this->getNbDefenseur(); i++)
+    {
+        if(this->getDefenseur(i)->getType() == "Patrouilleur")
+        {
+            nbPatrouilleur++;
+            patrouilleur += this->getDefenseur(i)->formattedInfo() + ";";
+        }
+        else if (this->getDefenseur(i)->getType() == "Croiseur")
+        {
+            nbCroiseur++;
+            croiseur += this->getDefenseur(i)->formattedInfo() + ";";
+        }
+    }
+
+    info += std::to_string(nbPatrouilleur) + ";"
+    + std::to_string(nbCroiseur);
+    if(nbPatrouilleur > 0)
+        info += ";[" + patrouilleur.substr(0, patrouilleur.length()-2) + "]";
+    if(nbCroiseur > 0)
+        info += ";[" + croiseur.substr(0, patrouilleur.length()-2) + "]";
+    info += "}";
+
+    return info;
 }

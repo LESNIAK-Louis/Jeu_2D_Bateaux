@@ -19,7 +19,9 @@
 
 Point* readPoint(std::string *line);
 int readNextNumber(std::string *line);
-void addPatrouilleurs(std::string *line, Flotte* flotte, int nbPatrouilleurs);
+void addPatrouilleursFlotte(std::string *line, Flotte* flotte, int nbPatrouilleurs);
+void addCroiseursFlotte(std::string *line, Flotte* flotte, int nbCroiseurs);
+void addDefenseurIleBonus(std::string *line, IleBonus* ileBonus, int nbPatrouilleurs, int nbCroiseurs);
 void checkNbParam(std::string line, long unsigned int requestedParamNumber);
 Monde* readSave(std::string path);
 void writeMonde(std::string fileName, Monde* monde);

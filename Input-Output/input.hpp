@@ -11,7 +11,6 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <iostream>
-#include "../Game.hpp"
 #include "../Logique/logique.hpp"
 #include "../Logique/Class/Monde.hpp"
 #include "Mouse.hpp"
@@ -20,8 +19,8 @@
  * \brief La fonction gère les saisis clavier/souris
  * \param event evenement
 */
-void gestion_evenements(Game* jeu);
-bool isPointingIle(Game* jeu);
+void gestion_evenements_jeu(SDL_Event* event, Mouse* mouse, Monde* monde, bool* terminer);
+bool isPointingIle(Monde* monde, Mouse* mouse);
 void addNavToSelection(Flotte* flotte, Mouse* mouse);
 bool collisionCercleRectangle(Point* centre, int rayon, SDL_Rect* rect);
 void appliquerEffetBouton(Flotte* flotte, int i, int j);

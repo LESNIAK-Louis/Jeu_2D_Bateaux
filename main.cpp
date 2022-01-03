@@ -39,34 +39,10 @@ int main()
     monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(750,750));
     monde->getFlotte(0)->getPatrouilleur(0)->ajouterPV(-5);
    
-   monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(600,300));
+    monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(600,300));
 
     Game* jeu = new Game(monde);
-
-    textures_s textures;
-    init_textures_jeu(jeu->getEcran(), &textures);
-
-    jeu->getMonde()->setTimer(SDL_GetTicks());
-    while(!jeu->getTerminer()){
-        
-        Uint32 currentTime = SDL_GetTicks();
-        SDL_RenderClear(jeu->getEcran());
-        SDL_RenderCopy(jeu->getEcran(), (&textures)->fond, NULL, NULL);
-        afficherMonde(jeu->getEcran(), monde, &textures);
-        moveShips(monde);
-        tirsBateaux(monde, currentTime);
-        monde->updateControleIleBonus();
-        monde->getFlotte(0)->addRessource();
-
-        
-        gestion_evenements(jeu);
-        SDL_RenderPresent(jeu->getEcran());
-        SDL_Delay(50);
-    }
-
-    save("Save.txt", jeu->getMonde());
     delete jeu;
-
 
     return 0;
 }

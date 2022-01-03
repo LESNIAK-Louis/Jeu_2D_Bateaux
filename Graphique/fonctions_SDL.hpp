@@ -66,31 +66,17 @@ TTF_Font* charger_police(const char* path, int font_size);
 void afficher_texte(const char* message, SDL_Renderer* renderer, SDL_Rect DestR, TTF_Font* font, SDL_Color color, bool query);
 
 /**
- * \brief La fonction nettoie toutes les textures d'un vector en mémoire
- * \param textures vector des textures
-*/
-void cleanTextures(std::vector<SDL_Texture*>* textures);
-
-/**
- * \brief La fonction nettoie toutes les polices d'un vector en mémoire
- * \param fonts vector des polices
-*/
-void cleanPolices(std::vector<TTF_Font*>* fonts);
-
-/**
  * @brief la fonction nettoye l'écran
  * 
  */
 void cleanRenderer(SDL_Renderer* renderer);
 
 /**
- * \brief La fonction nettoie toute la SDL et TTF
+ * \brief La fonction detruit le renderer et la fenetre
  * \param renderer le renderer
  * \param window la fenêtre du jeu
- * \param textures vector des textures
- * \param fonts vector des polices
 */
-void cleanSDL(SDL_Renderer* renderer, SDL_Window* window, std::vector<SDL_Texture*>* textures, std::vector<TTF_Font*>* fonts);
+void cleanSDL(SDL_Renderer* renderer, SDL_Window* window);
 
 /**
  * @brief La fonction permet de quitter SDL et TTF

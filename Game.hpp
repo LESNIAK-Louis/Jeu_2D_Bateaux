@@ -11,20 +11,24 @@
 #include <SDL2/SDL.h>
 #include "Input-Output/Mouse.hpp"
 #include "Logique/Class/Monde.hpp"
+#include "Input-Output/fichier.hpp"
+#include "Input-Output/input.hpp"
 #include "Graphique/fonctions_SDL.hpp"
+#include "Graphique/jeu.hpp"
 #include "definitions.hpp"
+#include "Logique/logique.hpp"
 
 
 class Game
 {
-    protected :
+    private :
 
     Mouse* mouse;
-    int etatJeu; // 0 : menu ; 1 : Niveau 1 ....
     bool terminer; // si le jeu doit s'arrêter
     SDL_Window* fenetre;
     SDL_Event evenements;
     SDL_Renderer* ecran;
+    textures_s* textures;
 
     Monde* monde;
 
@@ -40,10 +44,14 @@ class Game
     SDL_Window* getFenetre();
     SDL_Event* getEvent();
     SDL_Renderer* getEcran();
+    textures_s* getTextures();
     Monde* getMonde();
 
     void setMonde(Monde* monde);
     void setTerminer(bool terminer);
+
+
+    void boucleJeu();
 };
 
 

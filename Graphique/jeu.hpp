@@ -174,4 +174,10 @@ void afficherCroiseur(SDL_Renderer* ecran, textures_s* textures, Navire* navire)
  */
 void afficherBarreDeVie(Navire* navire, SDL_Renderer* ecran, textures_s* textures);
 
+/**
+ * @brief détruit toutes les textures
+ * @param textures les textures du jeu
+ */
+void destroy_textures_jeu(textures_s* textures);
+
 #endif

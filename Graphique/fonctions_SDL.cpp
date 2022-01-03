@@ -94,41 +94,14 @@ void afficher_texte(const char* message, SDL_Renderer* renderer, SDL_Rect DestR,
     SDL_FreeSurface(text);
 }
 
-void cleanTextures(std::vector<SDL_Texture*>* textures)
-{
-    if(textures == NULL) error("textures NULL | cleanTextures - fonctions_sdl");
-
-    while(textures->size() != 0)
-    {
-        if(textures->back() != NULL)
-            SDL_DestroyTexture(textures->back());
-        textures->pop_back();
-    }
-    textures->shrink_to_fit(); // Réduit la taille en mémoire au minimum
-}
-
-void cleanPolices(std::vector<TTF_Font*>* fonts)
-{
-    if(fonts == NULL) error("fonts NULL | cleanPolice - fonctions_sdl");
-
-    while(fonts->size() != 0)
-    {
-        if(fonts->back() != NULL)
-            TTF_CloseFont(fonts->back());
-        fonts->pop_back();
-    }
-    fonts->shrink_to_fit(); // Réduit la taille en mémoire au minimum
-}
 
 void cleanRenderer(SDL_Renderer* renderer)
 {
     SDL_RenderClear(renderer);
 }
 
-void cleanSDL(SDL_Renderer* renderer, SDL_Window* window, std::vector<SDL_Texture*>* textures, std::vector<TTF_Font*>* fonts)
+void cleanSDL(SDL_Renderer* renderer, SDL_Window* window)
 {
-    cleanTextures(textures);
-    cleanPolices(fonts);
     if(NULL != renderer)
         SDL_DestroyRenderer(renderer);
     if(NULL != window)

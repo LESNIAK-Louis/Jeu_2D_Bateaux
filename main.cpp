@@ -1,4 +1,6 @@
 #include "Graphique/fonctions_SDL.hpp"
+#include "Graphique/jeu.hpp"
+#include "Graphique/menu.hpp"
 #include "Logique/Class/Monde.hpp"
 #include "Input-Output/input.hpp"
 #include "Logique/logique.hpp"
@@ -9,6 +11,7 @@
 
 int main()
 {
+    initSDL();
     Monde* monde;
     //monde = readSave("Save.txt");
     monde = new Monde(1,1, 0,1);
@@ -35,7 +38,7 @@ int main()
     Game* jeu = new Game(monde);
 
     textures_s textures;
-    init_textures(jeu->getEcran(), &textures);
+    init_textures_jeu(jeu->getEcran(), &textures);
 
     jeu->getMonde()->setTimer(SDL_GetTicks());
     while(!jeu->getTerminer()){

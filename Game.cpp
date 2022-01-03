@@ -13,7 +13,7 @@ Game::Game(Monde* monde)
     this->mouse = new Mouse();
     this->etatJeu = 1;
     this->terminer = false;
-    initSDL(&(this->fenetre), &(this->ecran), LARGEUR_ECRAN, HAUTEUR_ECRAN);
+    initWindowRenderer(&(this->fenetre), &(this->ecran), LARGEUR_ECRAN, HAUTEUR_ECRAN);
     this->monde = monde;
 }
 

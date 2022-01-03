@@ -17,6 +17,9 @@
 
 #define PI 3.14159
 
+#define HAUTEUR_ECRAN_MENU 400
+#define LARGEUR_ECRAN_MENU 200
+
 
 #define HAUTEUR_ECRAN 800
 #define LARGEUR_ECRAN 800

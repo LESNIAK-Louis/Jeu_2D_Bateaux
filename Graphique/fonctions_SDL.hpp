@@ -32,6 +32,9 @@ struct textures_s{
     SDL_Texture* interface; /*Texture liée à l'image représentant l'interface*/
     SDL_Texture* bouton; /*Texture liée à l'image représentant un bouton*/
     SDL_Texture* plus; /*texture liée au signe plus */
+    SDL_Texture* point; /*texture liée au point */
+    SDL_Texture* tir; /*texture liée au tir */
+    SDL_Texture* explosion; /*texture liée a l'explosion */
 };
 
 /**
@@ -184,14 +187,14 @@ void afficherBarreDeVie(Navire* navire, SDL_Renderer* ecran, textures_s* texture
 TTF_Font* charger_police(const char* path, int font_size);
 
 /**
- * \brief La fonction charge un texte en param
+ * \brief La fonction affiche un texte à l'ecran
  * \param message le texte a charger
  * \param renderer le renderer
+ * \param DestR destination de l'affichage
  * \param font la police a utiliser
  * \param color la couleur a appliquer
- * \return la texture du texte charge
 */
-SDL_Texture* charger_texte(const char* message, SDL_Renderer* renderer, TTF_Font* font, SDL_Color color);
+void afficher_texte(const char* message, SDL_Renderer* renderer, SDL_Rect DestR, TTF_Font* font, SDL_Color color, bool query);
 
 /**
  * \brief La fonction nettoie toutes les textures d'un vector en mémoire

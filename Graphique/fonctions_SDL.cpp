@@ -20,6 +20,9 @@ void  init_textures(SDL_Renderer *renderer, textures_s* textures){
     textures->interface = charger_image("Ressources/interface.bmp", renderer);
     textures->bouton = charger_image("Ressources/bouton.bmp", renderer);
     textures->plus = charger_image("Ressources/plus.bmp", renderer);
+    textures->point = charger_image("Ressources/point.bmp", renderer);
+    textures->tir = charger_image("Ressources/tir.bmp", renderer);
+    textures->explosion = charger_image("Ressources/explosion.bmp", renderer);
     textures->police = charger_police("Ressources/arial.ttf", 16);
 }
 
@@ -34,8 +37,8 @@ void initSDL(SDL_Window** window, SDL_Renderer** renderer, int width, int height
 
 SDL_Texture* charger_image(const char* nomfichier, SDL_Renderer*renderer)
 {
-    if(nomfichier == NULL) error("nomfichier NULL en param | charger_police - fonctions_sdl");
-    if(renderer == NULL) error("renderer NULL en param | charger_texte - fonctions_sdl");
+    if(nomfichier == NULL) error("nomfichier NULL en param | charger_image - fonctions_sdl");
+    if(renderer == NULL) error("renderer NULL en param | charger_image - fonctions_sdl");
 
     // Charger une image
     SDL_Surface* bmp = SDL_LoadBMP(nomfichier);
@@ -50,8 +53,8 @@ SDL_Texture* charger_image(const char* nomfichier, SDL_Renderer*renderer)
 
 SDL_Texture* charger_image_transparente(const char* nomfichier, SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b)
 {
-    if(nomfichier == NULL) error("nomfichier NULL en param | charger_police - fonctions_sdl");
-    if(renderer == NULL) error("renderer NULL en param | charger_texte - fonctions_sdl")
+    if(nomfichier == NULL) error("nomfichier NULL en param | charger_image_transparente - fonctions_sdl");
+    if(renderer == NULL) error("renderer NULL en param | charger_image_transparente - fonctions_sdl")
 
     // Charger une image
     SDL_Surface* bmp = SDL_LoadBMP(nomfichier);
@@ -91,11 +94,8 @@ void afficherInformations(SDL_Renderer* ecran, Flotte* flotte, textures_s* textu
     string = string + std::to_string(ressource);
     const char* quantiteOr = string.c_str();
     SDL_Color couleurTexteInterface = { 231, 76, 60, 255};
-    SDL_Texture* qteOr = charger_texte(quantiteOr, ecran, textures->police, couleurTexteInterface);
-    int w, h;
-    SDL_QueryTexture(qteOr, NULL, NULL, &w, &h);
-    SDL_Rect DestR = {10,10, w, h};
-    SDL_RenderCopy(ecran, qteOr, NULL, &DestR);
+    SDL_Rect DestR = {10 ,10 ,0 ,0};
+    afficher_texte(quantiteOr, ecran, DestR, textures->police, couleurTexteInterface, 1);
     afficherSelection(ecran, flotte->getListeSelected(), textures, 0, 0);
 }
 
@@ -188,9 +188,8 @@ void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* text
         afficherBarreDeVie(flotte->getPatrouilleur(p), ecran, textures);
 
         //Permet d'afficher un point sur le wayPoint du patrouilleur. A utiliser pour le debuggage
-        SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", ecran);
         DestR = {flotte->getPatrouilleur(p)->getWayPoint()->getAbscisse(), flotte->getPatrouilleur(p)->getWayPoint()->getOrdonnee(),5, 5};
-        SDL_RenderCopy(ecran, texturePoint, NULL, &DestR);
+        SDL_RenderCopy(ecran, textures->point, NULL, &DestR);
     }
 }
 
@@ -201,9 +200,8 @@ void afficherCroiseurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures
         afficherBarreDeVie(flotte->getCroiseur(c), ecran, textures);
 
         //Permet d'afficher un point sur le wayPoint du croiseur. A utiliser pour le debuggage
-        SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", ecran);
         DestR = {flotte->getCroiseur(c)->getWayPoint()->getAbscisse(), flotte->getCroiseur(c)->getWayPoint()->getOrdonnee(),5, 5};
-        SDL_RenderCopy(ecran, texturePoint, NULL, &DestR);
+        SDL_RenderCopy(ecran, textures->point, NULL, &DestR);
     }
 }
 
@@ -234,21 +232,31 @@ TTF_Font* charger_police(const char *path, int font_size)
     return font;
 }
 
-SDL_Texture* charger_texte(const char* message, SDL_Renderer* renderer, TTF_Font* font, SDL_Color color)
+void afficher_texte(const char* message, SDL_Renderer* renderer, SDL_Rect DestR, TTF_Font* font, SDL_Color color, bool query)
 {
-    if(message == NULL) error("message NULL en param | charger_texte - fonctions_sdl!!!!!!");
-    if(renderer == NULL) error("renderer NULL en param | charger_texte - fonctions_sdl");
-    if(font == NULL) error("font NULL en param | charger_texte - fonctions_sdl");
+    if(message == NULL) error("message NULL en param | afficher_texte - fonctions_sdl!!!!!!");
+    if(renderer == NULL) error("renderer NULL en param | afficher_texte - fonctions_sdl");
+    if(font == NULL) error("font NULL en param | afficher_texte - fonctions_sdl");
 
     // Écrire le texte sur une surface SDL
     SDL_Surface* text = TTF_RenderText_Solid(font, message, color);
-    if(text == NULL) error(("Erreur pendant la creation de la surface visant a creer un text  : %s | charger_texte - fonctions_sdl", SDL_GetError()));
+    if(text == NULL) error(("Erreur pendant la creation de la surface visant a creer un text  : %s | afficher_texte - fonctions_sdl", SDL_GetError()));
     // Convertir la surface de l’image au format texture avant de l’appliquer
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer,text);
-    if(texture == NULL) error((("Erreur pendant la creation de la texture liee au texte charge  : %s | charger_texte - fonctions_sdl", SDL_GetError())));
+    if(texture == NULL) error((("Erreur pendant la creation de la texture liee au texte charge  : %s | afficher_texte - fonctions_sdl", SDL_GetError())));
+    if(query)
+    {
+        int w, h;
+        if(SDL_QueryTexture(texture, NULL, NULL, &w, &h) == -1) error((("Erreur pendant le query de la texture : %s | afficher_texte - fonctions_sdl", SDL_GetError())));
+        DestR.w = w;
+        DestR.h = h;
+    }
+    
+    if(SDL_RenderCopy(renderer, texture, NULL, &DestR) == -1) error((("Erreur pendant l'ajout de la texture au renderer' : %s | afficher_texte - fonctions_sdl", SDL_GetError())));
+    // Destruction de la texture
+    SDL_DestroyTexture(texture);
     // Libérer une surface
     SDL_FreeSurface(text);
-    return texture;
 }
 
 void cleanTextures(std::vector<SDL_Texture*>* textures)

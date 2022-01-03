@@ -25,6 +25,7 @@ void moveSelectedShips(Monde* monde, int x, int y);
 
 void moveShips(Monde* monde);
 
+void updateMonde(Monde* monde);
 bool collisionCercles(Point* ctr1, int taille1, Point* ctr2, int taille2);
 
 #endif

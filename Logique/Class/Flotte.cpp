@@ -149,19 +149,33 @@ Navire* Flotte::getNavire(int i){
 }
 
 Navire* Flotte::getPatrouilleur(int i){
-	return this->navires->at(i);
+	int nbPat = -1;
+    int j = 0;
+    while (j < getNbNavires() && nbPat != i){
+        if (getNavire(j)->getType().compare("Patrouilleur") == 0) {
+            nbPat++;
+        }
+        if (nbPat != i) { j++ ;}
+    }
+    if (getNavire(j)->getType().compare("Patrouilleur") != 0) {
+        error("Le patrouilleur i n'existe pas | getPatrouilleur()");
+    }
+    return getNavire(j);
 }
 
 Navire* Flotte::getCroiseur(int i){
-	return this->navires->at(getNbPatrouilleurs() + i);
-}
-
-int Flotte::getDebutIndicePatrouilleurs(){
-    return 0;
-}
-
-int Flotte::getDebutIndiceCroiseur(){
-    return this->getNbPatrouilleurs();
+	int nbCrois = -1;
+    int j = 0;
+    while (j < getNbNavires() && nbCrois != i){
+        if (getNavire(j)->getType().compare("Croiseur") == 0) {
+            nbCrois++;
+        }
+        if (nbCrois != i) { j++ ;}
+    }
+    if (getNavire(j)->getType().compare("Croiseur") != 0) {
+        error("Le croiseur i n'existe pas | getCroiseur()");
+    }
+    return getNavire(j);
 }
 
 void Flotte::setNumero(int i){

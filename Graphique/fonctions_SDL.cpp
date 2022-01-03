@@ -110,7 +110,7 @@ void afficherSelection(SDL_Renderer* ecran, selectedNavire* liste, textures_s* t
             afficherBouton(ecran, textures, ABSCISSE_INITIALE_SELECTION + decalageHorizontal*(10 + TAILLE_BOUTON), 10 + decalageVertical*(TAILLE_BOUTON + 10), 2, 0);
         }
         decalageHorizontal++;
-        if (decalageHorizontal > NB_CLASSE_NAVIRE/2) {
+        if (decalageHorizontal >= NB_SELECTION_MAX/2) {
             decalageHorizontal = 0;
             decalageVertical++;
         }

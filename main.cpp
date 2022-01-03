@@ -32,12 +32,6 @@ int main()
     monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,5,new Point(300, 150), new Point(300, 150), 50,50,50,2,50));
     monde->getIleBonus(0)->placerDefenseur();
 
-
-    monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(750,750));
-    monde->getFlotte(0)->getPatrouilleur(0)->ajouterPV(-5);
-   
-   monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(600,300));
-
     Game* jeu = new Game(monde);
 
     textures_s textures;

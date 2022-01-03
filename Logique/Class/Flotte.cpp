@@ -263,33 +263,30 @@ void Flotte::removeAllNavires(){
     }
 }
 
-void Flotte::removeNavire(Navire* navire){
+void Flotte::removeNavire(int i){
 
-    if(navire == NULL) error("navire NULL en param| removeNavire - Flotte");
+    if(getNavire(i) == NULL) error("navire NULL en param| removeNavire - Flotte");
 
     if(this->getNumero() == 0) // On regarde si le beateau est dans la liste de selection avant de le supprimer
     {
-        selectedNavire* newListe = supprimerElement(this->listeSelected, navire);
+        selectedNavire* newListe = supprimerElement(this->listeSelected, getNavire(i));
         this->listeSelected = newListe;
     }
     
-    int index = 0;
-    for(int i = 0; i < this->getNbNavires(); i++)
-    {
-        if (navire == this->getNavire(i))
-        {
-            index = i;
-            break;
-        }
-    }
-    if(this->navires->at(index) == navire) 
-    {
-        if (navire->getType() == "Patrouilleur")
-            this->removePatrouilleur(index - this->getDebutIndicePatrouilleurs());
-        else if (navire->getType() == "Croiseur")
-            this->removeCroiseur(index - this->getDebutIndiceCroiseur());
-        else
-            error("Type de bateau invalide | removeNavire - Flotte");       
+    if (getNavire(i)->getType() == "Patrouilleur")
+        this->setNbPatrouilleurs(this->getNbPatrouilleurs() - 1);
+    else if (getNavire(i)->getType() == "Croiseur")
+        this->setNbCroiseurs(this->getNbCroiseurs() - 1);
+    else
+            error("Type de bateau invalide | removeNavire - Flotte");  
+
+    reduireNumeroNavires(i);
+    navires->erase(navires->begin() + i);
+}
+
+void Flotte::reduireNumeroNavires(int indice){
+    for (int i = indice; i < this->getNbNavires(); i++){
+        this->navires->at(i)->reduireId();
     }
 }
 
@@ -313,44 +310,20 @@ void Flotte::deleteSelectedAux(selectedNavire* liste){
         if (!estVide(liste->suivant)) {
              deleteSelectedAux(liste->suivant);
         }
-        removePatrouilleur(liste->nav->getId());
+        removeNavire(liste->nav->getId());
     }
 }
 
 /* GESTION DES PATROUILLEURS */
 void Flotte::newPatrouilleur(){
-    Patrouilleur* p = new Patrouilleur(this->getNumero(), this->getNbPatrouilleurs(), this->getSpawnPoint(), this->getSpawnPoint(), this->getCaracPatrouilleur(0), this->getCaracPatrouilleur(1), this->getCaracPatrouilleur(2), this->getCaracPatrouilleur(3), this->getCaracPatrouilleur(4));
+    Patrouilleur* p = new Patrouilleur(this->getNumero(), this->getNbNavires(), this->getSpawnPoint(), this->getSpawnPoint(), this->getCaracPatrouilleur(0), this->getCaracPatrouilleur(1), this->getCaracPatrouilleur(2), this->getCaracPatrouilleur(3), this->getCaracPatrouilleur(4));
     this->addPatrouilleur(p);
 }
 
 void Flotte::addPatrouilleur(Patrouilleur* p){
     if(p == NULL) error("Patrouilleur NULL en param | ajouterPatrouilleur");
-    this->navires->insert(navires->begin() + getNbPatrouilleurs(), p);
+    this->navires->push_back(p);
     this->setNbPatrouilleurs(this->getNbPatrouilleurs() + 1);
-}
-
-void Flotte::removeAllPatrouilleurs(){
-    while(this->getNbPatrouilleurs() > 0)
-    {
-        delete this->navires->back();
-        this->navires->pop_back();
-        setNbPatrouilleurs(getNbPatrouilleurs() - 1);
-    }
-}
-
-void Flotte::removePatrouilleur(int i){
-    if (i < this->getNbPatrouilleurs() && this->getNbPatrouilleurs()  > 0 ) {
-        if(this->navires->at(i) != NULL) delete this->navires->at(i);
-        this->navires->erase(navires->begin() + i);
-        this->setNbPatrouilleurs(this->getNbPatrouilleurs() - 1);
-        this->reduireNumeroPatrouilleurs(i);
-    }
-}
-
-void Flotte::reduireNumeroPatrouilleurs(int indice){
-    for (int i = indice; i < this->getNbPatrouilleurs(); i++){
-        this->navires->at(i)->reduireId();
-    }
 }
 
 void Flotte::ameliorerPatrouilleurs(){
@@ -384,12 +357,14 @@ void Flotte::ameliorerPorteePatrouilleurs(){
 }
 
 void Flotte::updatePatrouilleurs(){
-    for (int i = 0; i < this->getNbPatrouilleurs(); i++){
-        this->navires->at(i)->setVitesse(this->getCaracPatrouilleur(0));
-        this->navires->at(i)->setPvMax(this->getCaracPatrouilleur(1));
-        this->navires->at(i)->setDegatArme(this->getCaracPatrouilleur(2));
-        this->navires->at(i)->setCadenceTir(this->getCaracPatrouilleur(3));
-        this->navires->at(i)->setPortee(this->getCaracPatrouilleur(4));
+    for (int i = 0; i < this->getNbNavires(); i++){
+        if (getNavire(i)->getType().compare("Patrouilleur") == 0) {
+            this->navires->at(i)->setVitesse(this->getCaracPatrouilleur(0));
+            this->navires->at(i)->setPvMax(this->getCaracPatrouilleur(1));
+            this->navires->at(i)->setDegatArme(this->getCaracPatrouilleur(2));
+            this->navires->at(i)->setCadenceTir(this->getCaracPatrouilleur(3));
+            this->navires->at(i)->setPortee(this->getCaracPatrouilleur(4));
+        }
     }
 }
 
@@ -397,40 +372,14 @@ void Flotte::updatePatrouilleurs(){
 /* GESTION DES CROISEURS */
 
 void Flotte::newCroiseur(){
-    Croiseur* c = new Croiseur(this->getNumero(), this->getNbCroiseurs(), this->getSpawnPoint(), this->getSpawnPoint(), this->getCaracCroiseur(0),  this->getCaracCroiseur(1), this->getCaracCroiseur(2), this->getCaracCroiseur(3), this->getCaracCroiseur(4));
+    Croiseur* c = new Croiseur(this->getNumero(), this->getNbNavires(), this->getSpawnPoint(), this->getSpawnPoint(), this->getCaracCroiseur(0),  this->getCaracCroiseur(1), this->getCaracCroiseur(2), this->getCaracCroiseur(3), this->getCaracCroiseur(4));
     this->addCroiseur(c);
-
 }
 
 void Flotte::addCroiseur(Croiseur* c){
     if(c == NULL) error("Croiseur NULL en param | ajouterCroiseur");
-    this->navires->insert(this->navires->begin() + this->getDebutIndiceCroiseur(), c);
+    this->navires->push_back(c);
     this->setNbCroiseurs(this->getNbCroiseurs() + 1);
-}
-
-void Flotte::removeAllCroiseurs(){
-    while(this->getNbCroiseurs() != 0)
-    {
-        delete this->navires->back();
-        this->navires->pop_back();
-        setNbCroiseurs(getNbCroiseurs() - 1);
-    }
-}
-
-void Flotte::removeCroiseur(int i){
-    if (i >= getDebutIndiceCroiseur() && i < getNbCroiseurs() + getDebutIndiceCroiseur() ) {
-        if(this->navires->at(i) != NULL) delete this->navires->at(i);
-        this->navires->erase(navires->begin() + i);
-        setNbCroiseurs(getNbCroiseurs() - 1);
-        this->reduireNumeroCroiseurs(i);
-    }
-    
-}
-
-void Flotte::reduireNumeroCroiseurs(int indice){
-    for (int i = indice; i < getNbCroiseurs(); i++){
-        this->navires->at(i + getDebutIndiceCroiseur() )->reduireId();
-    }
 }
 
 void Flotte::ameliorerCroiseurs(){
@@ -464,12 +413,14 @@ void Flotte::ameliorerPorteeCroiseurs(){
 }
 
 void Flotte::updateCroiseurs(){
-    for (int i = getDebutIndiceCroiseur(); i < getNbCroiseurs() + getDebutIndiceCroiseur(); i++){
-        this->navires->at(i)->setVitesse(this->getCaracCroiseur(0));
-        this->navires->at(i)->setPvMax(this->getCaracCroiseur(1));
-        this->navires->at(i)->setDegatArme(this->getCaracCroiseur(2));
-        this->navires->at(i)->setCadenceTir(this->getCaracCroiseur(3));
-        this->navires->at(i)->setPortee(this->getCaracCroiseur(4));
+    for (int i = 0; i < this->getNbNavires(); i++){
+        if (getNavire(i)->getType().compare("Croiseur") == 0) {
+            this->navires->at(i)->setVitesse(this->getCaracCroiseur(0));
+            this->navires->at(i)->setPvMax(this->getCaracCroiseur(1));
+            this->navires->at(i)->setDegatArme(this->getCaracCroiseur(2));
+            this->navires->at(i)->setCadenceTir(this->getCaracCroiseur(3));
+            this->navires->at(i)->setPortee(this->getCaracCroiseur(4));
+        }
     }
 }
 

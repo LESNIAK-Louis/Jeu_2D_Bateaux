@@ -17,7 +17,7 @@ struct texturesMenu_s{
  * @param renderer 
  * @param textures 
  */
-void init_textures_menu(SDL_Renderer *renderer, textures_s* textures);
+void init_textures_menu(SDL_Renderer *renderer, texturesMenu_s* textures);
 
 /**
  * @brief permet d'afficher le menu

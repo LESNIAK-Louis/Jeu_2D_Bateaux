@@ -1,6 +1,6 @@
 #include "menu.hpp"
 
-void init_textures_menu(SDL_Renderer *renderer, textures_s* textures){
+void init_textures_menu(SDL_Renderer *renderer, texturesMenu_s* textures){
     textures->fond = charger_image("Ressources/fond.bmp", renderer);
     textures->police = charger_police("Ressources/arial.ttf", 16);
 }

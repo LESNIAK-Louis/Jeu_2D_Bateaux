@@ -23,13 +23,6 @@ int main()
     monde->getFlotte(0)->setNbPatrouilleurs(1);
     monde->getFlotte(1)->newPatrouilleur();
     monde->getFlotte(1)->setNbPatrouilleurs(1);
-    /*monde->getFlotte(0)->newPatrouilleur();
-    monde->getFlotte(0)->newPatrouilleur();
-    monde->getFlotte(0)->newPatrouilleur();
-    monde->getFlotte(0)->newPatrouilleur();
-    monde->getFlotte(0)->newPatrouilleur();
-    monde->getFlotte(0)->newPatrouilleur();
-    monde->getFlotte(1)->newPatrouilleur();*/
 
     monde->setIleBonus(0, new IleBonus(new Point(500, 500), TAILLE_ILE2 , 1, 80, -1, 0 ,50));
     monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,0,new Point(500, 500), new Point(500, 500), 50,50,50,2,50));
@@ -42,31 +35,9 @@ int main()
     monde->getIleBonus(0)->addDefenseur(new Patrouilleur(-1,5,new Point(300, 150), new Point(300, 150), 50,50,50,2,50));
     monde->getIleBonus(0)->placerDefenseur();
 
-    //monde->getFlotte(1)->getPatrouilleur(0)->setCentre(new Point(150, 250));
-    /*monde->getFlotte(0)->getPatrouilleur(4)->setAngle(90);
-
-    monde->getFlotte(0)->getPatrouilleur(2)->setCentre(new Point(80-32, 150));
-    monde->getFlotte(0)->getPatrouilleur(2)->setAngle(90);
-
-    monde->getFlotte(0)->getPatrouilleur(3)->setCentre(new Point(80-32, 150+32));
-    monde->getFlotte(0)->getPatrouilleur(3)->setAngle(90);
-
-    monde->getFlotte(0)->getPatrouilleur(5)->setCentre(new Point(80+32, 150-32));
-    monde->getFlotte(0)->getPatrouilleur(5)->setAngle(90);
-
-    monde->getFlotte(0)->getPatrouilleur(6)->setCentre(new Point(80+32, 150));
-    monde->getFlotte(0)->getPatrouilleur(6)->setAngle(90);
-
-    monde->getFlotte(0)->getPatrouilleur(7)->setCentre(new Point(80+32, 150+32));
-    monde->getFlotte(0)->getPatrouilleur(7)->setAngle(90);*/
 
     monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(750,750));
     monde->getFlotte(0)->getPatrouilleur(0)->ajouterPV(-5);
-    /*monde->getFlotte(0)->getPatrouilleur(1)->setDestination(new Point(222,222));
-    monde->getFlotte(0)->getPatrouilleur(1)->setDestination(new Point(250, 150));
-    monde->getFlotte(0)->getPatrouilleur(2)->setDestination(new Point(150, 150));
-    monde->getFlotte(0)->getPatrouilleur(3)->setDestination(new Point(150, 250));
-    monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(300,300));*/
    
    monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(600,300));
 

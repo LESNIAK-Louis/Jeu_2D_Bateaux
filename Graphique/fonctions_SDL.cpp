@@ -57,8 +57,6 @@ SDL_Texture* charger_image_transparente(const char* nomfichier, SDL_Renderer* re
     return texture;
 }
 
-
-
 TTF_Font* charger_police(const char *path, int font_size)
 {
     if(path == NULL) error("path NULL en param | charger_police - fonctions_sdl");
@@ -122,11 +120,15 @@ void cleanPolices(std::vector<TTF_Font*>* fonts)
     fonts->shrink_to_fit(); // Réduit la taille en mémoire au minimum
 }
 
+void cleanRenderer(SDL_Renderer* renderer)
+{
+    SDL_RenderClear(renderer);
+}
+
 void cleanSDL(SDL_Renderer* renderer, SDL_Window* window, std::vector<SDL_Texture*>* textures, std::vector<TTF_Font*>* fonts)
 {
     cleanTextures(textures);
     cleanPolices(fonts);
-
     if(NULL != renderer)
         SDL_DestroyRenderer(renderer);
     if(NULL != window)

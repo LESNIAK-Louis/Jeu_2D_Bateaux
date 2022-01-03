@@ -114,12 +114,20 @@ void afficherIles(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
 void afficherIlesBonus(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
 
 /**
- * @brief  La fonction affiche les navire du monde
- * @param ecran l'ecran
+ * @brief La fonction qui affiche les flottes
+ * @param ecran l'écran
  * @param monde le monde
  * @param textures les textures du jeu
  */
-void afficherNavires(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
+void afficherFlottes(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
+
+/**
+ * @brief  La fonction affiche les navires d'une flotte
+ * @param ecran l'ecran
+ * @param flotte une flotte
+ * @param textures les textures du jeu
+ */
+void afficherNavires(SDL_Renderer* ecran,  Flotte* flotte, textures_s* textures);
 
 /**
  * @brief affiche les patrouilleurs
@@ -137,6 +145,25 @@ void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* text
  * @param textures 
  */
 void afficherCroiseurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures);
+
+/**
+ * @brief affiche un patrouilleur
+ * 
+ * @param ecran 
+ * @param flotte 
+ * @param textures 
+ */
+void afficherPatrouilleur(SDL_Renderer* ecran, textures_s* textures, Navire* navire);
+
+/**
+ * @brief affiche un croiseur
+ * 
+ * @param ecran 
+ * @param flotte 
+ * @param textures 
+ */
+void afficherCroiseur(SDL_Renderer* ecran, textures_s* textures, Navire* navire);
+
 
 /**
  * @brief affiche les barres de vie au dessus des bateaux selectionnés par l'utilisateur

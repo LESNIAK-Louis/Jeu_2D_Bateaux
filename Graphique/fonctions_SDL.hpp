@@ -17,7 +17,7 @@
 /**
  * \brief La fonction initialise la SDL et TTF
 */ 
-void initSDL()
+void initSDL();
 
 /**
  * \brief La fonction initialise la fenêtre du jeu ainsi que le renderer
@@ -76,6 +76,12 @@ void cleanTextures(std::vector<SDL_Texture*>* textures);
  * \param fonts vector des polices
 */
 void cleanPolices(std::vector<TTF_Font*>* fonts);
+
+/**
+ * @brief la fonction nettoye l'écran
+ * 
+ */
+void cleanRenderer(SDL_Renderer* renderer);
 
 /**
  * \brief La fonction nettoie toute la SDL et TTF

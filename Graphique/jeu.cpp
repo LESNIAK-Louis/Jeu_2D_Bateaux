@@ -22,7 +22,7 @@ void afficherMonde(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
     
     afficherIles(ecran, monde, textures);
     afficherIlesBonus(ecran, monde,textures);
-    afficherNavires(ecran, monde, textures);
+    afficherFlottes(ecran, monde, textures);
     afficherInterface(ecran, monde, textures);
 }
 
@@ -119,35 +119,43 @@ void afficherIlesBonus(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
     }
 }
 
-void afficherNavires(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
+void afficherFlottes(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
     for (int f = 0; f < monde->getNbFlottes(); f++){
-        afficherPatrouilleurs(ecran, monde->getFlotte(f), textures);
-        afficherCroiseurs(ecran, monde->getFlotte(f), textures);
+        afficherNavires(ecran, monde->getFlotte(f), textures);
     }
 }
 
-void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures){
-    for (int p = 0; p < flotte->getNbPatrouilleurs(); p++) {
-        SDL_Rect DestR = {flotte->getPatrouilleur(p)->getAbscisse()-TAILLE_PATROUILLEUR/2, flotte->getPatrouilleur(p)->getOrdonnee()-TAILLE_PATROUILLEUR/2,TAILLE_PATROUILLEUR, TAILLE_PATROUILLEUR};
-        SDL_RenderCopyEx(ecran, textures->patrouilleur, NULL, &DestR, flotte->getPatrouilleur(p)->getAngle(), NULL, SDL_FLIP_NONE);
-        afficherBarreDeVie(flotte->getPatrouilleur(p), ecran, textures);
-
-        //Permet d'afficher un point sur le wayPoint du patrouilleur. A utiliser pour le debuggage
-        DestR = {flotte->getPatrouilleur(p)->getWayPoint()->getAbscisse(), flotte->getPatrouilleur(p)->getWayPoint()->getOrdonnee(),5, 5};
-        SDL_RenderCopy(ecran, textures->point, NULL, &DestR);
+void afficherNavires(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures){
+    for (int n = 0; n < flotte->getNbNavires(); n++){
+        std::string type = flotte->getNavire(n)->getType();
+        if (type.compare("Patrouilleur") == 0) {
+            afficherPatrouilleur(ecran, textures, flotte->getNavire(n));
+        } else if (type.compare("Croiseur") == 0){
+            afficherCroiseur(ecran, textures, flotte->getNavire(n));
+        }
     }
 }
 
-void afficherCroiseurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures){
-    for (int c = 0; c < flotte->getNbCroiseurs(); c++) {
-        SDL_Rect DestR = {flotte->getCroiseur(c)->getAbscisse()-TAILLE_PATROUILLEUR/2, flotte->getCroiseur(c)->getOrdonnee()-TAILLE_CROISEUR/2,TAILLE_CROISEUR, TAILLE_CROISEUR};
-        SDL_RenderCopyEx(ecran, textures->croiseur, NULL, &DestR, flotte->getCroiseur(c)->getAngle(), NULL, SDL_FLIP_NONE);
-        afficherBarreDeVie(flotte->getCroiseur(c), ecran, textures);
+void afficherPatrouilleur(SDL_Renderer* ecran, textures_s* textures, Navire* navire){
+    SDL_Rect DestR = {navire->getAbscisse()-(navire->getTaille()/2), navire->getOrdonnee()-(navire->getTaille()/2),navire->getTaille(), navire->getTaille()};
+    SDL_RenderCopyEx(ecran, textures->patrouilleur, NULL, &DestR, navire->getAngle(), NULL, SDL_FLIP_NONE);
+    afficherBarreDeVie(navire, ecran, textures);
 
-        //Permet d'afficher un point sur le wayPoint du croiseur. A utiliser pour le debuggage
-        DestR = {flotte->getCroiseur(c)->getWayPoint()->getAbscisse(), flotte->getCroiseur(c)->getWayPoint()->getOrdonnee(),5, 5};
-        SDL_RenderCopy(ecran, textures->point, NULL, &DestR);
-    }
+    //Permet d'afficher un point sur le wayPoint du patrouilleur. A utiliser pour le debuggage
+    /*SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", ecran);
+    DestR = {flotte->getPatrouilleur(p)->getWayPoint()->getAbscisse(), flotte->getPatrouilleur(p)->getWayPoint()->getOrdonnee(),5, 5};
+    SDL_RenderCopy(ecran, texturePoint, NULL, &DestR);*/
+}
+
+void afficherCroiseur(SDL_Renderer* ecran, textures_s* textures, Navire* navire){
+    SDL_Rect DestR = {navire->getAbscisse()-(navire->getTaille()/2), navire->getOrdonnee()-(navire->getTaille()/2),navire->getTaille(), navire->getTaille()};
+    SDL_RenderCopyEx(ecran, textures->croiseur, NULL, &DestR, navire->getAngle(), NULL, SDL_FLIP_NONE);
+    afficherBarreDeVie(navire, ecran, textures);
+
+    //Permet d'afficher un point sur le wayPoint du croiseur. A utiliser pour le debuggage
+    /*SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", ecran);
+    DestR = {flotte->getCroiseur(c)->getWayPoint()->getAbscisse(), flotte->getCroiseur(c)->getWayPoint()->getOrdonnee(),5, 5};
+    SDL_RenderCopy(ecran, texturePoint, NULL, &DestR);*/
 }
 
 

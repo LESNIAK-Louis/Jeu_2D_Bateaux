@@ -111,7 +111,7 @@ void tirsBateaux(Monde* monde, unsigned int currentTime)
                             {
                                 monde->getFlotte(k)->getNavire(l)->ajouterPV(-monde->getFlotte(i)->getNavire(j)->getDegatArme());
                                 if(monde->getFlotte(k)->getNavire(l)->getPv() <= 0)
-                                    monde->getFlotte(k)->removeNavire(monde->getFlotte(k)->getNavire(l));
+                                    monde->getFlotte(k)->removeNavire(l);
                                 shot = true;
                                 break;
                             }
@@ -170,7 +170,7 @@ void tirsBateaux(Monde* monde, unsigned int currentTime)
                             
                             monde->getFlotte(k)->getNavire(l)->ajouterPV(-monde->getIleBonus(i)->getDefenseur(j)->getDegatArme());
                             if(monde->getFlotte(k)->getNavire(l)->getPv() <= 0)
-                                monde->getFlotte(k)->removeNavire(monde->getFlotte(k)->getNavire(l));
+                                monde->getFlotte(k)->removeNavire(l);
                             shot = true;
                             
                         }

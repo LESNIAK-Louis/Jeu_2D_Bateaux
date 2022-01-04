@@ -26,5 +26,6 @@ Monde* readSave(std::string path);
 void writeMonde(std::string fileName, Monde* monde);
 bool isFileExist(std::string fileName);
 void save(std::string path, Monde* monde);
+bool removeFile(std::string fileName);
 
 #endif

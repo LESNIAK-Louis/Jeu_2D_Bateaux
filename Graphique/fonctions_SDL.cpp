@@ -67,7 +67,7 @@ TTF_Font* charger_police(const char *path, int font_size)
     return font;
 }
 
-void afficher_texte(const char* message, SDL_Renderer* renderer, SDL_Rect DestR, TTF_Font* font, SDL_Color color, bool menu)
+void afficher_texte(const char* message, SDL_Renderer* renderer, SDL_Rect *DestR, TTF_Font* font, SDL_Color color, bool menu)
 {
     if(message == NULL) error("message NULL en param | afficher_texte - fonctions_sdl");
     if(renderer == NULL) error("renderer NULL en param | afficher_texte - fonctions_sdl");
@@ -81,16 +81,16 @@ void afficher_texte(const char* message, SDL_Renderer* renderer, SDL_Rect DestR,
     if(texture == NULL) error((("Erreur pendant la creation de la texture liee au texte charge  : %s | afficher_texte - fonctions_sdl", SDL_GetError())));
     int w, h;
     if(SDL_QueryTexture(texture, NULL, NULL, &w, &h) == -1) error((("Erreur pendant le query de la texture : %s | afficher_texte - fonctions_sdl", SDL_GetError())));
-    DestR.w = w;
-    DestR.h = h;
+    DestR->w = w;
+    DestR->h = h;
 
     if(menu)
     {
-        DestR.x -= DestR.w/2;
-        DestR.y -= DestR.h/2;
+        DestR->x -= DestR->w/2;
+        DestR->y -= DestR->h/2;
     }
     
-    if(SDL_RenderCopy(renderer, texture, NULL, &DestR) == -1) error((("Erreur pendant l'ajout de la texture au renderer' : %s | afficher_texte - fonctions_sdl", SDL_GetError())));
+    if(SDL_RenderCopy(renderer, texture, NULL, DestR) == -1) error((("Erreur pendant l'ajout de la texture au renderer' : %s | afficher_texte - fonctions_sdl", SDL_GetError())));
     // Destruction de la texture
     SDL_DestroyTexture(texture);
     // Libérer une surface

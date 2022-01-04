@@ -17,6 +17,8 @@
 
 #define PI 3.14159
 
+#define NOM_SAUVEGARDE "Save.txt"
+
 /* Menu */
 
 #define HAUTEUR_ECRAN_MENU 350

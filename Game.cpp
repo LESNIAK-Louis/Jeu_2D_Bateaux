@@ -119,8 +119,11 @@ void Game::boucleJeu()
         SDL_Delay(50);
     }
     if (getVainqueur().compare("Non") == 0) {
-        save("Save.txt", this->getMonde());
+        save(NOM_SAUVEGARDE, this->getMonde());
     }
-    std::cout << "Vainqueur : " << getVainqueur() << std::endl;
-    
+    else
+    {
+        if(isFileExist(NOM_SAUVEGARDE)){ if(!removeFile(NOM_SAUVEGARDE)) error("Erreur supression fichier | boucleJeu - Game");}
+        std::cout << "Vainqueur : " << getVainqueur() << std::endl;   
+    }
 }

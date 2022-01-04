@@ -42,7 +42,7 @@ void afficherInformations(SDL_Renderer* ecran, Flotte* flotte, textures_s* textu
     const char* quantiteOr = string.c_str();
     SDL_Color couleurTexteInterface = { 231, 76, 60, 255};
     SDL_Rect DestR = {10 ,10 ,0 ,0};
-    afficher_texte(quantiteOr, ecran, DestR, textures->police, couleurTexteInterface, 0);
+    afficher_texte(quantiteOr, ecran, &DestR, textures->police, couleurTexteInterface, 0);
     afficherSelection(ecran, flotte->getListeSelected(), textures, 0, 0);
 }
 

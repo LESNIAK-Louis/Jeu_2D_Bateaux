@@ -33,26 +33,52 @@ void pathFinding(Navire* navire, Point* centreIle, int tailleIle){
         theta *= (PI/180);
         int absWayPoint = round(distTangente * sin(theta) + absNav);
         int ordWayPoint = round(ordNav - distTangente * cos(theta));
-        Point* waypoint = new Point(absWayPoint, ordWayPoint);
-        navire->setWayPoint(waypoint);
-        if(waypoint != NULL)
-            delete waypoint;
+        Point* wayPoint = new Point(absWayPoint, ordWayPoint);
+        while(wayPoint->distance(centreIle) > tailleIle/2 + 1){
+            if (wayPoint->getAbscisse() > centreIle->getAbscisse()){
+                wayPoint->setAbscisse(wayPoint->getAbscisse() - 1);
+            } else if (wayPoint->getAbscisse() < centreIle->getAbscisse()){
+                wayPoint->setAbscisse(wayPoint->getAbscisse() + 1);
+            }
+            if (wayPoint->getOrdonnee() > centreIle->getOrdonnee()){
+                wayPoint->setOrdonnee(wayPoint->getOrdonnee() - 1);
+            } else if (wayPoint->getOrdonnee() < centreIle->getOrdonnee()) {
+                wayPoint->setOrdonnee(wayPoint->getOrdonnee() + 1);
+            }
+        }
+        if (navire->getCentre()->distance(wayPoint) <= navire->getCentre()->distance(navire->getDestination())){
+            navire->setWayPoint(wayPoint);
+        }
+        delete wayPoint;
         //col = true;
-    }
-    if (angleIncidence > -angleIncidenceMin && angleIncidence < 0) {
+    } else if (angleIncidence > -angleIncidenceMin && angleIncidence < 0) {
         //esquive en passant à droite de l'ile (du point de vue du navire)
         theta = 180 - angleNavIle - angleIncidenceMin;
-        theta += 360;
+        theta += 720;
         theta %= 360;
         theta *= (PI/180);
         int absWayPoint = round(distTangente * sin(theta) + absNav);
         int ordWayPoint = round(ordNav + distTangente * cos(theta));
-        Point* waypoint = new Point(absWayPoint, ordWayPoint);
-        navire->setWayPoint(waypoint);
-        if(waypoint != NULL)
-            delete waypoint;
+        Point* wayPoint = new Point(absWayPoint, ordWayPoint);
+        while(wayPoint->distance(centreIle) > tailleIle/2 + 1){
+            if (wayPoint->getAbscisse() > centreIle->getAbscisse()){
+                wayPoint->setAbscisse(wayPoint->getAbscisse() - 1);
+            } else if (wayPoint->getAbscisse() < centreIle->getAbscisse()){
+                wayPoint->setAbscisse(wayPoint->getAbscisse() + 1);
+            }
+            if (wayPoint->getOrdonnee() > centreIle->getOrdonnee()){
+                wayPoint->setOrdonnee(wayPoint->getOrdonnee() - 1);
+            } else if (wayPoint->getOrdonnee() < centreIle->getOrdonnee()) {
+                wayPoint->setOrdonnee(wayPoint->getOrdonnee() + 1);
+            }
+        }
+        if (navire->getCentre()->distance(wayPoint) <= navire->getCentre()->distance(navire->getWayPoint())){
+            navire->setWayPoint(wayPoint);
+        }
         //col = true;
-    }  
+        delete wayPoint;
+    }
+            
     //Cette partie est pour le debuggage
     /*if (col && navire->estEnCollisionAvec(TAILLE_ILE1+10, ile->getCentre())){
         printf("\n#########COLLLISION!!!!!!!#######################\n");

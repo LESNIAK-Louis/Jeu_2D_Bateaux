@@ -192,10 +192,18 @@ bool isPointingIle(Monde* monde, Mouse* mouse)
     }
     for(int j = 0; j < monde->getNbIlesBonus(); j++)
     {
-        if(collisionCercles(monde->getIleBonus(j)->getCentre(), monde->getIleBonus(j)->getTaille(), mouse->getCurrentPosMouse(), TAILLE_POINTEUR_SOURIS))
+        if(collisionCercles(monde->getIleBonus(j)->getCentre(), monde->getIleBonus(j)->getTaille(), mouse->getCurrentPosMouse(), TAILLE_POINTEUR_SOURIS)){
             return true;
+        }
+            
     }
-    return false;
+    for(int j = 0; j < monde->getNbFlottes(); j++)
+    {
+        if(collisionCercles(monde->getFlotte(j)->getCoordBase(), TAILLE_BASE, mouse->getCurrentPosMouse(), TAILLE_POINTEUR_SOURIS)) {
+            return true;
+        }
+    }
+    return false;  
 }
 
 void addNavToSelection(Flotte* flotte, Mouse* mouse)

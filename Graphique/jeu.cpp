@@ -153,9 +153,9 @@ void afficherPatrouilleur(SDL_Renderer* ecran, textures_s* textures, Navire* nav
     afficherBarreDeVie(navire, ecran, textures);
 
     //Permet d'afficher un point sur le wayPoint du patrouilleur. A utiliser pour le debuggage
-    /*SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", ecran);
-    DestR = {flotte->getPatrouilleur(p)->getWayPoint()->getAbscisse(), flotte->getPatrouilleur(p)->getWayPoint()->getOrdonnee(),5, 5};
-    SDL_RenderCopy(ecran, texturePoint, NULL, &DestR);*/
+    SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", ecran);
+    DestR = {navire->getWayPoint()->getAbscisse(), navire->getWayPoint()->getOrdonnee(),5, 5};
+    SDL_RenderCopy(ecran, texturePoint, NULL, &DestR);
 }
 
 void afficherCroiseur(SDL_Renderer* ecran, textures_s* textures, Navire* navire){
@@ -187,8 +187,8 @@ void afficherBarreDeVie(Navire* navire, SDL_Renderer* ecran, textures_s* texture
 void afficherBarreDeVieBase(Navire* navire, SDL_Renderer* ecran, textures_s* textures){
 
     double ratio = (double)navire->getPv() / (double)navire->getPvMax();
-    SDL_Rect DestRExt = {navire->getAbscisse()-navire->getTaille()/2, navire->getOrdonnee()-navire->getTaille()/2 - 8, PV_CONT_WIDTH, PV_CONT_HEIGHT};
-    SDL_Rect DestRInt = {navire->getAbscisse()-navire->getTaille()/2 +1, navire->getOrdonnee()-navire->getTaille()/2 - 7, (int)round(PV_REMP_WIDTH * ratio), PV_REMP_HEIGHT};
+    SDL_Rect DestRExt = {navire->getAbscisse()-navire->getTaille()/2, navire->getOrdonnee()-navire->getTaille()/2 - 8, TAILLE_BASE, PV_CONT_HEIGHT + 10 };
+    SDL_Rect DestRInt = {navire->getAbscisse()-navire->getTaille()/2 +1, navire->getOrdonnee()-navire->getTaille()/2 - 7, (int)round(TAILLE_BASE * ratio), PV_REMP_HEIGHT + 10};
 
     SDL_RenderCopy(ecran, textures->contourPV, NULL, &DestRExt);
     if (navire->getIdFlotte() == 0) {

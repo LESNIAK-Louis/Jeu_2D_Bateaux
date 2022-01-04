@@ -34,18 +34,6 @@ void pathFinding(Navire* navire, Point* centreIle, int tailleIle){
         int absWayPoint = round(distTangente * sin(theta) + absNav);
         int ordWayPoint = round(ordNav - distTangente * cos(theta));
         Point* wayPoint = new Point(absWayPoint, ordWayPoint);
-        while(wayPoint->distance(centreIle) > tailleIle/2 + 1){
-            if (wayPoint->getAbscisse() > centreIle->getAbscisse()){
-                wayPoint->setAbscisse(wayPoint->getAbscisse() - 1);
-            } else if (wayPoint->getAbscisse() < centreIle->getAbscisse()){
-                wayPoint->setAbscisse(wayPoint->getAbscisse() + 1);
-            }
-            if (wayPoint->getOrdonnee() > centreIle->getOrdonnee()){
-                wayPoint->setOrdonnee(wayPoint->getOrdonnee() - 1);
-            } else if (wayPoint->getOrdonnee() < centreIle->getOrdonnee()) {
-                wayPoint->setOrdonnee(wayPoint->getOrdonnee() + 1);
-            }
-        }
         if (navire->getCentre()->distance(wayPoint) <= navire->getCentre()->distance(navire->getDestination())){
             navire->setWayPoint(wayPoint);
         }
@@ -60,18 +48,6 @@ void pathFinding(Navire* navire, Point* centreIle, int tailleIle){
         int absWayPoint = round(distTangente * sin(theta) + absNav);
         int ordWayPoint = round(ordNav + distTangente * cos(theta));
         Point* wayPoint = new Point(absWayPoint, ordWayPoint);
-        while(wayPoint->distance(centreIle) > tailleIle/2 + 1){
-            if (wayPoint->getAbscisse() > centreIle->getAbscisse()){
-                wayPoint->setAbscisse(wayPoint->getAbscisse() - 1);
-            } else if (wayPoint->getAbscisse() < centreIle->getAbscisse()){
-                wayPoint->setAbscisse(wayPoint->getAbscisse() + 1);
-            }
-            if (wayPoint->getOrdonnee() > centreIle->getOrdonnee()){
-                wayPoint->setOrdonnee(wayPoint->getOrdonnee() - 1);
-            } else if (wayPoint->getOrdonnee() < centreIle->getOrdonnee()) {
-                wayPoint->setOrdonnee(wayPoint->getOrdonnee() + 1);
-            }
-        }
         if (navire->getCentre()->distance(wayPoint) <= navire->getCentre()->distance(navire->getWayPoint())){
             navire->setWayPoint(wayPoint);
         }
@@ -114,7 +90,7 @@ void moveShips(Monde* monde){
                 //Evite la collision avec une base
                 for (int i = 0; i < monde->getNbFlottes(); i++){
                     if (monde->getFlotte(f)->getNavire(p)->estEnCollisionAvec(TAILLE_BASE+80,monde->getFlotte(i)->getCoordBase()) /*&& !monde->getFlotte(f)->getNavire(p)->estEnCollisionAvec(50-TAILLE_Navire, monde->getFlotte(f)->getNavire(p)->getDestination())*/ ) {
-                        pathFinding(monde->getFlotte(f)->getNavire(p), monde->getFlotte(i)->getCoordBase(), TAILLE_BASE/2);
+                        pathFinding(monde->getFlotte(f)->getNavire(p), monde->getFlotte(i)->getCoordBase(), TAILLE_BASE +5);
                     } 
                 }
                 monde->getFlotte(f)->getNavire(p)->avancer(0);

@@ -106,6 +106,8 @@ class Flotte
          */
         void removeNavire(int i);
         void reduireNumeroNavires(int indice);
+
+        void addNavire(Navire* nav);
         
 
          /**

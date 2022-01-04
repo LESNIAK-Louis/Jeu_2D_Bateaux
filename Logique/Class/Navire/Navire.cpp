@@ -314,7 +314,17 @@ void Navire::stop() {
 
 std::string Navire::formattedInfo()
 {
-    std::string info = this->getCentre()->formattedInfo() + ";" +
+    std::string info; 
+    int type = 0;
+    if(this->getType() == "Base")
+        type = 0;
+    else if(this->getType() == "Patrouilleur")
+        type = 1;
+    else if(this->getType() == "Croiseur")
+        type = 2;
+
+    info = std::to_string(type) + ";" +
+    this->getCentre()->formattedInfo() + ";" +
     this->getDestination()->formattedInfo() + ";" +
     std::to_string(this->getVitesse()) + ";" + 
     std::to_string(this->getPvMax()) + ";" + 

@@ -10,7 +10,6 @@
 
 #include <string>
 #include <vector>
-#include "Armes_Explosives.hpp"
 #include "Flotte.hpp"
 #include "Ile.hpp"
 #include "IleBonus.hpp"
@@ -24,10 +23,9 @@ class Monde {
         int nbFlottes;
         int nbIles;
         int nbIlesBonus;
-        std::vector<Mine*>* mines;
-        std::vector<Torpille*>* torpilles;
         int timer;
         int difficulte;
+        std::string vainqueur;
     public : 
         Monde(int nbIles, int nbIlesBonus, int time, int difficulte);
         ~Monde();
@@ -35,39 +33,30 @@ class Monde {
         Flotte* getFlotte(int index);
         Ile* getIle(int index);
         IleBonus* getIleBonus(int index);
-        Mine* getMine(int index);
-        Torpille* getTorpille(int index);
         int getTimer();
         int getDifficulte();
+        std::string getVainqueur();
 
         int getNbFlottes();
         int getNbIles();
         int getNbIlesBonus();
-        int getNbMines();
-        int getNbTorpilles();
-
+        
         void setIle(int index, Ile* ile);
         void setIleBonus(int index, IleBonus* ilebonus);
         void setTimer(int time);
         void setDifficulte(int difficulte);
+        void setVainqueur(std::string nomVainqueur);
 
         void addFlotte(Flotte* flotte);
-        void addMine(Mine* mine);
-        void addTorpille(Torpille* torpille);
 
         void removeFlotte(int id);
-        void removeMine(int id);
-        void removeTorpille(int id);
 
         void removeAllFlottes();
-        void removeAllMines();
-        void removeAllTorpilles();
         void removeAllIles();
         void removeAllIlesBonus();
 
         void updateControleIleBonus();
 
-        std::string toString();
         std::string formattedInfo();
 };
 

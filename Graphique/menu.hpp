@@ -5,28 +5,18 @@
 #include <SDL2/SDL_ttf.h>
 #include "../definitions.hpp"
 #include "fonctions_SDL.hpp"
+#include <string>
 
+
+#ifndef MENU_C_HPP
 struct texturesMenu_s{
     TTF_Font* police; /*textures liée a l'image représentant l'affichage du texte*/
     SDL_Texture* fond; /*!< Texture liée à l'image du fond de l'écran. */
 };
+#endif
 
-/**
- * @brief initialise les textures du menu
- * 
- * @param renderer 
- * @param textures 
- */
-void init_textures_menu(SDL_Renderer *renderer, texturesMenu_s* textures);
+#include "../Menu.hpp"
 
-/**
- * @brief permet d'afficher le menu
- */
-void afficher_menu();
-
-/**
- * @brief Permet de fermer proprement le menu
- */
-void clear_menu();
+void afficherTextes(SDL_Renderer *renderer ,texturesMenu_s* textures, int selecting, bool isSaveAvailiable);
 
 #endif

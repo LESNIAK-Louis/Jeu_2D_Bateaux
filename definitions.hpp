@@ -17,9 +17,17 @@
 
 #define PI 3.14159
 
-#define HAUTEUR_ECRAN_MENU 400
-#define LARGEUR_ECRAN_MENU 200
+/* Menu */
 
+#define HAUTEUR_ECRAN_MENU 350
+#define LARGEUR_ECRAN_MENU 250
+#define NB_CATEG_MENU 3
+#define CATEG_SAUVEGARDE 1
+#define COULEUR_TEXTE_MENU {231, 76, 60, 255}
+#define COULEUR_SAUVEGARDE_MANQUANTE {220, 220, 220, 255}
+#define COULEUR_SELECTING {255, 0, 0, 255}
+
+/* Jeu */
 
 #define HAUTEUR_ECRAN 800
 #define LARGEUR_ECRAN 800
@@ -45,8 +53,15 @@
 #define OR_INITIAL 200
 #define GAIN_INITIAL 1
 #define OR_MAX 9999
-#define PV_MAX_FLOTTE 5000
+
 #define NB_AMELIO_MAX 3
+
+//Base
+#define PV_MAX_BASE 5000
+#define TAILLE_BASE 90
+#define DEGATS_BASE 20
+#define CADENCE_TIR_BASE 1
+#define PORTEE_BASE 70
 
 //Bateau
 #define NB_CARAC_BATEAU 6

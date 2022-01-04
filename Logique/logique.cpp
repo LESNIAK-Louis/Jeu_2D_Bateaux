@@ -24,7 +24,7 @@ void pathFinding(Navire* navire, Point* centreIle, int tailleIle){
     float distTangente = sqrt(distanceNavIle * distanceNavIle - rayonIle * rayonIle);
     int absNav = navire->getAbscisse();
     int ordNav = navire->getOrdonnee();
-    bool col = false;
+    //bool col = false;
     if (angleIncidence < angleIncidenceMin && angleIncidence >= 0) {
         //esquive en passant à gauche de l'ile (du point de vue du navire)
         theta = angleNavIle - angleIncidenceMin;
@@ -35,8 +35,9 @@ void pathFinding(Navire* navire, Point* centreIle, int tailleIle){
         int ordWayPoint = round(ordNav - distTangente * cos(theta));
         Point* waypoint = new Point(absWayPoint, ordWayPoint);
         navire->setWayPoint(waypoint);
-        delete waypoint;
-        col = true;
+        if(waypoint != NULL)
+            delete waypoint;
+        //col = true;
     }
     if (angleIncidence > -angleIncidenceMin && angleIncidence < 0) {
         //esquive en passant à droite de l'ile (du point de vue du navire)
@@ -48,8 +49,9 @@ void pathFinding(Navire* navire, Point* centreIle, int tailleIle){
         int ordWayPoint = round(ordNav + distTangente * cos(theta));
         Point* waypoint = new Point(absWayPoint, ordWayPoint);
         navire->setWayPoint(waypoint);
-        delete waypoint;
-        col = true;
+        if(waypoint != NULL)
+            delete waypoint;
+        //col = true;
     }  
     //Cette partie est pour le debuggage
     /*if (col && navire->estEnCollisionAvec(TAILLE_ILE1+10, ile->getCentre())){
@@ -83,6 +85,12 @@ void moveShips(Monde* monde){
                         pathFinding(monde->getFlotte(f)->getNavire(p), monde->getIleBonus(i)->getCentre(), monde->getIleBonus(i)->getTaille());
                     }   
                 }
+                //Evite la collision avec une base
+                for (int i = 0; i < monde->getNbFlottes(); i++){
+                    if (monde->getFlotte(f)->getNavire(p)->estEnCollisionAvec(TAILLE_BASE+80,monde->getFlotte(i)->getCoordBase()) /*&& !monde->getFlotte(f)->getNavire(p)->estEnCollisionAvec(50-TAILLE_Navire, monde->getFlotte(f)->getNavire(p)->getDestination())*/ ) {
+                        pathFinding(monde->getFlotte(f)->getNavire(p), monde->getFlotte(i)->getCoordBase(), TAILLE_BASE/2);
+                    } 
+                }
                 monde->getFlotte(f)->getNavire(p)->avancer(0);
                 
             }
@@ -107,11 +115,26 @@ void tirsBateaux(Monde* monde, unsigned int currentTime)
                     {
                         if(monde->getFlotte(i)->getNavire(j)->peutTirer(currentTime))
                         {
-                            if(monde->getFlotte(i)->getNavire(j)->estEnCollisionAvec(monde->getFlotte(i)->getNavire(j)->getPortee(), monde->getFlotte(k)->getNavire(l)->getCentre()))
+                            if(monde->getFlotte(i)->getNavire(j)->estEnCollisionAvec(monde->getFlotte(i)->getNavire(j)->getPortee() + monde->getFlotte(k)->getNavire(l)->getTaille()/2, monde->getFlotte(k)->getNavire(l)->getCentre()))
                             {
                                 monde->getFlotte(k)->getNavire(l)->ajouterPV(-monde->getFlotte(i)->getNavire(j)->getDegatArme());
-                                if(monde->getFlotte(k)->getNavire(l)->getPv() <= 0)
+                                if(monde->getFlotte(k)->getNavire(l)->getPv() <= 0) 
+                                {
                                     monde->getFlotte(k)->removeNavire(l);
+                                    if (monde->getFlotte(k)->getNavire(l)->getType().compare("Base") == 0)
+                                    {
+                                        switch (k) 
+                                        {
+                                            case 0:
+                                                monde->setVainqueur("Bot");
+                                                break;
+                                            default:
+                                                monde->setVainqueur("Joueur");
+                                                break;
+                                        }
+                                    }
+                                }
+                                    
                                 shot = true;
                                 break;
                             }
@@ -133,7 +156,7 @@ void tirsBateaux(Monde* monde, unsigned int currentTime)
                     {
                         if(monde->getFlotte(i)->getNavire(j)->peutTirer(currentTime))
                         {
-                            if(monde->getFlotte(i)->getNavire(j)->estEnCollisionAvec(monde->getFlotte(i)->getNavire(j)->getPortee(), monde->getIleBonus(k)->getDefenseur(l)->getCentre()))
+                            if(monde->getFlotte(i)->getNavire(j)->estEnCollisionAvec(monde->getFlotte(i)->getNavire(j)->getPortee() + monde->getIleBonus(k)->getDefenseur(l)->getTaille()/2, monde->getIleBonus(k)->getDefenseur(l)->getCentre()))
                             {
                                 monde->getIleBonus(k)->getDefenseur(l)->ajouterPV(-monde->getFlotte(i)->getNavire(j)->getDegatArme());
                                 if(monde->getIleBonus(k)->getDefenseur(l)->getPv() <= 0)

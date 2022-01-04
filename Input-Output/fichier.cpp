@@ -39,6 +39,8 @@ void addCroiseursFlotte(std::string *line, Flotte* flotte, int nbCroiseurs)
         {
             flotte->addCroiseur(new Croiseur(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
             flotte->getNavire(i)->setPv(readNextNumber(line));
+            if(!flotte->getNavire(i)->getDestination()->isEqual(flotte->getNavire(i)->getCentre()))
+                flotte->getNavire(i)->setDestination(flotte->getNavire(i)->getDestination());
         }
         line->substr(2);
     }
@@ -53,6 +55,8 @@ void addPatrouilleursFlotte(std::string *line, Flotte* flotte, int nbPatrouilleu
         {
             flotte->addPatrouilleur(new Patrouilleur(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
             flotte->getNavire(i)->setPv(readNextNumber(line));
+            if(!flotte->getNavire(i)->getDestination()->isEqual(flotte->getNavire(i)->getCentre()))
+                flotte->getNavire(i)->setDestination(flotte->getNavire(i)->getDestination());
         }
         line->substr(2);
     }
@@ -163,10 +167,6 @@ Monde* readSave(std::string path)
                 monde->setIleBonus(nbIlesBonus-1, ileBonus);
                 nbIlesBonus--;
             }
-            break;
-            case 'M':
-            break;
-            case 'T':
             break;
             default:
                 error("Erreur de format | readSave - fichier ");

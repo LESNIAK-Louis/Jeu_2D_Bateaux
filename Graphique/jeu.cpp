@@ -6,6 +6,7 @@ void init_textures_jeu(SDL_Renderer *renderer, textures_s* textures){
     textures->contourPV = charger_image("Ressources/contourBarrePV.bmp", renderer);
     textures->remplissagePV = charger_image("Ressources/remplissageBarrePV.bmp", renderer);
     textures->remplissagePVEnnemis = charger_image("Ressources/remplissageBarrePVEnnemis.bmp", renderer);
+    textures->base = charger_image("Ressources/base.bmp", renderer);
     textures->patrouilleur = charger_image("Ressources/patrouilleur.bmp", renderer);
     textures->croiseur = charger_image("Ressources/croiseur.bmp", renderer);
     textures->porteAvion = charger_image("Ressources/porteAvion.bmp", renderer);
@@ -22,6 +23,7 @@ void afficherMonde(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
     
     afficherIles(ecran, monde, textures);
     afficherIlesBonus(ecran, monde,textures);
+
     afficherFlottes(ecran, monde, textures);
     afficherInterface(ecran, monde, textures);
 }
@@ -40,7 +42,7 @@ void afficherInformations(SDL_Renderer* ecran, Flotte* flotte, textures_s* textu
     const char* quantiteOr = string.c_str();
     SDL_Color couleurTexteInterface = { 231, 76, 60, 255};
     SDL_Rect DestR = {10 ,10 ,0 ,0};
-    afficher_texte(quantiteOr, ecran, DestR, textures->police, couleurTexteInterface, 1);
+    afficher_texte(quantiteOr, ecran, DestR, textures->police, couleurTexteInterface, 0);
     afficherSelection(ecran, flotte->getListeSelected(), textures, 0, 0);
 }
 
@@ -55,7 +57,7 @@ void afficherSelection(SDL_Renderer* ecran, selectedNavire* liste, textures_s* t
             afficherBouton(ecran, textures, ABSCISSE_INITIALE_SELECTION + decalageHorizontal*(10 + TAILLE_BOUTON), 10 + decalageVertical*(TAILLE_BOUTON + 10), 2, 0);
         }
         decalageHorizontal++;
-        if (decalageHorizontal > NB_CLASSE_NAVIRE/2) {
+        if (decalageHorizontal >= NB_SELECTION_MAX/2) {
             decalageHorizontal = 0;
             decalageVertical++;
         }
@@ -128,12 +130,21 @@ void afficherFlottes(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
 void afficherNavires(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures){
     for (int n = 0; n < flotte->getNbNavires(); n++){
         std::string type = flotte->getNavire(n)->getType();
-        if (type.compare("Patrouilleur") == 0) {
+        if (type.compare("Base") == 0){
+            afficherBase(ecran, textures, flotte->getNavire(n));
+        } else if (type.compare("Patrouilleur") == 0) {
             afficherPatrouilleur(ecran, textures, flotte->getNavire(n));
         } else if (type.compare("Croiseur") == 0){
             afficherCroiseur(ecran, textures, flotte->getNavire(n));
-        }
+        } else {}
     }
+}
+
+
+void afficherBase(SDL_Renderer* ecran, textures_s* textures, Navire* navire){
+    SDL_Rect DestR = {navire->getAbscisse()-(navire->getTaille()/2), navire->getOrdonnee()-(navire->getTaille()/2),navire->getTaille(), navire->getTaille()};
+    SDL_RenderCopy(ecran, textures->base, NULL, &DestR);
+    afficherBarreDeVieBase(navire, ecran, textures);
 }
 
 void afficherPatrouilleur(SDL_Renderer* ecran, textures_s* textures, Navire* navire){
@@ -171,5 +182,39 @@ void afficherBarreDeVie(Navire* navire, SDL_Renderer* ecran, textures_s* texture
     } else {
         SDL_RenderCopy(ecran, textures->remplissagePVEnnemis, NULL, &DestRInt);
     }
-    
+}
+
+void afficherBarreDeVieBase(Navire* navire, SDL_Renderer* ecran, textures_s* textures){
+
+    double ratio = (double)navire->getPv() / (double)navire->getPvMax();
+    SDL_Rect DestRExt = {navire->getAbscisse()-navire->getTaille()/2, navire->getOrdonnee()-navire->getTaille()/2 - 8, PV_CONT_WIDTH, PV_CONT_HEIGHT};
+    SDL_Rect DestRInt = {navire->getAbscisse()-navire->getTaille()/2 +1, navire->getOrdonnee()-navire->getTaille()/2 - 7, (int)round(PV_REMP_WIDTH * ratio), PV_REMP_HEIGHT};
+
+    SDL_RenderCopy(ecran, textures->contourPV, NULL, &DestRExt);
+    if (navire->getIdFlotte() == 0) {
+        SDL_RenderCopy(ecran, textures->remplissagePV, NULL, &DestRInt);
+    } else {
+        SDL_RenderCopy(ecran, textures->remplissagePVEnnemis, NULL, &DestRInt);
+    }
+}
+
+void destroy_textures_jeu(textures_s* textures){
+    if(textures != NULL)
+    {
+        if(NULL != textures->bouton) SDL_DestroyTexture(textures->bouton);
+        if(NULL != textures->contourPV) SDL_DestroyTexture(textures->contourPV);
+        if(NULL != textures->croiseur) SDL_DestroyTexture(textures->croiseur);
+        if(NULL != textures->explosion) SDL_DestroyTexture(textures->explosion);
+        if(NULL != textures->fond) SDL_DestroyTexture(textures->fond);
+        if(NULL != textures->ile) SDL_DestroyTexture(textures->ile);
+        if(NULL != textures->interface) SDL_DestroyTexture(textures->interface);
+        if(NULL != textures->patrouilleur) SDL_DestroyTexture(textures->patrouilleur);
+        if(NULL != textures->plus) SDL_DestroyTexture(textures->plus);
+        if(NULL != textures->point) SDL_DestroyTexture(textures->point);
+        if(NULL != textures->police) TTF_CloseFont(textures->police);
+        if(NULL != textures->porteAvion) SDL_DestroyTexture(textures->porteAvion);
+        if(NULL != textures->remplissagePV) SDL_DestroyTexture(textures->remplissagePV);
+        if(NULL != textures->remplissagePVEnnemis) SDL_DestroyTexture(textures->remplissagePVEnnemis);
+        if(NULL != textures->tir) SDL_DestroyTexture(textures->tir);
+    }
 }

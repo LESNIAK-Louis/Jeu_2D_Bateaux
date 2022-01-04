@@ -23,9 +23,11 @@ IleBonus::IleBonus(Point* centre, int taille, int forme, int rayonCapture, int c
 
 IleBonus::~IleBonus()
 {   
-    delete this->centre;
+    if(this->centre != NULL)
+        delete this->centre;
     this->removeAllDefenseurs();
-    delete this->defenseurs;
+    if(this->defenseurs != NULL)
+        delete this->defenseurs;
 }
 
 Point* IleBonus::getCentre()
@@ -169,7 +171,9 @@ void IleBonus::removeAllDefenseurs()
 {
     while(this->getNbDefenseur() != 0)
     {
-        this->defenseurs->back()->~Navire();
+        Navire* nav = this->defenseurs->back();
+        if(nav != NULL)
+            delete this->defenseurs->back();
         this->defenseurs->pop_back();
     }
 }
@@ -206,9 +210,9 @@ std::string IleBonus::formattedInfo()
     info += std::to_string(nbPatrouilleur) + ";"
     + std::to_string(nbCroiseur);
     if(nbPatrouilleur > 0)
-        info += ";[" + patrouilleur.substr(0, patrouilleur.length()-2) + "]";
+        info += ";[" + patrouilleur.substr(0, patrouilleur.length()-1) + "]";
     if(nbCroiseur > 0)
-        info += ";[" + croiseur.substr(0, patrouilleur.length()-2) + "]";
+        info += ";[" + croiseur.substr(0, patrouilleur.length()-1) + "]";
     info += "}";
 
     return info;

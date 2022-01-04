@@ -15,6 +15,7 @@
 #include "Point.hpp"
 #include "../../definitions.hpp"
 #include "Navire/Navire.hpp"
+#include "Navire/Base.hpp"
 #include "Navire/Patrouilleur.hpp"
 #include "Navire/Croiseur.hpp"
 
@@ -70,6 +71,7 @@ class Flotte
         int getNbPatrouilleurs();
         int getNbCroiseurs();
         Navire* getNavire(int i);
+        Navire* getBase();
         Navire* getPatrouilleur(int i);
         Navire* getCroiseur(int i);
 
@@ -126,6 +128,12 @@ class Flotte
         void deleteSelected();
 
         void deleteSelectedAux(selectedNavire* liste);
+
+        /**
+         * @brief Fonction qui crée la base
+         * 
+         */
+        void creerBase();
 
         /**
          * @brief Crée un nouveau patrouilleur et l'ajoute à la flotte

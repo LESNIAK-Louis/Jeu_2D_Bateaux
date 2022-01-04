@@ -25,6 +25,7 @@ struct textures_s{
     SDL_Texture* contourPV; /*Texture liée à l'image représentant le contour des barres de point de vie */
     SDL_Texture* remplissagePV; /*Texture liée à l'image représentant le remplissage des barres de point de vie du joueur*/
     SDL_Texture* remplissagePVEnnemis; /*Texture liée à l'image représentant le remplissage des barres de point de vie des ennemis*/
+    SDL_Texture* base; /*Texture liée à l'image représentant une base */
     SDL_Texture* patrouilleur; /*Texture liée à l'image représentant un patrouilleur*/
     SDL_Texture* croiseur; /*Texture liée à l'image représentant un croiseur*/
     SDL_Texture* porteAvion;
@@ -130,21 +131,13 @@ void afficherFlottes(SDL_Renderer* ecran, Monde* monde, textures_s* textures);
 void afficherNavires(SDL_Renderer* ecran,  Flotte* flotte, textures_s* textures);
 
 /**
- * @brief affiche les patrouilleurs
- * @param ecran l'ecran
- * @param monde 
- * @param textures les textures du jeu
- */
-void afficherPatrouilleurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures);
-
-/**
- * @brief affiche les croiseurs
+ * @brief la fonction affiche la base d'une flotte
  * 
  * @param ecran 
  * @param flotte 
  * @param textures 
  */
-void afficherCroiseurs(SDL_Renderer* ecran, Flotte* flotte, textures_s* textures);
+void afficherBase(SDL_Renderer* ecran, textures_s* textures, Navire* navire);
 
 /**
  * @brief affiche un patrouilleur
@@ -166,12 +159,27 @@ void afficherCroiseur(SDL_Renderer* ecran, textures_s* textures, Navire* navire)
 
 
 /**
- * @brief affiche les barres de vie au dessus des bateaux selectionnés par l'utilisateur
+ * @brief affiche les barres de vie au dessus des bateaux
  * 
  * @param ecran 
  * @param monde 
  * @param textures les textures du jeu
  */
 void afficherBarreDeVie(Navire* navire, SDL_Renderer* ecran, textures_s* textures);
+
+/**
+ * @brief affiche la barre de vie au dessus de la base
+ * 
+ * @param navire 
+ * @param ecran 
+ * @param textures 
+ */
+void afficherBarreDeVieBase(Navire* navire, SDL_Renderer* ecran, textures_s* textures);
+
+/**
+ * @brief détruit toutes les textures
+ * @param textures les textures du jeu
+ */
+void destroy_textures_jeu(textures_s* textures);
 
 #endif

@@ -55,7 +55,8 @@ selectedNavire* supprimerElement(selectedNavire* liste, Navire* navire)
     if (prem(previous) == navire)
     {
         liste = rest(liste);
-        free(previous);
+        if(previous != NULL)
+            free(previous);
         return liste;
     }
     temp = rest(previous); 
@@ -64,7 +65,8 @@ selectedNavire* supprimerElement(selectedNavire* liste, Navire* navire)
         if (prem(temp) == navire)
         {
             previous->suivant = rest(temp);
-            free(temp);
+            if(temp != NULL)
+                free(temp);
             return liste;
         }
         previous = temp; 
@@ -90,14 +92,19 @@ Flotte::Flotte(int numero, Point* coord, Point* spawn, int ressource, int gain, 
     this->listeSelected = consVide();
     this->nbPatrouilleurs = 0;
     this->nbCroiseurs = 0;
+    creerBase();
 }
 
 Flotte::~Flotte(){
-    delete this->coordBase;
-    delete this->spawnPoint;
+    if(this->coordBase != NULL)
+        delete this->coordBase;
+    if(this->spawnPoint != NULL)  
+        delete this->spawnPoint;
     this->removeAllNavires();
-    delete this->navires;
-    freeListe(this->listeSelected);
+    if(this->navires != NULL)  
+        delete this->navires;
+    if(this->listeSelected != NULL)
+        freeListe(this->listeSelected);
 }
 
 int Flotte::getNumero(){
@@ -120,7 +127,11 @@ int Flotte::getGainRessource(){
     return this->gainRessource;
 }
 int Flotte::getPvBase(){
-    return this->pvBase;
+   for (int i = 0; i < getNbNavires(); i++){
+       if (getNavire(i)->getType().compare("Base") == 0){
+           return getNavire(i)->getPv();
+       }
+   }
 }
 
 int Flotte::getCaracPatrouilleur(int i){
@@ -146,6 +157,13 @@ int Flotte::getNbCroiseurs(){
 
 Navire* Flotte::getNavire(int i){
     return this->navires->at(i);
+}
+Navire* Flotte::getBase(){
+    for (int i = 0; i < getNbNavires(); i++){
+        if (getNavire(i)->getType().compare("Base") == 0) {
+            return getNavire(i);
+        }
+    }
 }
 
 Navire* Flotte::getPatrouilleur(int i){
@@ -204,10 +222,6 @@ void Flotte::setQteRessource(int q){
 
 void Flotte::setGainRessource(int g){
     this->gainRessource = g;
-}
-
-void Flotte::setPvBase(int p){
-    this->pvBase = p;
 }
 
 void Flotte::setCaracPatrouilleur(int v, int pMax, int degat, int cadence, int p){
@@ -272,7 +286,9 @@ void Flotte::augmenterGainRessource(int a){
 void Flotte::removeAllNavires(){
     while(this->getNbNavires() != 0)
     {
-        this->navires->back()->~Navire();
+        Navire* nav = this->navires->back();
+        if(nav != NULL)
+            delete nav;
         this->navires->pop_back();
     }
 }
@@ -324,8 +340,17 @@ void Flotte::deleteSelectedAux(selectedNavire* liste){
         if (!estVide(liste->suivant)) {
              deleteSelectedAux(liste->suivant);
         }
-        removeNavire(liste->nav->getId());
+        if (liste->nav->getType().compare("Base") != 0) {
+            removeNavire(liste->nav->getId());
+        }
+        
     }
+}
+
+/*CEATION DE LA BASE*/
+void Flotte::creerBase(){
+    Base* b = new Base(getNumero(), getNbNavires(), getCoordBase(),  getCoordBase(), 0, PV_MAX_BASE, DEGATS_BASE, CADENCE_TIR_BASE, PORTEE_BASE);
+    this->navires->push_back(b);
 }
 
 /* GESTION DES PATROUILLEURS */

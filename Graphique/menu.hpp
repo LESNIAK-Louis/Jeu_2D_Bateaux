@@ -17,6 +17,6 @@ struct texturesMenu_s{
 
 #include "../Menu.hpp"
 
-void afficherTextes(SDL_Renderer *renderer ,texturesMenu_s* textures, int selecting, bool isSaveAvailiable);
+void afficherTextes(SDL_Renderer *renderer ,texturesMenu_s* textures, std::vector<textes_s*>*  textes, int nbTextes);
 
 #endif

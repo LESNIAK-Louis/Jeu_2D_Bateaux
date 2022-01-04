@@ -197,6 +197,11 @@ bool isFileExist(std::string fileName)
     return exist;
 }
 
+bool removeFile(std::string fileName)
+{
+    return !remove(fileName.c_str());
+}
+
 void save(std::string path, Monde* monde)
 {
     if(monde == NULL) error("Monde null en param | sauvegarder - fichier");

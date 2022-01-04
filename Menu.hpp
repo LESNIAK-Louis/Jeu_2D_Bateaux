@@ -21,6 +21,13 @@ struct texturesMenu_s{
 };
 #endif
 
+struct textes_s{
+    int id;
+    const char* texte;
+    SDL_Color couleur;
+    SDL_Rect emplacement;
+};
+
 class Menu
 {
     private :
@@ -33,7 +40,9 @@ class Menu
     SDL_Event evenements;
     SDL_Renderer* ecran;
     texturesMenu_s* textures;
+    std::vector<textes_s*>* rectTexte;
     int selecting;
+    int pos; // Profondeur du menu
 
     public : 
 
@@ -48,11 +57,18 @@ class Menu
     SDL_Event* getEvent();
     SDL_Renderer* getEcran();
     texturesMenu_s* getTextures();
+    int getNbRectTextes();
+    std::vector<textes_s*>* getRectTextes();
+    int getPos();
 
     void setTerminer(bool terminer);
     void setSelecting(int selecting);
     void incrementerSelecting();
     void decrementerSelecting();
+    void addRectTextes(textes_s* texte);
+    void viderRectTextes();
+    void setPos(int i);
+    void updatePos();
 
     void boucleMenu();
 

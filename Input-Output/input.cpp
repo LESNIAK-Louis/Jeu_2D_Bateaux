@@ -176,7 +176,12 @@ void gestion_evenements_menu(Menu* menu)
             break;
             case SDL_MOUSEMOTION: // Si une touche souris est enfoncée
             {
-
+                for(int i = 0; i < menu->getNbRectTextes(); i++)
+                {
+                    if(menu->getMouse()->estEnCollisionAvec(menu->getRectTextes()->at(i)->emplacement))
+                        menu->setSelecting(menu->getRectTextes()->at(i)->id);
+                }
+                break;
             }
             default: break;
         }

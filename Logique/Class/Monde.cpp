@@ -160,7 +160,7 @@ void Monde::removeAllSpritesPersistant()
 {
     while(this->getNbSpritesPersistants() != 0)
     {
-        spritePersistant* sP = spritesPersistants->back();
+        spritePersistant* sp = spritesPersistants->back();
         if(sp != NULL)
         {
             if(sp->point != NULL) delete sp->point;

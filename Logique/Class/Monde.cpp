@@ -60,7 +60,7 @@ Flotte* Monde::getFlotte(int index)
 
 spritePersistant* Monde::getSpritePersistant(int index)
 {
-    if(index >= this->getNbSpritesPersistants()) error("index out of range | getSpritePersistant - Monde");
+    if(index < 0 || index >= this->getNbSpritesPersistants()) error("index out of range | getSpritePersistant - Monde");
     return this->spritesPersistants->at(index);
 }
 
@@ -134,9 +134,9 @@ void Monde::removeFlotte(int index)
     this->flottes->erase(this->flottes->begin() + index);
 }
 
-void Monde::addSpritePersistant(Point* p,std::string type, int tempsDebut, int duree)
+void Monde::addSpritePersistant(Point* p, const char* type, int tempsDebut, int duree)
 {
-    spritePersistant* s = new spritePersistant();
+    spritePersistant* s = (spritePersistant*)malloc(sizeof(spritePersistant));
     s->point = p;
     s->type = type;
     s->tempsDebut = tempsDebut;
@@ -146,18 +146,26 @@ void Monde::addSpritePersistant(Point* p,std::string type, int tempsDebut, int d
 
 void Monde::removeSpritePersistant(int index)
 {
-    if(index >= getNbSpritesPersistants()) error("index out of range | removeSpritePersistant - Monde");
-    if(spritesPersistants->at(index) != NULL)
-        delete spritesPersistants->at(index);
+    if(index < 0 || index >= getNbSpritesPersistants()) error("index out of range | removeSpritePersistant - Monde");
+    spritePersistant* sp = spritesPersistants->at(index);
+    if(sp != NULL)
+    {
+        if(sp->point != NULL) delete sp->point;
+        free(sp);
+    }
     this->spritesPersistants->erase(spritesPersistants->begin() + index);
 }
 
 void Monde::removeAllSpritesPersistant()
 {
-    for(int i = 0; i < this->getNbSpritesPersistants(); i++)
+    while(this->getNbSpritesPersistants() != 0)
     {
         spritePersistant* sP = spritesPersistants->back();
-        if(sP!=NULL) delete sP;
+        if(sp != NULL)
+        {
+            if(sp->point != NULL) delete sp->point;
+            free(sp);
+        }
         this->spritesPersistants->pop_back();
     }
 }

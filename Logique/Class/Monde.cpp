@@ -187,6 +187,29 @@ void Monde::updateControleIleBonus()
     }
 }
 
+void Monde::actionBot(){
+    srand(time(0));
+    Point* cibleJoueur = new Point(getFlotte(0)->getCoordBase()->getAbscisse() - TAILLE_BASE - 5, getFlotte(0)->getCoordBase()->getOrdonnee() - TAILLE_BASE - 5);
+    for (int f = 1; f < getNbFlottes(); f++){
+        if (getFlotte(f)->getNbPatrouilleurs() < 5) {
+        getFlotte(f)->acheterPatrouilleur();
+        int random = (rand() % 99 ) + 1;
+            if (random < 15) {
+                getFlotte(f)->getNavire(getFlotte(f)->getNbNavires()-1)->setDestination(cibleJoueur);
+            }
+        }
+        getFlotte(f)->ameliorerPatrouilleurs();
+        getFlotte(f)->acheterCroiseur();
+        getFlotte(f)->acheterPatrouilleur();
+        int random = (rand() % 1000) + 1;
+        if (random < 10){
+            for (int n = 1; n < getFlotte(f)->getNbNavires(); n++){
+                getFlotte(f)->getNavire(n)->setDestination(cibleJoueur);
+            }
+        }
+    } 
+}
+
 std::string Monde::formattedInfo()
 {
     std::string info = std::to_string(this->getNbIles()) + ";" +

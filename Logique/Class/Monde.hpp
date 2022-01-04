@@ -56,7 +56,7 @@ class Monde {
         void removeAllIlesBonus();
 
         void updateControleIleBonus();
-
+        void actionBot();
         std::string formattedInfo();
 };
 

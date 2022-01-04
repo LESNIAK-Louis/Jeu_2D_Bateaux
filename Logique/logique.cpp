@@ -213,6 +213,7 @@ void tirsBateaux(Monde* monde, unsigned int currentTime)
 }
 
 
+
 bool collisionCercles(Point* ctr1, int taille1, Point* ctr2, int taille2)
 {
     return (ctr1->distance(ctr2) <= (taille1 + taille2)/2);

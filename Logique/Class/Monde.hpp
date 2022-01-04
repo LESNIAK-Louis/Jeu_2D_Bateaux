@@ -17,7 +17,7 @@
 
 struct spritePersistant_s{
     Point* point;
-    std::string type;
+    const char* type;
     int duree;
     int tempsDebut;
 }; typedef struct spritePersistant_s spritePersistant;

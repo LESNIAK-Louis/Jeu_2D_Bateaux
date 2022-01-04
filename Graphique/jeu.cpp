@@ -197,13 +197,13 @@ void afficherBarreDeVieBase(Navire* navire, SDL_Renderer* ecran, textures_s* tex
         SDL_RenderCopy(ecran, textures->remplissagePVEnnemis, NULL, &DestRInt);
     }
 }
-
+/*
 void afficherSpritesPersistants(Monde* monde, SDL_Renderer* ecran, textures_s* textures){
     for (int s = 0; s < monde->getNbSpritesPersistants(); s++) {
         SDL_Rect DestR = {monde->getSpritePersistant(s)->point->getAbscisse - 8 , monde->getSpritePersistant(s)->point->getOrdonnee - 8, 16, 16}
         SDL_RenderCopy(ecran, textures->explosion, NULL, &DestR);
     }
-}
+}*/
 
 void destroy_textures_jeu(textures_s* textures){
     if(textures != NULL)

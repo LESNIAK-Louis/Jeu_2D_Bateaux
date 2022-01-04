@@ -109,7 +109,7 @@ void Game::boucleJeu()
         SDL_RenderClear(this->getEcran());
         SDL_RenderCopy(this->getEcran(), this->getTextures()->fond, NULL, NULL);
         afficherMonde(this->getEcran(), this->getMonde(), this->getTextures());
-        moveSh
+        moveShips(getMonde());
         tirsBateaux(this->getMonde(), currentTime);
         this->getMonde()->updateControleIleBonus();
         this->getMonde()->getFlotte(0)->addRessource();

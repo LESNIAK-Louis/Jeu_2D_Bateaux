@@ -60,7 +60,7 @@ class Monde {
         void addFlotte(Flotte* flotte);
         void removeFlotte(int id);
 
-        void addSpritePersistant(Point* p, std::string type, int tempsDebut, int duree);
+        void addSpritePersistant(Point* p, const char* type, int tempsDebut, int duree);
         void removeSpritePersistant(int index);
 
         void removeAllFlottes();

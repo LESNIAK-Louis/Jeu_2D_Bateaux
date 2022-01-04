@@ -199,8 +199,9 @@ void afficherBarreDeVieBase(Navire* navire, SDL_Renderer* ecran, textures_s* tex
 }
 
 void afficherSpritesPersistants(Monde* monde, SDL_Renderer* ecran, textures_s* textures){
-    for (int s = 0; s < monde->getNbSpritesPersistants(); i++) {
-        
+    for (int s = 0; s < monde->getNbSpritesPersistants(); s++) {
+        SDL_Rect DestR = {monde->getSpritePersistant(s)->point->getAbscisse - 8 , monde->getSpritePersistant(s)->point->getOrdonnee - 8, 16, 16}
+        SDL_RenderCopy(ecran, textures->explosion, NULL, &DestR);
     }
 }
 

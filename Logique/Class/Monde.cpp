@@ -134,7 +134,7 @@ void Monde::removeFlotte(int index)
     this->flottes->erase(this->flottes->begin() + index);
 }
 
-void Monde::addSpritePersistant(Point* p,std::string type, int tempsDebut, int duree)
+void Monde::addSpritePersistant(Point* p, const char* type, int tempsDebut, int duree)
 {
     spritePersistant* s = new spritePersistant();
     s->point = p;

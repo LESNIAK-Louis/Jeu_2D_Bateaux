@@ -17,6 +17,7 @@ Monde::Monde(int nbIles, int nbIlesBonus, int time, int difficulte)
     this->timer = time;
     this->difficulte = difficulte;
     this->vainqueur = "Non";
+    this->spritesPersistants = new std::vector<spritePersistant*>();
 }
 
 Monde::~Monde()
@@ -134,7 +135,7 @@ void Monde::removeFlotte(int index)
     this->flottes->erase(this->flottes->begin() + index);
 }
 
-void Monde::addSpritePersistant(Point* p, const char* type, int tempsDebut, int duree)
+void Monde::addSpritePersistant(Point* p, const char* type, unsigned int tempsDebut, unsigned int duree)
 {
     spritePersistant* s = (spritePersistant*)malloc(sizeof(spritePersistant));
     s->point = p;
@@ -167,6 +168,15 @@ void Monde::removeAllSpritesPersistant()
             free(sp);
         }
         this->spritesPersistants->pop_back();
+    }
+}
+
+void Monde::updateSpritesPersistants(unsigned int tempsActuel)
+{
+    for (int s = 0; s < getNbSpritesPersistants(); s++){
+        if (getSpritePersistant(s)->duree < tempsActuel - getSpritePersistant(s)->tempsDebut) {
+            removeSpritePersistant(s);
+        }
     }
 }
 

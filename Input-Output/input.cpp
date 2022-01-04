@@ -25,10 +25,6 @@ void gestion_evenements_jeu(SDL_Event* event, Mouse* mouse, Monde* monde, bool* 
                     case SDLK_LEFT :
                         break;
                     case SDLK_UP :
-                        for (int i = 0; i < monde->getFlotte(0)->getNbNavires(); i++){
-                            std::cout << "ID " << monde->getFlotte(0)->getNavire(i)->getType() <<" : " << monde->getFlotte(0)->getNavire(i)->getId() << std::endl;
-                        }
-                        printf("\n");
                         break;
                     case SDLK_DOWN :
                         break;

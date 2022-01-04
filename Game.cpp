@@ -6,7 +6,6 @@
 */
 
 #include "Game.hpp"
-Monde* temporaire();
 
 Game::Game(bool* arreterApplication, bool* newGame)
 {
@@ -24,9 +23,12 @@ Game::Game(bool* arreterApplication, bool* newGame)
         }
         
         if(*newGame)
-            /*this->monde = readSave("carteInitiale.txt");*/ this->monde = temporaire();
-        else
+        {
+            this->monde = readSave("carteInitiale.txt"); 
+        }  else {
             this->monde = readSave("Save.txt");
+        }
+            
 
         this->mouse = new Mouse();
         this->terminer = false;
@@ -111,6 +113,7 @@ void Game::boucleJeu()
         afficherMonde(this->getEcran(), this->getMonde(), this->getTextures());
         moveShips(getMonde());
         tirsBateaux(this->getMonde(), currentTime);
+        monde->updateSpritesPersistants(currentTime);
         this->getMonde()->updateControleIleBonus();
         this->getMonde()->getFlotte(0)->addRessource();
         getMonde()->actionBot();

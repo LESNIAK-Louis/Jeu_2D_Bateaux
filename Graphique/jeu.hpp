@@ -183,7 +183,7 @@ void afficherBarreDeVieBase(Navire* navire, SDL_Renderer* ecran, textures_s* tex
  * @param ecran 
  * @param textures 
  */
-void afficherSpritesPersistant(Monde* monde, SDL_Renderer* ecran, textures_s* textures);
+void afficherSpritesPersistants(Monde* monde, SDL_Renderer* ecran, textures_s* textures);
 
 /**
  * @brief détruit toutes les textures

@@ -18,8 +18,8 @@
 struct spritePersistant_s{
     Point* point;
     const char* type;
-    int duree;
-    int tempsDebut;
+    unsigned int duree;
+    unsigned int tempsDebut;
 }; typedef struct spritePersistant_s spritePersistant;
 
 class Monde {
@@ -60,8 +60,9 @@ class Monde {
         void addFlotte(Flotte* flotte);
         void removeFlotte(int id);
 
-        void addSpritePersistant(Point* p, const char* type, int tempsDebut, int duree);
+        void addSpritePersistant(Point* p, const char* type, unsigned int tempsDebut, unsigned int duree);
         void removeSpritePersistant(int index);
+        void updateSpritesPersistants(unsigned int tempsActuel);
 
         void removeAllFlottes();
         void removeAllIles();

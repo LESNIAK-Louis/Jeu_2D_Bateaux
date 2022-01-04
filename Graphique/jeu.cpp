@@ -23,7 +23,7 @@ void afficherMonde(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
     
     afficherIles(ecran, monde, textures);
     afficherIlesBonus(ecran, monde,textures);
-
+    afficherSpritesPersistants(monde, ecran, textures);
     afficherFlottes(ecran, monde, textures);
     afficherInterface(ecran, monde, textures);
 }
@@ -114,9 +114,11 @@ void afficherIlesBonus(SDL_Renderer* ecran, Monde* monde, textures_s* textures){
         SDL_Rect DestR = {monde->getIleBonus(i)->getCentre()->getAbscisse()-(TAILLE_ILE2/2), monde->getIleBonus(i)->getCentre()->getOrdonnee()-(TAILLE_ILE2/2),TAILLE_ILE2, TAILLE_ILE2};
         SDL_RenderCopy(ecran, textures->ile, NULL, &DestR);
         for (int p = 0; p < monde->getIleBonus(i)->getNbDefenseur(); p++) {
-            SDL_Rect DestR = {monde->getIleBonus(i)->getDefenseur(p)->getAbscisse()-TAILLE_PATROUILLEUR/2, monde->getIleBonus(i)->getDefenseur(p)->getOrdonnee()-TAILLE_PATROUILLEUR/2,TAILLE_PATROUILLEUR, TAILLE_PATROUILLEUR};
-            SDL_RenderCopyEx(ecran, textures->patrouilleur, NULL, &DestR, monde->getIleBonus(i)->getDefenseur(p)->getAngle(), NULL, SDL_FLIP_NONE);
-            afficherBarreDeVie(monde->getIleBonus(i)->getDefenseur(p), ecran, textures);      
+            if (monde->getIleBonus(i)->getDefenseur(p)->getType().compare("Patrouilleur") == 0){
+                afficherPatrouilleur(ecran, textures, monde->getIleBonus(i)->getDefenseur(p));
+            } else if (monde->getIleBonus(i)->getDefenseur(p)->getType().compare("Croiseur") == 0) {
+                afficherCroiseur(ecran, textures, monde->getIleBonus(i)->getDefenseur(p));
+            }
         }
     }
 }
@@ -151,22 +153,12 @@ void afficherPatrouilleur(SDL_Renderer* ecran, textures_s* textures, Navire* nav
     SDL_Rect DestR = {navire->getAbscisse()-(navire->getTaille()/2), navire->getOrdonnee()-(navire->getTaille()/2),navire->getTaille(), navire->getTaille()};
     SDL_RenderCopyEx(ecran, textures->patrouilleur, NULL, &DestR, navire->getAngle(), NULL, SDL_FLIP_NONE);
     afficherBarreDeVie(navire, ecran, textures);
-
-    //Permet d'afficher un point sur le wayPoint du patrouilleur. A utiliser pour le debuggage
-    /*SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", ecran);
-    DestR = {navire->getWayPoint()->getAbscisse(), navire->getWayPoint()->getOrdonnee(),5, 5};
-    SDL_RenderCopy(ecran, texturePoint, NULL, &DestR);*/
 }
 
 void afficherCroiseur(SDL_Renderer* ecran, textures_s* textures, Navire* navire){
     SDL_Rect DestR = {navire->getAbscisse()-(navire->getTaille()/2), navire->getOrdonnee()-(navire->getTaille()/2),navire->getTaille(), navire->getTaille()};
     SDL_RenderCopyEx(ecran, textures->croiseur, NULL, &DestR, navire->getAngle(), NULL, SDL_FLIP_NONE);
     afficherBarreDeVie(navire, ecran, textures);
-
-    //Permet d'afficher un point sur le wayPoint du croiseur. A utiliser pour le debuggage
-    /*SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", ecran);
-    DestR = {flotte->getCroiseur(c)->getWayPoint()->getAbscisse(), flotte->getCroiseur(c)->getWayPoint()->getOrdonnee(),5, 5};
-    SDL_RenderCopy(ecran, texturePoint, NULL, &DestR);*/
 }
 
 
@@ -197,13 +189,13 @@ void afficherBarreDeVieBase(Navire* navire, SDL_Renderer* ecran, textures_s* tex
         SDL_RenderCopy(ecran, textures->remplissagePVEnnemis, NULL, &DestRInt);
     }
 }
-/*
+
 void afficherSpritesPersistants(Monde* monde, SDL_Renderer* ecran, textures_s* textures){
     for (int s = 0; s < monde->getNbSpritesPersistants(); s++) {
-        SDL_Rect DestR = {monde->getSpritePersistant(s)->point->getAbscisse - 8 , monde->getSpritePersistant(s)->point->getOrdonnee - 8, 16, 16}
+        SDL_Rect DestR = {monde->getSpritePersistant(s)->point->getAbscisse() - 8 , monde->getSpritePersistant(s)->point->getOrdonnee() - 8, 16, 16};
         SDL_RenderCopy(ecran, textures->explosion, NULL, &DestR);
     }
-}*/
+}
 
 void destroy_textures_jeu(textures_s* textures){
     if(textures != NULL)

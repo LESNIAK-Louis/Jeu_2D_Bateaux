@@ -134,7 +134,7 @@ void tirsBateaux(Monde* monde, unsigned int currentTime)
                                                 break;
                                         }
                                     } else {
-                                        monde->addSpritePersistant(monde->getFlotte(k)->getNavire(l)->getCentre(), "destruction", currentTime, 1);
+                                        monde->addSpritePersistant(monde->getFlotte(k)->getNavire(l)->getCentre(), "destruction", currentTime, DUREE_EXPLOSION);
                                         monde->getFlotte(k)->removeNavire(l);
                                     }
                                 }
@@ -163,8 +163,11 @@ void tirsBateaux(Monde* monde, unsigned int currentTime)
                             if(monde->getFlotte(i)->getNavire(j)->estEnCollisionAvec(monde->getFlotte(i)->getNavire(j)->getPortee() + monde->getIleBonus(k)->getDefenseur(l)->getTaille()/2, monde->getIleBonus(k)->getDefenseur(l)->getCentre()))
                             {
                                 monde->getIleBonus(k)->getDefenseur(l)->ajouterPV(-monde->getFlotte(i)->getNavire(j)->getDegatArme());
-                                if(monde->getIleBonus(k)->getDefenseur(l)->getPv() <= 0)
+                                if(monde->getIleBonus(k)->getDefenseur(l)->getPv() <= 0) 
+                                {
+                                    monde->addSpritePersistant(monde->getIleBonus(k)->getDefenseur(l)->getCentre(), "destruction", currentTime, DUREE_EXPLOSION);
                                     monde->getIleBonus(k)->removeDefenseur(monde->getIleBonus(k)->getDefenseur(l));
+                                }
                                 shot = true;
                                 break;
                             }
@@ -197,7 +200,11 @@ void tirsBateaux(Monde* monde, unsigned int currentTime)
                             
                             monde->getFlotte(k)->getNavire(l)->ajouterPV(-monde->getIleBonus(i)->getDefenseur(j)->getDegatArme());
                             if(monde->getFlotte(k)->getNavire(l)->getPv() <= 0)
+                            {
+                                monde->addSpritePersistant(monde->getFlotte(k)->getNavire(l)->getCentre(), "destruction", currentTime, DUREE_EXPLOSION);
                                 monde->getFlotte(k)->removeNavire(l);
+                            }
+                                
                             shot = true;
                             
                         }

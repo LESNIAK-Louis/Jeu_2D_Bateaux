@@ -67,7 +67,10 @@ Sur la partie jeu (en bas) :
 * Clic GAUCHE : sélectionner un bateau pointé par la souris
 * Clic DROIT : ordonner aux bateaux sélectionnés de se déplacer à l'endroit pointé (si on ne pointe pas une ile ou une base)
 
+## Détail technique
+###Diagramme de classe simplifié
+![diagramme](https://github.com/LESNIAK-Louis/Projet_STEINER_LESNIAK_ProgA/tree/main/Ressources/diagramme.png)
+
 ## Auteurs
 [STEINER Hugues](https://github.com/Hugues-STEINER)
-
 [LESNIAK Louis](https://github.com/LESNIAK-Louis)

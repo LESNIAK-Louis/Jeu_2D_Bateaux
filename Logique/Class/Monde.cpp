@@ -37,6 +37,11 @@ int Monde::getNbFlottes()
     return this->flottes->size();
 }
 
+int Monde::getNbSpritesPersistants()
+{
+    return this->spritesPersistants->size();
+}
+
 int Monde::getNbIles()
 {
     return this->nbIles;
@@ -51,6 +56,12 @@ Flotte* Monde::getFlotte(int index)
 {
     if(index >= this->getNbFlottes()) error("index out of range | getFlotte - Monde");
     return this->flottes->at(index);
+}
+
+spritePersistant* Monde::getSpritePersistant(int index)
+{
+    if(index >= this->getNbSpritesPersistants()) error("index out of range | getSpritePersistant - Monde");
+    return this->spritesPersistants->at(index);
 }
 
 Ile* Monde::getIle(int index)
@@ -121,6 +132,34 @@ void Monde::removeFlotte(int index)
     if(this->flottes->at(index) != NULL)
         delete this->flottes->at(index);
     this->flottes->erase(this->flottes->begin() + index);
+}
+
+void Monde::addSpritePersistant(Point* p,std::string type, int tempsDebut, int duree)
+{
+    spritePersistant* s = new spritePersistant();
+    s->point = p;
+    s->type = type;
+    s->tempsDebut = tempsDebut;
+    s->duree = duree;
+    spritesPersistants->push_back(s);
+}
+
+void Monde::removeSpritePersistant(int index)
+{
+    if(index >= getNbSpritesPersistants()) error("index out of range | removeSpritePersistant - Monde");
+    if(spritesPersistants->at(index) != NULL)
+        delete spritesPersistants->at(index);
+    this->spritesPersistants->erase(spritesPersistants->begin() + index);
+}
+
+void Monde::removeAllSpritesPersistant()
+{
+    for(int i = 0; i < this->getNbSpritesPersistants(); i++)
+    {
+        spritePersistant* sP = spritesPersistants->back();
+        if(sP!=NULL) delete sP;
+        this->spritesPersistants->pop_back();
+    }
 }
 
 void Monde::removeAllFlottes()

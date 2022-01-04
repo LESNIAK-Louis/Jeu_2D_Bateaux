@@ -153,9 +153,9 @@ void afficherPatrouilleur(SDL_Renderer* ecran, textures_s* textures, Navire* nav
     afficherBarreDeVie(navire, ecran, textures);
 
     //Permet d'afficher un point sur le wayPoint du patrouilleur. A utiliser pour le debuggage
-    SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", ecran);
+    /*SDL_Texture* texturePoint = charger_image("Ressources/point.bmp", ecran);
     DestR = {navire->getWayPoint()->getAbscisse(), navire->getWayPoint()->getOrdonnee(),5, 5};
-    SDL_RenderCopy(ecran, texturePoint, NULL, &DestR);
+    SDL_RenderCopy(ecran, texturePoint, NULL, &DestR);*/
 }
 
 void afficherCroiseur(SDL_Renderer* ecran, textures_s* textures, Navire* navire){
@@ -195,6 +195,12 @@ void afficherBarreDeVieBase(Navire* navire, SDL_Renderer* ecran, textures_s* tex
         SDL_RenderCopy(ecran, textures->remplissagePV, NULL, &DestRInt);
     } else {
         SDL_RenderCopy(ecran, textures->remplissagePVEnnemis, NULL, &DestRInt);
+    }
+}
+
+void afficherSpritesPersistants(Monde* monde, SDL_Renderer* ecran, textures_s* textures){
+    for (int s = 0; s < monde->getNbSpritesPersistants(); i++) {
+        
     }
 }
 

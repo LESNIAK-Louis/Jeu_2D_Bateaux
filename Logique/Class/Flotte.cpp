@@ -377,14 +377,24 @@ void Flotte::addPatrouilleur(Patrouilleur* p){
     this->setNbPatrouilleurs(this->getNbPatrouilleurs() + 1);
 }
 
+void Flotte::acheterPatrouilleur(){
+    if (getQteRessource() >= COUT_PATROUILLEUR) {
+        newPatrouilleur();
+        addRessource(-COUT_PATROUILLEUR);
+    }
+}
+
 void Flotte::ameliorerPatrouilleurs(){
-    ameliorerPVMaxPatrouilleurs();
-    ameliorerVitessePatrouilleurs();
-    ameliorerDegatsPatrouilleurs();
-    ameliorerCadencePatrouilleurs();
-    ameliorerPorteePatrouilleurs();
-    updatePatrouilleurs();
-    caracPatrouilleur[5]++;
+    if (getCaracPatrouilleur(5) < NB_AMELIO_MAX && getQteRessource() >= COUT_AMELIORATION_PATROUILLEUR ) { //on vérifie si les navires ont déjà été améliorés au maximum et que la flotte a suffsiament de ressources
+        ameliorerPVMaxPatrouilleurs();
+        ameliorerVitessePatrouilleurs();
+        ameliorerDegatsPatrouilleurs();
+        ameliorerCadencePatrouilleurs();
+        ameliorerPorteePatrouilleurs();
+        updatePatrouilleurs();
+        caracPatrouilleur[5]++;
+        addRessource(-COUT_AMELIORATION_PATROUILLEUR);
+    }
 }
 
 void Flotte::ameliorerPVMaxPatrouilleurs(){
@@ -433,14 +443,24 @@ void Flotte::addCroiseur(Croiseur* c){
     this->setNbCroiseurs(this->getNbCroiseurs() + 1);
 }
 
+void Flotte::acheterCroiseur(){
+    if (getQteRessource() >= COUT_CROISEUR) {
+        newCroiseur();
+        addRessource(-COUT_CROISEUR);
+    }
+}
+
 void Flotte::ameliorerCroiseurs(){
-    ameliorerPVMaxCroiseurs();
-    ameliorerVitesseCroiseurs();
-    ameliorerDegatsCroiseurs();
-    ameliorerCadenceCroiseurs();
-    ameliorerPorteeCroiseurs();
-    updateCroiseurs();
-    caracCroiseur[5]++;
+    if (getCaracCroiseur(5) < NB_AMELIO_MAX && getQteRessource() >= COUT_AMELIORATION_CROISEUR ) { //on vérifie si les navires ont déjà été améliorés au maximum et que la flotte a suffsiament de ressources
+        ameliorerPVMaxCroiseurs();
+        ameliorerVitesseCroiseurs();
+        ameliorerDegatsCroiseurs();
+        ameliorerCadenceCroiseurs();
+        ameliorerPorteeCroiseurs();
+        updateCroiseurs();
+        caracCroiseur[5]++;
+        addRessource(-COUT_AMELIORATION_CROISEUR);
+    }
 }
 
 void Flotte::ameliorerPVMaxCroiseurs(){

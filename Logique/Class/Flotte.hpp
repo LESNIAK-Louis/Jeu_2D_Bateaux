@@ -149,6 +149,13 @@ class Flotte
          * @param p le patrouilleur à ajouter
          */
         void addPatrouilleur(Patrouilleur* p);
+
+        /**
+         * @brief Achete un patrouilleur
+         * 
+         */
+        void acheterPatrouilleur();
+
         /**
          * @brief améliore les caractéristiques des patrouilleurs
          * 
@@ -174,6 +181,12 @@ class Flotte
          * @param c le croiseur à ajouter
          */
         void addCroiseur(Croiseur* c);
+
+        /**
+         * @brief Achete un croiseur
+         * 
+         */
+        void acheterCroiseur();
 
         /**
          * @brief améliore les caractéristiques des croiseurs

@@ -134,7 +134,8 @@ void tirsBateaux(Monde* monde, unsigned int currentTime)
                                                 break;
                                         }
                                     } else {
-                                         monde->getFlotte(k)->removeNavire(l);
+                                        monde->addSpritePersistant(monde->getFlotte(k)->getNavire(l)->getCentre(), "destruction", currentTime, 1);
+                                        monde->getFlotte(k)->removeNavire(l);
                                     }
                                 }
                                     

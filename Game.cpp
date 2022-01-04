@@ -109,7 +109,7 @@ void Game::boucleJeu()
         SDL_RenderClear(this->getEcran());
         SDL_RenderCopy(this->getEcran(), this->getTextures()->fond, NULL, NULL);
         afficherMonde(this->getEcran(), this->getMonde(), this->getTextures());
-        moveShips(this->getMonde());
+        moveSh
         tirsBateaux(this->getMonde(), currentTime);
         this->getMonde()->updateControleIleBonus();
         this->getMonde()->getFlotte(0)->addRessource();
@@ -122,5 +122,4 @@ void Game::boucleJeu()
         save("Save.txt", this->getMonde());
     }
     std::cout << "Vainqueur : " << getVainqueur() << std::endl;
-    
 }

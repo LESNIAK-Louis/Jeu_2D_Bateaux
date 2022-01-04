@@ -177,6 +177,15 @@ void afficherBarreDeVie(Navire* navire, SDL_Renderer* ecran, textures_s* texture
 void afficherBarreDeVieBase(Navire* navire, SDL_Renderer* ecran, textures_s* textures);
 
 /**
+ * @brief affiche les sprites persitants (explosions par exemple)
+ * 
+ * @param monde 
+ * @param ecran 
+ * @param textures 
+ */
+void afficherSpritesPersistant(Monde* monde, SDL_Renderer* ecran, textures_s* textures);
+
+/**
  * @brief détruit toutes les textures
  * @param textures les textures du jeu
  */

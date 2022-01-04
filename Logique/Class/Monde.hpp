@@ -15,9 +15,17 @@
 #include "IleBonus.hpp"
 #include "../../definitions.hpp"
 
+struct spritePersistant_s{
+    Point* point;
+    std::string type;
+    int duree;
+    int tempsDebut;
+}; typedef struct spritePersistant_s spritePersistant;
+
 class Monde {
     private : 
         std::vector<Flotte*>* flottes;
+        std::vector<spritePersistant*>* spritesPersistants;
         Ile** iles;
         IleBonus** ilesBonus;
         int nbFlottes;
@@ -31,13 +39,15 @@ class Monde {
         ~Monde();
 
         Flotte* getFlotte(int index);
+        spritePersistant* getSpritePersistant(int index);
         Ile* getIle(int index);
         IleBonus* getIleBonus(int index);
         int getTimer();
         int getDifficulte();
         std::string getVainqueur();
-
+        
         int getNbFlottes();
+        int getNbSpritesPersistants();
         int getNbIles();
         int getNbIlesBonus();
         
@@ -48,12 +58,15 @@ class Monde {
         void setVainqueur(std::string nomVainqueur);
 
         void addFlotte(Flotte* flotte);
-
         void removeFlotte(int id);
+
+        void addSpritePersistant(Point* p, std::string type, int tempsDebut, int duree);
+        void removeSpritePersistant(int index);
 
         void removeAllFlottes();
         void removeAllIles();
         void removeAllIlesBonus();
+        void removeAllSpritesPersistant();
 
         void updateControleIleBonus();
         void actionBot();

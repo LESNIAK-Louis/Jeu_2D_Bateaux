@@ -120,7 +120,6 @@ void tirsBateaux(Monde* monde, unsigned int currentTime)
                                 monde->getFlotte(k)->getNavire(l)->ajouterPV(-monde->getFlotte(i)->getNavire(j)->getDegatArme());
                                 if(monde->getFlotte(k)->getNavire(l)->getPv() <= 0) 
                                 {
-                                    monde->getFlotte(k)->removeNavire(l);
                                     if (monde->getFlotte(k)->getNavire(l)->getType().compare("Base") == 0)
                                     {
                                         switch (k) 
@@ -132,6 +131,8 @@ void tirsBateaux(Monde* monde, unsigned int currentTime)
                                                 monde->setVainqueur("Joueur");
                                                 break;
                                         }
+                                    } else {
+                                         monde->getFlotte(k)->removeNavire(l);
                                     }
                                 }
                                     

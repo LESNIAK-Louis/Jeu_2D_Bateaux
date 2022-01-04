@@ -4,12 +4,19 @@ Un jeu de bateau style RTS crée pour le deuxième semestre de L2 Infomatique à
 
 ## Description du jeu
 Vous jouez contre l'ordinateur.
+
 Le but est de détruire la base des autres flottes.
+
 Pour cela vous pouvez acheter, avec de l'or, 2 types de bateaux différents, un Patrouilleur, et un Croiseur (qui a de meilleures capacités que le Patrouilleur).
+
 L'or est gagné au fur et à mesure de la partie.
+
 Vous pouvez attaquer une ile protégée par des bateaux afin de la contrôler et gagner plus d'or. Attention, vous pouvez perdre le contrôle et donc le bonus si une autre flotte attaque cette ile.
+
 Des iles qui ne donnent pas de bonus (donc non protégées) sont aussi présentent.
+
 Une fois les bases des adversaires détruites ou la destruction de votre base, le jeu s'arrête et le gagnant est affiché sur la sortie standard.
+
 Si vous revenez au menu ou quittez l'application, votre partie est sauvegardée, vous pouvez la recharger plus tard.
 Attention si vous démarrez une nouvelle partie, toute partie sauvegardée sera supprimé !
 
@@ -62,4 +69,5 @@ Sur la partie jeu (en bas) :
 
 ## Auteurs
 [STEINER Hugues](https://github.com/Hugues-STEINER)
+
 [LESNIAK Louis](https://github.com/LESNIAK-Louis)

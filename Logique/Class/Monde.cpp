@@ -55,7 +55,7 @@ int Monde::getNbIlesBonus()
 
 Flotte* Monde::getFlotte(int index)
 {
-    if(index >= this->getNbFlottes()) error("index out of range | getFlotte - Monde");
+    if(index < 0 || index >= this->getNbFlottes()) error("index out of range | getFlotte - Monde");
     return this->flottes->at(index);
 }
 
@@ -138,7 +138,7 @@ void Monde::removeFlotte(int index)
 void Monde::addSpritePersistant(Point* p, const char* type, unsigned int tempsDebut, unsigned int duree)
 {
     spritePersistant* s = (spritePersistant*)malloc(sizeof(spritePersistant));
-    s->point = p;
+    s->point = new Point(p);
     s->type = type;
     s->tempsDebut = tempsDebut;
     s->duree = duree;

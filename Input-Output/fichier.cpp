@@ -30,59 +30,63 @@ int readNextNumber(std::string *line)
     }catch(std::exception &e){error("Format incorrect du fichier de sauvegarde | readNextNumber - fichier ");}
 }
 
-void addCroiseursFlotte(std::string *line, Flotte* flotte, int nbCroiseurs)
+void addNavireFlotte(std::string *line, Flotte* flotte, int nbNavire)
 {
-    if(nbCroiseurs > 0)
+    if(nbNavire > 0)
     {
-        line->substr(1);
-        for(int i = 0; i < nbCroiseurs; i++)
+        *line = line->substr(1);
+        for(int i = 0; i < nbNavire; i++)
         {
-            flotte->addCroiseur(new Croiseur(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+            int type = readNextNumber(line); 
+            switch(type)
+            {
+                case 0:
+                    flotte->addNavire(new Base(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+                break;
+                case 1:
+                    flotte->addNavire(new Patrouilleur(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+                break;
+                case 2:
+                    flotte->addNavire(new Croiseur(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+                break;
+                default :error("Format incorrect du fichier de sauvegarde - type bateau non reconnu | addDefenseurIleBonus - fichier ");
+
+            }
             flotte->getNavire(i)->setPv(readNextNumber(line));
             if(!flotte->getNavire(i)->getDestination()->isEqual(flotte->getNavire(i)->getCentre()))
                 flotte->getNavire(i)->setDestination(flotte->getNavire(i)->getDestination());
         }
-        line->substr(2);
+
+        *line = line->substr(2);
     }
 }
 
-void addPatrouilleursFlotte(std::string *line, Flotte* flotte, int nbPatrouilleurs)
+void addDefenseurIleBonus(std::string *line, IleBonus* ileBonus, int nbNavire, int nbIlesBonus)
 {
-    if(nbPatrouilleurs > 0)
+    if(nbNavire > 0)
     {
-        line->substr(1);
-        for(int i = 0; i < nbPatrouilleurs; i++)
+        *line = line->substr(1);
+        for(int i = 0; i < nbNavire; i++)
         {
-            flotte->addPatrouilleur(new Patrouilleur(flotte->getNumero(), i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
-            flotte->getNavire(i)->setPv(readNextNumber(line));
-            if(!flotte->getNavire(i)->getDestination()->isEqual(flotte->getNavire(i)->getCentre()))
-                flotte->getNavire(i)->setDestination(flotte->getNavire(i)->getDestination());
-        }
-        line->substr(2);
-    }
-}
+            int type = readNextNumber(line); 
+            switch(type)
+            {
+                case 0:
+                    ileBonus->addDefenseur(new Base(-nbIlesBonus, i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+                break;
+                case 1:
+                    ileBonus->addDefenseur(new Patrouilleur(-nbIlesBonus, i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+                break;
+                case 2:
+                    ileBonus->addDefenseur(new Croiseur(-nbIlesBonus, i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+                break;
+                default:error("Format incorrect du fichier de sauvegarde - type bateau non reconnu | addDefenseurIleBonus - fichier ");
 
-void addDefenseurIleBonus(std::string *line, IleBonus* ileBonus, int nbPatrouilleurs, int nbCroiseurs)
-{
-    if(nbPatrouilleurs > 0)
-    {
-        line->substr(1);
-        for(int i = 0; i < nbPatrouilleurs; i++)
-        {
-            ileBonus->addDefenseur(new Patrouilleur(-1, i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
+            }
             ileBonus->getDefenseur(i)->setPv(readNextNumber(line));
         }
-        line->substr(2);
-    }
-    if(nbCroiseurs > 0)
-    {
-        line->substr(1);
-        for(int i = 0; i < nbCroiseurs; i++)
-        {
-            ileBonus->addDefenseur(new Croiseur(-1, i, readPoint(line), readPoint(line), readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line),readNextNumber(line)));
-            ileBonus->getDefenseur(i)->setPv(readNextNumber(line));
-        }
-        line->substr(2);
+
+        *line = line->substr(2);
     }
 }
 
@@ -127,10 +131,8 @@ Monde* readSave(std::string path)
                 int gain = readNextNumber(&line);
                 int pv = readNextNumber(&line);
                 Flotte* flotte = new Flotte(numero, Coord, Spawn, ressource, gain, pv);
-                int nbPatrouilleurs = readNextNumber(&line);
-                int nbCroiseurs = readNextNumber(&line);
-                addPatrouilleursFlotte(&line, flotte, nbPatrouilleurs);
-                addCroiseursFlotte(&line, flotte, nbCroiseurs);
+                int nbNavires = readNextNumber(&line);
+                addNavireFlotte(&line, flotte, nbNavires);
                 monde->addFlotte(flotte);
             }
             break;
@@ -160,10 +162,9 @@ Monde* readSave(std::string path)
                 int controle = readNextNumber(&line);
                 int bonustype = readNextNumber(&line);
                 int bonusGain = readNextNumber(&line);
-                int nbPatrouilleurs = readNextNumber(&line);
-                int nbCroiseurs = readNextNumber(&line);
+                int nbDefenseurs = readNextNumber(&line);
                 IleBonus* ileBonus = new IleBonus(centre, taille, forme, rayonCapture, controle, bonustype, bonusGain);
-                addDefenseurIleBonus(&line, ileBonus, nbPatrouilleurs, nbCroiseurs);
+                addDefenseurIleBonus(&line, ileBonus, nbDefenseurs, nbIlesBonus);
                 monde->setIleBonus(nbIlesBonus-1, ileBonus);
                 nbIlesBonus--;
             }

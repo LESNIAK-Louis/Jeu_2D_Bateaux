@@ -92,7 +92,6 @@ Flotte::Flotte(int numero, Point* coord, Point* spawn, int ressource, int gain, 
     this->listeSelected = consVide();
     this->nbPatrouilleurs = 0;
     this->nbCroiseurs = 0;
-    creerBase();
 }
 
 Flotte::~Flotte(){
@@ -132,6 +131,7 @@ int Flotte::getPvBase(){
            return getNavire(i)->getPv();
        }
    }
+   error("Base introuvable | getPvBase");
 }
 
 int Flotte::getCaracPatrouilleur(int i){
@@ -164,6 +164,7 @@ Navire* Flotte::getBase(){
             return getNavire(i);
         }
     }
+    error("Base introuvable | getBase");
 }
 
 Navire* Flotte::getPatrouilleur(int i){
@@ -320,6 +321,17 @@ void Flotte::reduireNumeroNavires(int indice){
     }
 }
 
+void Flotte::addNavire(Navire* nav)
+{
+    if(nav == NULL) error("Navire NULL en param | addNavire");
+    this->navires->push_back(nav);
+    
+    if(nav->getType() == "Patrouilleur")
+        this->setNbPatrouilleurs(this->getNbPatrouilleurs() + 1);
+    else if(nav->getType() == "Croiseur")
+        this->setNbCroiseurs(this->getNbCroiseurs()+1);
+}
+
 void Flotte::stopSelected(){
     stopSelectedAux(listeSelected);
 }
@@ -474,21 +486,13 @@ std::string Flotte::formattedInfo()
     std::to_string(this->getQteRessource()) + ";" +
     std::to_string(this->getGainRessource()) + ";" +
     std::to_string(this->getPvBase()) + ";" +
-    std::to_string(this->getNbPatrouilleurs()) + ";" + 
-    std::to_string(this->getNbCroiseurs());
-    if(this->getNbPatrouilleurs() != 0)
+    std::to_string(this->getNbNavires());
+    if(this->getNbNavires() != 0)
     {
         info += ";[";
-        for(int k = 0; k <  this->getNbPatrouilleurs()-1; k++)
-            info +=  this->getPatrouilleur(k)->formattedInfo() + ";";
-        info +=  this->getPatrouilleur(this->getNbPatrouilleurs()-1)->formattedInfo() + "]";
-    }
-    if(this->getNbCroiseurs() != 0)
-    {
-        info += ";[";
-        for(int k = 0; k <  this->getNbCroiseurs()-1; k++)
-            info +=  this->getCroiseur(k)->formattedInfo() + ";";
-        info +=  this->getCroiseur(this->getNbCroiseurs()-1)->formattedInfo() + "]";
+        for(int k = 0; k <  this->getNbNavires()-1; k++)
+            info +=  this->getNavire(k)->formattedInfo() + ";";
+        info +=  this->getNavire(this->getNbNavires()-1)->formattedInfo() + "]";
     }
     info += "}";
 

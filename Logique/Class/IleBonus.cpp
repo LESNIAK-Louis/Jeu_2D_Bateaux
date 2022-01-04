@@ -187,33 +187,17 @@ std::string IleBonus::formattedInfo()
     + std::to_string(this->getRayonCapture()) + ";"
     + std::to_string(this->getControle()) + ";"
     + std::to_string(this->getBonusType()) + ";"
-    + std::to_string(this->getBonusGain()) + ";";
-
-    std::string patrouilleur = "";
-    std::string croiseur = "";
-    int nbPatrouilleur = 0;
-    int nbCroiseur = 0;
-    for(int i = 0; i < this->getNbDefenseur(); i++)
+    + std::to_string(this->getBonusGain()) + ";"
+    + std::to_string(this->getNbDefenseur());
+    if(this->getNbDefenseur() != 0)
     {
-        if(this->getDefenseur(i)->getType() == "Patrouilleur")
-        {
-            nbPatrouilleur++;
-            patrouilleur += this->getDefenseur(i)->formattedInfo() + ";";
-        }
-        else if (this->getDefenseur(i)->getType() == "Croiseur")
-        {
-            nbCroiseur++;
-            croiseur += this->getDefenseur(i)->formattedInfo() + ";";
-        }
+        info += ";[";
+        for(int k = 0; k <  this->getNbDefenseur()-1; k++)
+            info +=  this->getDefenseur(k)->formattedInfo() + ";";
+        info +=  this->getDefenseur(this->getNbDefenseur()-1)->formattedInfo() + "]";
     }
-
-    info += std::to_string(nbPatrouilleur) + ";"
-    + std::to_string(nbCroiseur);
-    if(nbPatrouilleur > 0)
-        info += ";[" + patrouilleur.substr(0, patrouilleur.length()-1) + "]";
-    if(nbCroiseur > 0)
-        info += ";[" + croiseur.substr(0, patrouilleur.length()-1) + "]";
     info += "}";
+    
 
     return info;
 }

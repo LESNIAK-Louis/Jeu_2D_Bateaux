@@ -25,6 +25,7 @@ class Game
 
     Mouse* mouse;
     bool terminer; // si le jeu doit s'arrêter
+    bool* stop; // on arrete l'application
     SDL_Window* fenetre;
     SDL_Event evenements;
     SDL_Renderer* ecran;
@@ -35,7 +36,7 @@ class Game
 
     public : 
 
-    Game(Monde* monde);
+    Game(bool* arreterApplication, bool* newGame);
     ~Game();
 
     Mouse* getMouse();

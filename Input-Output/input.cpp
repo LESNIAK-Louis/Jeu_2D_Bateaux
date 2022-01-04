@@ -7,7 +7,7 @@
 
 #include "input.hpp"
 
-void gestion_evenements_jeu(SDL_Event* event, Mouse* mouse, Monde* monde, bool* terminer)
+void gestion_evenements_jeu(SDL_Event* event, Mouse* mouse, Monde* monde, bool* terminer, bool* arreterApplication)
 {
     while(SDL_PollEvent(event)) 
     {
@@ -15,6 +15,7 @@ void gestion_evenements_jeu(SDL_Event* event, Mouse* mouse, Monde* monde, bool* 
         {
             case SDL_QUIT : // Si l'utilisateur a cliqué sur le X de la fenêtre
                 *terminer = true;
+                *arreterApplication = true;
             break;
             case SDL_KEYDOWN :  // Si une touche clavier est appuyée
                 switch (event->key.keysym.sym)
@@ -96,6 +97,88 @@ void gestion_evenements_jeu(SDL_Event* event, Mouse* mouse, Monde* monde, bool* 
             break;
             default:
             break;
+        }
+    }
+}
+
+void gestion_evenements_menu(Menu* menu)
+{
+    while(SDL_PollEvent(menu->getEvent())) 
+    {
+        switch(menu->getEvent()->type)
+        {
+            case SDL_QUIT : // Si l'utilisateur a cliqué sur le X de la fenêtre
+                menu->arreterApplication();
+            break;
+            case SDL_KEYDOWN :  // Si une touche clavier est appuyée
+                switch (menu->getEvent()->key.keysym.sym)
+                {
+                    case SDLK_UP :
+                    {
+                        menu->decrementerSelecting();
+                        break;
+                    }
+                    case SDLK_DOWN :
+                    {
+                        menu->incrementerSelecting();
+                        break;
+                    }
+                    case SDLK_RETURN :
+                    {
+                        switch (menu->getSelecting())
+                        {
+                            case 0:
+                                menu->setTerminer(true);
+                                menu->setNewGame(true);
+                                break;
+                            case 1:
+                                menu->setTerminer(true);
+                                menu->setNewGame(false);
+                                break;
+                            case 2:
+                                menu->arreterApplication();
+                                break;
+                            
+                            default: error("erreur selection menu | gestion_evenements_menu - input");
+                        }
+                        break;
+                    }
+                    case SDLK_ESCAPE :
+                    {
+                        menu->arreterApplication();
+                        break;
+                    }
+                    default:
+                    break;
+                }
+            break;
+            case SDL_MOUSEBUTTONDOWN: // Si une touche souris est enfoncée
+                if(menu->getEvent()->button.button == SDL_BUTTON_LEFT)
+                {
+                    switch (menu->getSelecting())
+                        {
+                            case 0:
+                                menu->setTerminer(true);
+                                menu->setNewGame(true);
+                                break;
+                            case 1:
+                                menu->setTerminer(true);
+                                menu->setNewGame(false);
+                                break;
+                            case 2:
+                                menu->arreterApplication();
+                                break;
+                            
+                            default: break;
+                        }
+                        break;
+                }
+            break;
+            case SDL_MOUSEMOTION: // Si une touche souris est enfoncée
+            {
+
+            }
+            default: break;
         }
     }
 }

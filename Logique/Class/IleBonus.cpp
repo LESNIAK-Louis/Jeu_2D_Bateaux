@@ -210,9 +210,9 @@ std::string IleBonus::formattedInfo()
     info += std::to_string(nbPatrouilleur) + ";"
     + std::to_string(nbCroiseur);
     if(nbPatrouilleur > 0)
-        info += ";[" + patrouilleur.substr(0, patrouilleur.length()-2) + "]";
+        info += ";[" + patrouilleur.substr(0, patrouilleur.length()-1) + "]";
     if(nbCroiseur > 0)
-        info += ";[" + croiseur.substr(0, patrouilleur.length()-2) + "]";
+        info += ";[" + croiseur.substr(0, patrouilleur.length()-1) + "]";
     info += "}";
 
     return info;

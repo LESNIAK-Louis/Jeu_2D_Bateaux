@@ -6,17 +6,34 @@
 */
 
 #include "Game.hpp"
+Monde* temporaire();
 
-Game::Game(Monde* monde)
+Game::Game(bool* arreterApplication, bool* newGame)
 {
-    if(monde == NULL) error("Monde NULL en param : Game - Game");
-    this->mouse = new Mouse();
-    this->terminer = false;
-    initWindowRenderer(&(this->fenetre), &(this->ecran), LARGEUR_ECRAN, HAUTEUR_ECRAN);
-    this->monde = monde;
-    this->textures = (textures_s*)malloc(sizeof(textures_s));
-    init_textures_jeu(this->getEcran(), this->textures);
-    this->boucleJeu();
+    
+        if(arreterApplication == NULL || newGame == NULL) error("pointeurs null en param de constructeur | Game");
+        this->stop = arreterApplication;
+        if((*arreterApplication))
+        {
+            this->monde = NULL;
+            this->mouse = NULL;
+            this->textures = NULL;
+            this->ecran = NULL;
+            this->fenetre = NULL;
+            return;
+        }
+        if(*newGame)
+            /*this->monde = readSave("carteInitiale.txt");*/ this->monde = temporaire();
+        else
+            this->monde = readSave("Save.txt");
+
+        this->mouse = new Mouse();
+        this->terminer = false;
+        initWindowRenderer(&(this->fenetre), &(this->ecran), LARGEUR_ECRAN, HAUTEUR_ECRAN);
+        this->monde = monde;
+        this->textures = (textures_s*)malloc(sizeof(textures_s));
+        init_textures_jeu(this->getEcran(), this->textures);
+        this->boucleJeu();
 }
 
 Game::~Game()
@@ -92,7 +109,7 @@ void Game::boucleJeu()
         this->getMonde()->updateControleIleBonus();
         this->getMonde()->getFlotte(0)->addRessource();
         
-        gestion_evenements_jeu(this->getEvent(), this->getMouse(), this->getMonde(), &(this->terminer));
+        gestion_evenements_jeu(this->getEvent(), this->getMouse(), this->getMonde(), &(this->terminer), this->stop);
         SDL_RenderPresent(this->getEcran());
         SDL_Delay(50);
     }

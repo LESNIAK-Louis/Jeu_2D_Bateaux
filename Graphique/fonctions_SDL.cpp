@@ -67,9 +67,9 @@ TTF_Font* charger_police(const char *path, int font_size)
     return font;
 }
 
-void afficher_texte(const char* message, SDL_Renderer* renderer, SDL_Rect DestR, TTF_Font* font, SDL_Color color, bool query)
+void afficher_texte(const char* message, SDL_Renderer* renderer, SDL_Rect DestR, TTF_Font* font, SDL_Color color, bool menu)
 {
-    if(message == NULL) error("message NULL en param | afficher_texte - fonctions_sdl!!!!!!");
+    if(message == NULL) error("message NULL en param | afficher_texte - fonctions_sdl");
     if(renderer == NULL) error("renderer NULL en param | afficher_texte - fonctions_sdl");
     if(font == NULL) error("font NULL en param | afficher_texte - fonctions_sdl");
 
@@ -79,12 +79,15 @@ void afficher_texte(const char* message, SDL_Renderer* renderer, SDL_Rect DestR,
     // Convertir la surface de l’image au format texture avant de l’appliquer
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer,text);
     if(texture == NULL) error((("Erreur pendant la creation de la texture liee au texte charge  : %s | afficher_texte - fonctions_sdl", SDL_GetError())));
-    if(query)
+    int w, h;
+    if(SDL_QueryTexture(texture, NULL, NULL, &w, &h) == -1) error((("Erreur pendant le query de la texture : %s | afficher_texte - fonctions_sdl", SDL_GetError())));
+    DestR.w = w;
+    DestR.h = h;
+
+    if(menu)
     {
-        int w, h;
-        if(SDL_QueryTexture(texture, NULL, NULL, &w, &h) == -1) error((("Erreur pendant le query de la texture : %s | afficher_texte - fonctions_sdl", SDL_GetError())));
-        DestR.w = w;
-        DestR.h = h;
+        DestR.x -= DestR.w/2;
+        DestR.y -= DestR.h/2;
     }
     
     if(SDL_RenderCopy(renderer, texture, NULL, &DestR) == -1) error((("Erreur pendant l'ajout de la texture au renderer' : %s | afficher_texte - fonctions_sdl", SDL_GetError())));
@@ -97,7 +100,8 @@ void afficher_texte(const char* message, SDL_Renderer* renderer, SDL_Rect DestR,
 
 void cleanRenderer(SDL_Renderer* renderer)
 {
-    SDL_RenderClear(renderer);
+    if(renderer != NULL)
+        SDL_RenderClear(renderer);
 }
 
 void cleanSDL(SDL_Renderer* renderer, SDL_Window* window)

@@ -1,17 +1,12 @@
-#include "Graphique/fonctions_SDL.hpp"
-#include "Graphique/jeu.hpp"
-#include "Graphique/menu.hpp"
-#include "Logique/Class/Monde.hpp"
-#include "Input-Output/input.hpp"
-#include "Logique/logique.hpp"
-#include "Input-Output/fichier.hpp"
+#include "Menu.hpp"
 #include "Game.hpp"
 
+/* Temporaire */
+#include "Logique/Class/Monde.hpp"
 #include <iostream>
 
-int main()
+Monde* temporaire()
 {
-    initSDL();
     Monde* monde;
     //monde = readSave("Save.txt");
     monde = new Monde(1,1, 0,1);
@@ -38,11 +33,21 @@ int main()
     monde->getFlotte(0)->getPatrouilleur(0)->setDestination(new Point(750,750));
     monde->getFlotte(0)->getPatrouilleur(0)->ajouterPV(-5);
    
-    monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(600,300));
+    monde->getFlotte(1)->getPatrouilleur(0)->setDestination(new Point(600,300));    
+    return monde;
+}
+/* ####### */
 
-    Game* jeu = new Game(monde);
-    if(jeu != NULL)
-        delete jeu;
+int main()
+{
+    initSDL();
+    bool arreterApplication = false;
+    bool newGame =  true;
+    while(!arreterApplication)
+    {
+        Menu* menu = new Menu(&arreterApplication, &newGame); delete menu;
+        Game* jeu = new Game(&arreterApplication, &newGame); delete jeu;
+    }
 
     quitSDL();
     return 0;

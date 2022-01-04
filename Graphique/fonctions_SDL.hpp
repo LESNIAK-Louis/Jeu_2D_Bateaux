@@ -62,8 +62,9 @@ TTF_Font* charger_police(const char* path, int font_size);
  * \param DestR destination de l'affichage
  * \param font la police a utiliser
  * \param color la couleur a appliquer
+ * \param centrerHorizontalement si on doit centrer le texte à l'écran
 */
-void afficher_texte(const char* message, SDL_Renderer* renderer, SDL_Rect DestR, TTF_Font* font, SDL_Color color, bool query);
+void afficher_texte(const char* message, SDL_Renderer* renderer, SDL_Rect DestR, TTF_Font* font, SDL_Color color, bool menu);
 
 /**
  * @brief la fonction nettoye l'écran

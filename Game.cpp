@@ -113,7 +113,7 @@ void Game::boucleJeu()
         tirsBateaux(this->getMonde(), currentTime);
         this->getMonde()->updateControleIleBonus();
         this->getMonde()->getFlotte(0)->addRessource();
-        
+        getMonde()->actionBot();
         gestion_evenements_jeu(this->getEvent(), this->getMouse(), this->getMonde(), &(this->terminer), this->stop);
         SDL_RenderPresent(this->getEcran());
         SDL_Delay(50);

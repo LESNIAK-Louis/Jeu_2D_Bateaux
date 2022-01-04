@@ -246,17 +246,11 @@ void appliquerEffetBouton(Flotte* flotte, int i, int j){
         case 0:
             switch (i){
                 case 0:
-                    if (!(flotte->getQteRessource() < COUT_PATROUILLEUR) ) {
-                        flotte->newPatrouilleur();
-                        flotte->addRessource(-COUT_PATROUILLEUR);
-                    }
+                    flotte->acheterPatrouilleur();
                     
                 break;
                 case 1:
-                    if (!(flotte->getQteRessource() < COUT_CROISEUR)) {
-                        flotte->newCroiseur();
-                        flotte->addRessource(-COUT_CROISEUR);
-                    }
+                    flotte->acheterCroiseur();
                 break;
                 case 2:
                 
@@ -268,16 +262,10 @@ void appliquerEffetBouton(Flotte* flotte, int i, int j){
         case 1:
             switch (i){
                 case 0:
-                    if (flotte->getCaracPatrouilleur(5) < NB_AMELIO_MAX && flotte->getQteRessource() >= COUT_AMELIORATION_PATROUILLEUR ) { //on vérifie si les navires ont déjà été améliorés au maximum et que la flotte a suffsiament de ressources
-                        flotte->ameliorerPatrouilleurs();
-                        flotte->addRessource(-COUT_AMELIORATION_PATROUILLEUR);
-                    }
+                    flotte->ameliorerPatrouilleurs();
                 break;
                 case 1:
-                    if (flotte->getCaracCroiseur(5) < NB_AMELIO_MAX && flotte->getQteRessource() >= COUT_AMELIORATION_CROISEUR ) { //on vérifie si les navires ont déjà été améliorés au maximum et que la flotte a suffsiament de ressources
-                        flotte->ameliorerCroiseurs();
-                        flotte->addRessource(-COUT_AMELIORATION_CROISEUR);
-                    }
+                    flotte->ameliorerCroiseurs();
                 break;
                 case 2:
                     

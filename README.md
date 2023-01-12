@@ -74,5 +74,5 @@ Sur la partie jeu (en bas) :
 ![Diagramme de classe simplifié](Ressources/diagramme.png)
 
 ## Auteurs
-[STEINER Hugues](https://github.com/Hugues-STEINER)
+[STEINER Hugues](https://github.com/Hugues-STEINER) </br>
 [LESNIAK Louis](https://github.com/LESNIAK-Louis)

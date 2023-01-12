@@ -1,6 +1,6 @@
 # Game : Master & Commander
 
-Un jeu de bateau style RTS crée pour le semestre quatre de notre formation à la Faculté des Sciences et Technologies de Vandoeuvre-lès-Nancy (54500 France).
+Un jeu de bateau style RTS crée pour le troisième semestre de notre formation à la Faculté des Sciences et Technologies de Vandoeuvre-lès-Nancy (54500 France).
 
 ## Description du jeu
 Vous jouez contre l'ordinateur.
